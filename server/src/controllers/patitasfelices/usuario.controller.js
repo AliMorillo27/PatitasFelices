@@ -1,18 +1,42 @@
-import { Usuario } from '../models/patitasfelices/usuarios_model.js';
-import { createAdoptante } from './adoptante.controller.js';
+import { Usuario } from '../../models/patitasfelices/usuarios_model.js';
+import { Adoptante } from '../../models/patitasfelices/adoptante.model.js';
+import { sequelize } from '../../database/database.js';
 
 // Crear un nuevo usuario
 //esta funcion va traer todos los atributos para crear usuario
 export const createUsuario = async (req, res) => {
-    
+    const t = await sequelize.transaction();
     try {
-        const { nombre, apellido,email,contrasena,tipo } = req.body;
-        
         const newUsuario = await Usuario.create(req.body);
-        res.status(201).json(newUsuario);
+        //res.status(201).json(newUsuario);
         //
-        createAdoptante()
+        if (req.body.tipo === 'Adoptante') {
+            await Adoptante.create({
+                id_usuario: newUsuario.id_usuario,
+                nombre: req.body.nombre,
+                apellido: req.body.apellido,
+                // Puedes asignar otros campos necesarios para el Adoptante
+                cedula: req.body.cedula,
+                genero: req.body.genero,
+                direccion: req.body.direccion,
+                telefono: req.body.telefono,
+                email: req.body.email,
+                contraseña: req.body.contraseña,
+                edad: req.body.edad,
+                tiene_ninos: req.body.tiene_ninos,
+                tiene_mascota: req.body.tiene_mascota,
+                nivel_actividad: req.body.nivel_actividad,
+                nivel_energia: req.body.nivel_energia,
+                tamaño_perro_preferido: req.body.tamaño_perro_preferido,
+                experiencia_con_perros: req.body.experiencia_con_perros
+            }, { transaction: t });
+        }
+
+        await t.commit();
+
+        res.status(201).json(newUsuario);
     } catch (error) {
+        await t.rollback();
         res.status(500).json({ message: error.message });
     }
 };

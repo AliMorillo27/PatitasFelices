@@ -1,4 +1,4 @@
-import { Perro } from '../models/patitasfelices/perro.model.js';
+import { Perro } from '../../models/patitasfelices/perro.model.js';
 
 // Crear un nuevo perro
 export const createPerro = async (req, res) => {

@@ -1,4 +1,4 @@
-import { Criterio } from '../models/patitasfelices/criterio.model.js';
+import { Criterio } from '../../models/patitasfelices/criterio.model.js';
 
 // Crear un nuevo criterio
 export const createCriterio = async (req, res) => {

@@ -12,7 +12,7 @@ export const Adoptante = sequelize.define('tb_adoptante', {
 
   id_usuario: {
     type: DataTypes.INTEGER,
-    
+    allowNull: false,    
   },
   cedula: {
     type: DataTypes.STRING(100),

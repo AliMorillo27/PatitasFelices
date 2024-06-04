@@ -1,4 +1,4 @@
-import { Recursoedu } from '../models/patitasfelices/recursoedu.model.js';
+import { Recursoedu } from '../../models/patitasfelices/recursoedu.model.js';
 
 // Crear un nuevo recurso educativo
 export const createRecursoedu = async (req, res) => {

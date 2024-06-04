@@ -1,4 +1,4 @@
-import { Estado } from '../models/patitasfelices/estado.model.js';
+import { Estado } from '../../models/patitasfelices/estado.model.js';
 
 // Crear un nuevo estado
 export const createEstado = async (req, res) => {

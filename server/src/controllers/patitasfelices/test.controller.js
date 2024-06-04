@@ -1,4 +1,4 @@
-import { Test } from '../models/patitasfelices/test.modelo.js';
+import { Test } from '../../models/patitasfelices/test.modelo.js';
 
 // Crear un nuevo test
 export const createTest = async (req, res) => {

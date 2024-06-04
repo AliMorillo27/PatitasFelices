@@ -1,4 +1,4 @@
-import { SolicitudAdopcion } from '../models/patitasfelices/solicitudadop.modelo.js';
+import { SolicitudAdopcion } from '../../models/patitasfelices/solicitudadop.modelo.js';
 
 // Crear una nueva solicitud de adopción
 export const createSolicitudAdopcion = async (req, res) => {
