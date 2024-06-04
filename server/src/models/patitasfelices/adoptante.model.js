@@ -12,6 +12,8 @@ export const Adoptante = sequelize.define('tb_adoptante', {
 
   id_usuario: {
     type: DataTypes.INTEGER,
+
+    
     
   },
   nombre: {
