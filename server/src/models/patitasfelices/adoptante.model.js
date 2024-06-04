@@ -14,14 +14,6 @@ export const Adoptante = sequelize.define('tb_adoptante', {
     type: DataTypes.INTEGER,
     
   },
-  nombre: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
-  apellido: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
   cedula: {
     type: DataTypes.STRING(100),
     allowNull: false,
