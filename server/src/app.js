@@ -1,5 +1,4 @@
 import express from 'express'
-import indexModel from './models/index.model.js'
 import routes from './routes/index.routes.js';
 
 const app = express()
