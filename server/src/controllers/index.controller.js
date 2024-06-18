@@ -6,3 +6,5 @@ export * from './patitasfelices/recursoedu.controller.js';
 export * from './patitasfelices/solicitudadop.controller.js';
 export * from './patitasfelices/test.controller.js';
 export * from './patitasfelices/usuario.controller.js';
+
+
