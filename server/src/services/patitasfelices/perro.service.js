@@ -1,16 +1,25 @@
 import { sequelize } from "../../database/database.js";
+import { Perro } from "../../models/index.js";
 import { PerroRepository } from "../../repositories/index.js";
 
 const PerroService = {
   createPerro: async (perroData) => {
     const t = await sequelize.transaction();
     try {
-      if (!perroData.nombre || !perroData.edad || !perroData.raza) {
-        throw new Error('Faltan datos obligatorios del perro.');
+      const existingDOG = await Perro.findOne({
+        name: perroData.nombre ,
+        
+      });
+      if (perroData.nombre.length <= 1) {
+        throw new Error("El nombre es muy corto");
       }
-      if (!perroData.id_estado) {
-        throw new Error('El perro debe tener un estado asignado.');
+       if (!perroData.raza) {
+        throw new Error('La raza debe estar especificada.');
       }
+
+      //*if (!perroData.id_estado) {
+        //throw new Error('El perro debe tener un estado asignado.');
+      //}
 
       const newPerro = await PerroRepository.createPerro(perroData, t);
       await t.commit();

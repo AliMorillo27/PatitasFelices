@@ -1,9 +1,9 @@
-import { Estado } from '../../models/patitasfelices/estado.model.js';
+import { EstadoService } from "../../services/index.service.js";
 
 // Crear un nuevo estado
 export const createEstado = async (req, res) => {
     try {
-        const newEstado = await Estado.create(req.body);
+        const newEstado = await EstadoService.create(req.body);
         res.status(201).json(newEstado);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ export const createEstado = async (req, res) => {
 // Obtener todos los estados
 export const getEstados = async (req, res) => {
     try {
-        const estados = await Estado.findAll();
+        const estados = await EstadoService.findAll();
         res.status(200).json(estados);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -23,7 +23,7 @@ export const getEstados = async (req, res) => {
 // Obtener un estado por ID
 export const getEstadoById = async (req, res) => {
     try {
-        const estado = await Estado.findByPk(req.params.id);
+        const estado = await EstadoService.findByPk(req.params.id);
         if (estado) {
             res.status(200).json(estado);
         } else {
@@ -37,7 +37,7 @@ export const getEstadoById = async (req, res) => {
 // Actualizar un estado
 export const updateEstado = async (req, res) => {
     try {
-        const estado = await Estado.findByPk(req.params.id);
+        const estado = await EstadoService.findByPk(req.params.id);
         if (estado) {
             await estado.update(req.body);
             res.status(200).json(estado);
@@ -52,7 +52,7 @@ export const updateEstado = async (req, res) => {
 // Eliminar un estado
 export const deleteEstado = async (req, res) => {
     try {
-        const estado = await Estado.findByPk(req.params.id);
+        const estado = await EstadoService.findByPk(req.params.id);
         if (estado) {
             await estado.destroy();
             res.status(204).json({ message: 'Estado eliminado' });

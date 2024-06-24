@@ -1,9 +1,9 @@
-import { Test } from '../../models/patitasfelices/test.modelo.js';
+import { TestService } from "../../services/index.service.js";
 
 // Crear un nuevo test
 export const createTest = async (req, res) => {
     try {
-        const newTest = await Test.create(req.body);
+        const newTest = await TestService.createTest(req.body);
         res.status(201).json(newTest);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ export const createTest = async (req, res) => {
 // Obtener todos los tests
 export const getTests = async (req, res) => {
     try {
-        const tests = await Test.findAll();
+        const tests = await TestService.getAllTests();
         res.status(200).json(tests);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -23,7 +23,7 @@ export const getTests = async (req, res) => {
 // Obtener un test por ID
 export const getTestById = async (req, res) => {
     try {
-        const test = await Test.findByPk(req.params.id);
+        const test = await TestService.getTestById(req.params.id);
         if (test) {
             res.status(200).json(test);
         } else {
@@ -37,7 +37,7 @@ export const getTestById = async (req, res) => {
 // Actualizar un test
 export const updateTest = async (req, res) => {
     try {
-        const test = await Test.findByPk(req.params.id);
+        const test = await TestService.findByPk(req.params.id);
         if (test) {
             await test.update(req.body);
             res.status(200).json(test);
@@ -52,7 +52,7 @@ export const updateTest = async (req, res) => {
 // Eliminar un test
 export const deleteTest = async (req, res) => {
     try {
-        const test = await Test.findByPk(req.params.id);
+        const test = await TestService.findByPk(req.params.id);
         if (test) {
             await test.destroy();
             res.status(204).json({ message: 'Test eliminado' });

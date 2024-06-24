@@ -1,9 +1,9 @@
-import { SolicitudAdopcion } from '../../models/patitasfelices/solicitudadop.modelo.js';
+import { SolicitudAdopcionService } from "../../services/index.service.js";
 
 // Crear una nueva solicitud de adopción
 export const createSolicitudAdopcion = async (req, res) => {
     try {
-        const newSolicitudAdopcion = await SolicitudAdopcion.create(req.body);
+        const newSolicitudAdopcion = await SolicitudAdopcionService.create(req.body);
         res.status(201).json(newSolicitudAdopcion);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ export const createSolicitudAdopcion = async (req, res) => {
 // Obtener todas las solicitudes de adopción
 export const getSolicitudesAdopcion = async (req, res) => {
     try {
-        const solicitudesAdopcion = await SolicitudAdopcion.findAll();
+        const solicitudesAdopcion = await SolicitudAdopcionService.findAll();
         res.status(200).json(solicitudesAdopcion);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -23,7 +23,7 @@ export const getSolicitudesAdopcion = async (req, res) => {
 // Obtener una solicitud de adopción por ID
 export const getSolicitudAdopcionById = async (req, res) => {
     try {
-        const solicitudAdopcion = await SolicitudAdopcion.findByPk(req.params.id);
+        const solicitudAdopcion = await SolicitudAdopcionService.findByPk(req.params.id);
         if (solicitudAdopcion) {
             res.status(200).json(solicitudAdopcion);
         } else {
@@ -37,7 +37,7 @@ export const getSolicitudAdopcionById = async (req, res) => {
 // Actualizar una solicitud de adopción
 export const updateSolicitudAdopcion = async (req, res) => {
     try {
-        const solicitudAdopcion = await SolicitudAdopcion.findByPk(req.params.id);
+        const solicitudAdopcion = await SolicitudAdopcionService.findByPk(req.params.id);
         if (solicitudAdopcion) {
             await solicitudAdopcion.update(req.body);
             res.status(200).json(solicitudAdopcion);
@@ -52,7 +52,7 @@ export const updateSolicitudAdopcion = async (req, res) => {
 // Eliminar una solicitud de adopción
 export const deleteSolicitudAdopcion = async (req, res) => {
     try {
-        const solicitudAdopcion = await SolicitudAdopcion.findByPk(req.params.id);
+        const solicitudAdopcion = await SolicitudAdopcionService.findByPk(req.params.id);
         if (solicitudAdopcion) {
             await solicitudAdopcion.destroy();
             res.status(204).json({ message: 'Solicitud de adopción eliminada' });

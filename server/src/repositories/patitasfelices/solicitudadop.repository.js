@@ -1,17 +1,17 @@
-import { SolicitudAdopcion } from '../models/patitasfelices/solicitudadop.model.js';
+import { SolicitudAdopcion } from '../../models/index.js';
 
-export class SolicitudAdopcionRepository {
+const SolicitudAdopcionRepository = {
     async getAllSolicitudes() {
         return await SolicitudAdopcion.findAll();
-    }
+    },
 
     async getSolicitudById(id) {
         return await SolicitudAdopcion.findByPk(id);
-    }
+    },
 
     async createSolicitud(solicitud) {
         return await SolicitudAdopcion.create(solicitud);
-    }
+    },
 
     async updateSolicitud(id, solicitud) {
         const existingSolicitud = await SolicitudAdopcion.findByPk(id);
@@ -19,7 +19,7 @@ export class SolicitudAdopcionRepository {
             return await existingSolicitud.update(solicitud);
         }
         return null;
-    }
+    },
 
     async deleteSolicitud(id) {
         const solicitud = await SolicitudAdopcion.findByPk(id);
@@ -30,3 +30,5 @@ export class SolicitudAdopcionRepository {
         return false;
     }
 }
+
+export default SolicitudAdopcionRepository;

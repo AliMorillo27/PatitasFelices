@@ -1,9 +1,9 @@
-import { Criterio } from '../../models/patitasfelices/criterio.model.js';
+import { CriterioService } from "../../services/index.service.js";
 
 // Crear un nuevo criterio
 export const createCriterio = async (req, res) => {
     try {
-        const newCriterio = await Criterio.create(req.body);
+        const newCriterio = await  CriterioService.create(req.body);
         res.status(201).json(newCriterio);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ export const createCriterio = async (req, res) => {
 // Obtener todos los criterios
 export const getCriterios = async (req, res) => {
     try {
-        const criterios = await Criterio.findAll();
+        const criterios = await  CriterioService.findAll();
         res.status(200).json(criterios);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -23,7 +23,7 @@ export const getCriterios = async (req, res) => {
 // Obtener un criterio por ID
 export const getCriterioById = async (req, res) => {
     try {
-        const criterio = await Criterio.findByPk(req.params.id);
+        const criterio = await  CriterioService.findByPk(req.params.id);
         if (criterio) {
             res.status(200).json(criterio);
         } else {
@@ -37,7 +37,7 @@ export const getCriterioById = async (req, res) => {
 // Actualizar un criterio
 export const updateCriterio = async (req, res) => {
     try {
-        const criterio = await Criterio.findByPk(req.params.id);
+        const criterio = await  CriterioService.findByPk(req.params.id);
         if (criterio) {
             await criterio.update(req.body);
             res.status(200).json(criterio);
@@ -52,7 +52,7 @@ export const updateCriterio = async (req, res) => {
 // Eliminar un criterio
 export const deleteCriterio = async (req, res) => {
     try {
-        const criterio = await Criterio.findByPk(req.params.id);
+        const criterio = await  CriterioService.findByPk(req.params.id);
         if (criterio) {
             await criterio.destroy();
             res.status(204).json({ message: 'Criterio eliminado' });

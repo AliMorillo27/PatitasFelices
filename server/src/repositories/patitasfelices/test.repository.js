@@ -1,17 +1,17 @@
-import { Test } from '../models/patitasfelices/test.model.js';
+import { Test } from '../../models/index.js';
 
-export class TestRepository {
+const TestRepository = {
     async getAllTests() {
         return await Test.findAll();
-    }
+    },
 
     async getTestById(id) {
         return await Test.findByPk(id);
-    }
+    },
 
     async createTest(test) {
         return await Test.create(test);
-    }
+    },
 
     async updateTest(id, test) {
         const existingTest = await Test.findByPk(id);
@@ -19,7 +19,7 @@ export class TestRepository {
             return await existingTest.update(test);
         }
         return null;
-    }
+    },
 
     async deleteTest(id) {
         const test = await Test.findByPk(id);
@@ -30,3 +30,5 @@ export class TestRepository {
         return false;
     }
 }
+
+export default TestRepository;

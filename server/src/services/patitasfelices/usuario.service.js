@@ -6,6 +6,12 @@ const UsuarioService = {
     const t = await sequelize.transaction();
     try {
       const newUsuario = await UsuarioRepository.createUsuario(usuarioData, t);
+      if (usuarioData.nombre.length <= 1) {
+        throw new Error("ingrese un nombre valido");
+      }
+      if (usuarioData.cedula.length <= 9) {
+        throw new Error("ingrese una cédula valida");
+      }
 
       if (usuarioData.tipo === "Adoptante") {
         await UsuarioRepository.createAdoptante(

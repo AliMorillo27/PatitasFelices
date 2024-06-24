@@ -1,17 +1,17 @@
-import { Recursoedu } from '../models/patitasfelices/recursoedu.model.js';
+import { Recursoedu } from '../../models/index.js';
 
-export class RecursoEduRepository {
+const RecursoEduRepository = {
     async getAllRecursos() {
         return await Recursoedu.findAll();
-    }
+    },
 
     async getRecursoById(id) {
         return await Recursoedu.findByPk(id);
-    }
+    },
 
     async createRecurso(recurso) {
         return await Recursoedu.create(recurso);
-    }
+    },
 
     async updateRecurso(id, recurso) {
         const existingRecurso = await Recursoedu.findByPk(id);
@@ -19,7 +19,7 @@ export class RecursoEduRepository {
             return await existingRecurso.update(recurso);
         }
         return null;
-    }
+    },
 
     async deleteRecurso(id) {
         const recurso = await Recursoedu.findByPk(id);
@@ -29,4 +29,6 @@ export class RecursoEduRepository {
         }
         return false;
     }
-}
+};
+
+export default RecursoEduRepository;
