@@ -1,32 +1,34 @@
-import { SolicitudAdopcion } from '../models/patitasfelices/solicitudadop.model.js';
+import { SolicitudAdopcion } from '../../models/index.js';
 
-export class SolicitudAdopcionRepository {
-    async getAllSolicitudes() {
-        return await SolicitudAdopcion.findAll();
-    }
+const SolicitudAdopcionRepository = {
+    createSolicitudAdopcion: async (solicitudAdopcionData, transaction) => {
+        return SolicitudAdopcion.create(solicitudAdopcionData, { transaction });
+    },
 
-    async getSolicitudById(id) {
-        return await SolicitudAdopcion.findByPk(id);
-    }
+    getAllSolicitudesAdopcion: async () => {
+        return SolicitudAdopcion.findAll();
+    },
 
-    async createSolicitud(solicitud) {
-        return await SolicitudAdopcion.create(solicitud);
-    }
+    getSolicitudAdopcionById: async (id) => {
+        return SolicitudAdopcion.findByPk(id);
+    },
 
-    async updateSolicitud(id, solicitud) {
-        const existingSolicitud = await SolicitudAdopcion.findByPk(id);
-        if (existingSolicitud) {
-            return await existingSolicitud.update(solicitud);
+    updateSolicitudAdopcion: async (id, solicitudAdopcionData) => {
+        const solicitudAdopcion = await SolicitudAdopcion.findByPk(id);
+        if (solicitudAdopcion) {
+            return solicitudAdopcion.update(solicitudAdopcionData);
         }
         return null;
-    }
+    },
 
-    async deleteSolicitud(id) {
-        const solicitud = await SolicitudAdopcion.findByPk(id);
-        if (solicitud) {
-            await solicitud.destroy();
+    deleteSolicitudAdopcion: async (id) => {
+        const solicitudAdopcion = await SolicitudAdopcion.findByPk(id);
+        if (solicitudAdopcion) {
+            await solicitudAdopcion.destroy();
             return true;
         }
         return false;
     }
-}
+};
+
+export default SolicitudAdopcionRepository;

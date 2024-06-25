@@ -5,8 +5,8 @@ const AdoptanteRepository = {
         return Adoptante.create(adoptanteData, { transaction });
     },
 
-    getAllAdoptantes: async () => {
-        return Adoptante.findAll();
+    getAllAdoptantes: async (query={}) => {
+        return Adoptante.findAll(query);
     },
 
     getAdoptanteById: async (id) => {

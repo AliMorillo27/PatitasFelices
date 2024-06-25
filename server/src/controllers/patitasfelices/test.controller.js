@@ -1,31 +1,28 @@
-import { Test } from '../../models/patitasfelices/test.modelo.js';
+import { TestService } from '../../services/index.js';
 
-// Crear un nuevo test
 export const createTest = async (req, res) => {
     try {
-        const newTest = await Test.create(req.body);
-        res.status(201).json(newTest);
+        const test = await TestService.createTest(req.body);
+        res.status(201).json(test);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };
 
-// Obtener todos los tests
-export const getTests = async (req, res) => {
+export const getAllTests = async (req, res) => {
     try {
-        const tests = await Test.findAll();
-        res.status(200).json(tests);
+        const tests = await TestService.getAllTests();
+        res.json(tests);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-// Obtener un test por ID
 export const getTestById = async (req, res) => {
     try {
-        const test = await Test.findByPk(req.params.id);
+        const test = await TestService.getTestById(req.params.id);
         if (test) {
-            res.status(200).json(test);
+            res.json(test);
         } else {
             res.status(404).json({ message: 'Test no encontrado' });
         }
@@ -34,28 +31,24 @@ export const getTestById = async (req, res) => {
     }
 };
 
-// Actualizar un test
 export const updateTest = async (req, res) => {
     try {
-        const test = await Test.findByPk(req.params.id);
-        if (test) {
-            await test.update(req.body);
-            res.status(200).json(test);
+        const updatedTest = await TestService.updateTest(req.params.id, req.body);
+        if (updatedTest) {
+            res.json(updatedTest);
         } else {
             res.status(404).json({ message: 'Test no encontrado' });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };
 
-// Eliminar un test
 export const deleteTest = async (req, res) => {
     try {
-        const test = await Test.findByPk(req.params.id);
-        if (test) {
-            await test.destroy();
-            res.status(204).json({ message: 'Test eliminado' });
+        const deleted = await TestService.deleteTest(req.params.id);
+        if (deleted) {
+            res.status(204).end();
         } else {
             res.status(404).json({ message: 'Test no encontrado' });
         }

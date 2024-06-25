@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../database/database.js';
 
-export const Criterio = sequelize.define('tb_criterio', {
-  id_criterio: {
+export const Test = sequelize.define('tb_test', {
+  id_test: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -14,21 +14,27 @@ export const Criterio = sequelize.define('tb_criterio', {
       key: 'id_adoptante'
     }
   },
-  clave_preferencia: {
+  id_perro: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'tb_perro',
+      key: 'id_perro'
+    }
+  },
+  fecha_interaccion: {
+    type: DataTypes.DATE,
+  },
+  tipo_interaccion: {
     type: DataTypes.STRING(50),
   },
-  valor_preferencia: {
-    type: DataTypes.STRING(100),
-  },
-  peso: {
+  duracion_interaccion: {
     type: DataTypes.INTEGER,
   },
-  ultima_actualizacion: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+  calificacion: {
+    type: DataTypes.INTEGER,
   }
 }, {
   schema: "patitasfelices",
-  tableName: 'tb_criterio',
+  tableName: 'tb_test',
   timestamps: true,
 });

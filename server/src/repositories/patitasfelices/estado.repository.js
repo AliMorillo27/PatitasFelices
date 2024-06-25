@@ -1,27 +1,27 @@
-import { Estado } from '../models/patitasfelices/estado.model.js';
+import { Estado } from '../../models/index.js';
 
-export class EstadoRepository {
-    async getAllEstados() {
-        return await Estado.findAll();
-    }
+const EstadoRepository = {
+    createEstado: async (estadoData, transaction) => {
+        return Estado.create(estadoData, { transaction });
+    },
 
-    async getEstadoById(id) {
-        return await Estado.findByPk(id);
-    }
+    getAllEstados: async () => {
+        return Estado.findAll();
+    },
 
-    async createEstado(estado) {
-        return await Estado.create(estado);
-    }
+    getEstadoById: async (id) => {
+        return Estado.findByPk(id);
+    },
 
-    async updateEstado(id, estado) {
-        const existingEstado = await Estado.findByPk(id);
-        if (existingEstado) {
-            return await existingEstado.update(estado);
+    updateEstado: async (id, estadoData) => {
+        const estado = await Estado.findByPk(id);
+        if (estado) {
+            return estado.update(estadoData);
         }
         return null;
-    }
+    },
 
-    async deleteEstado(id) {
+    deleteEstado: async (id) => {
         const estado = await Estado.findByPk(id);
         if (estado) {
             await estado.destroy();
@@ -29,4 +29,6 @@ export class EstadoRepository {
         }
         return false;
     }
-}
+};
+
+export default EstadoRepository;

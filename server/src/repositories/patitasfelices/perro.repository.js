@@ -1,27 +1,27 @@
-import { Perro } from '../models/patitasfelices/perro.model.js';
+import { Perro } from '../../models/index.js';
 
-export class PerroRepository {
-    async getAllPerros() {
-        return await Perro.findAll();
-    }
+const PerroRepository = {
+    createPerro: async (perroData, transaction) => {
+        return Perro.create(perroData, { transaction });
+    },
 
-    async getPerroById(id) {
-        return await Perro.findByPk(id);
-    }
+    getAllPerros: async (query = {}) => {
+        return Perro.findAll(query);
+    },
 
-    async createPerro(perro) {
-        return await Perro.create(perro);
-    }
+    getPerroById: async (id) => {
+        return Perro.findByPk(id);
+    },
 
-    async updatePerro(id, perro) {
-        const existingPerro = await Perro.findByPk(id);
-        if (existingPerro) {
-            return await existingPerro.update(perro);
+    updatePerro: async (id, perroData) => {
+        const perro = await Perro.findByPk(id);
+        if (perro) {
+            return perro.update(perroData);
         }
         return null;
-    }
+    },
 
-    async deletePerro(id) {
+    deletePerro: async (id) => {
         const perro = await Perro.findByPk(id);
         if (perro) {
             await perro.destroy();
@@ -29,4 +29,6 @@ export class PerroRepository {
         }
         return false;
     }
-}
+};
+
+export default PerroRepository;

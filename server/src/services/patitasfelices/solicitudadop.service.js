@@ -1,34 +1,52 @@
-import { sequelize } from "../../database/database.js";
-import { SolicitudAdopcionRepository } from "../../repositories/index.js";
+import { SolicitudAdopcionRepository, AdoptanteRepository, PerroRepository } from '../../repositories/index.js';
 
 const SolicitudAdopcionService = {
-  createSolicitud: async (solicitudData) => {
-    const t = await sequelize.transaction();
-    try {
-      const newSolicitud = await SolicitudAdopcionRepository.createSolicitud(solicitudData, t);
-      await t.commit();
-      return newSolicitud;
-    } catch (error) {
-      await t.rollback();
-      throw error;
+    createSolicitudAdopcion: async (solicitudAdopcionData) => {
+        const { id_adoptante, id_perro, estado } = solicitudAdopcionData;
+
+        // Verificación de adoptante y perro válidos
+        const adoptanteValido = await AdoptanteRepository.getAdoptanteById(id_adoptante);
+        const perroValido = await PerroRepository.getPerroById(id_perro);
+        if (!adoptanteValido || !perroValido) {
+            throw new Error('El adoptante o el perro no son válidos.');
+        }
+
+        // Verificación de estado de la solicitud
+        if (!['pendiente', 'aprobada', 'rechazada'].includes(estado)) {
+            throw new Error('El estado de la solicitud no es válido.');
+        }
+
+        // Verificación de solicitudes pendientes duplicadas
+        const solicitudesPendientes = await SolicitudAdopcionRepository.getAllSolicitudesAdopcion({
+            where: {
+                id_adoptante,
+                id_perro,
+                estado: 'pendiente'
+            }
+        });
+
+        if (solicitudesPendientes.length > 0) {
+            throw new Error('Ya existe una solicitud pendiente para este perro.');
+        }
+
+        return SolicitudAdopcionRepository.createSolicitudAdopcion(solicitudAdopcionData);
+    },
+
+    getAllSolicitudesAdopcion: async () => {
+        return SolicitudAdopcionRepository.getAllSolicitudesAdopcion();
+    },
+
+    getSolicitudAdopcionById: async (id) => {
+        return SolicitudAdopcionRepository.getSolicitudAdopcionById(id);
+    },
+
+    updateSolicitudAdopcion: async (id, solicitudAdopcionData) => {
+        return SolicitudAdopcionRepository.updateSolicitudAdopcion(id, solicitudAdopcionData);
+    },
+
+    deleteSolicitudAdopcion: async (id) => {
+        return SolicitudAdopcionRepository.deleteSolicitudAdopcion(id);
     }
-  },
-
-  getAllSolicitudes: async () => {
-    return SolicitudAdopcionRepository.getAllSolicitudes();
-  },
-
-  getSolicitudById: async (id) => {
-    return SolicitudAdopcionRepository.getSolicitudById(id);
-  },
-
-  updateSolicitud: async (id, solicitudData) => {
-    return SolicitudAdopcionRepository.updateSolicitud(id, solicitudData);
-  },
-
-  deleteSolicitud: async (id) => {
-    return SolicitudAdopcionRepository.deleteSolicitud(id);
-  },
 };
 
 export default SolicitudAdopcionService;

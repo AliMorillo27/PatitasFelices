@@ -1,24 +1,34 @@
-import { Usuario, Adoptante } from '../../models/index.js';
+import { Usuario } from '../../models/index.js';
 
 const UsuarioRepository = {
     createUsuario: async (usuarioData, transaction) => {
         return Usuario.create(usuarioData, { transaction });
     },
-    findAllUsuarios: async () => {
-        return Usuario.findAll();
+
+    getAllUsuarios: async (query = {}) => {
+        return Usuario.findAll(query);
     },
-    findUsuarioById: async (id) => {
+
+    getUsuarioById: async (id) => {
         return Usuario.findByPk(id);
     },
-    updateUsuario: async (usuario, usuarioData) => {
-        return usuario.update(usuarioData);
+
+    updateUsuario: async (id, usuarioData) => {
+        const usuario = await Usuario.findByPk(id);
+        if (usuario) {
+            return usuario.update(usuarioData);
+        }
+        return null;
     },
-    deleteUsuario: async (usuario) => {
-        return usuario.destroy();
-    },
-    createAdoptante: async (adoptanteData, transaction) => {
-        return Adoptante.create(adoptanteData, { transaction });
-    },
+
+    deleteUsuario: async (id) => {
+        const usuario = await Usuario.findByPk(id);
+        if (usuario) {
+            await usuario.destroy();
+            return true;
+        }
+        return false;
+    }
 };
 
 export default UsuarioRepository;

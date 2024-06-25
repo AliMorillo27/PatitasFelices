@@ -1,27 +1,27 @@
-import { Test } from '../models/patitasfelices/test.model.js';
+import { Test } from '../../models/index.js';
 
-export class TestRepository {
-    async getAllTests() {
-        return await Test.findAll();
-    }
+const TestRepository = {
+    createTest: async (testData, transaction) => {
+        return Test.create(testData, { transaction });
+    },
 
-    async getTestById(id) {
-        return await Test.findByPk(id);
-    }
+    getAllTests: async () => {
+        return Test.findAll();
+    },
 
-    async createTest(test) {
-        return await Test.create(test);
-    }
+    getTestById: async (id) => {
+        return Test.findByPk(id);
+    },
 
-    async updateTest(id, test) {
-        const existingTest = await Test.findByPk(id);
-        if (existingTest) {
-            return await existingTest.update(test);
+    updateTest: async (id, testData) => {
+        const test = await Test.findByPk(id);
+        if (test) {
+            return test.update(testData);
         }
         return null;
-    }
+    },
 
-    async deleteTest(id) {
+    deleteTest: async (id) => {
         const test = await Test.findByPk(id);
         if (test) {
             await test.destroy();
@@ -29,4 +29,6 @@ export class TestRepository {
         }
         return false;
     }
-}
+};
+
+export default TestRepository;

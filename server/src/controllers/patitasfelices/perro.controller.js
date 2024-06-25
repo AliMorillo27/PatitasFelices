@@ -1,64 +1,76 @@
-import { Perro } from '../../models/patitasfelices/perro.model.js';
+import { PerroService } from '../../services/index.js';
 
-// Crear un nuevo perro
 export const createPerro = async (req, res) => {
     try {
-        const newPerro = await Perro.create(req.body);
-        res.status(201).json(newPerro);
+        const perro = await PerroService.createPerro(req.body);
+        res.status(201).json(perro);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };
 
-// Obtener todos los perros
-export const getPerros = async (req, res) => {
+export const getAllPerros = async (req, res) => {
     try {
-        const perros = await Perro.findAll();
-        res.status(200).json(perros);
+        const perros = await PerroService.getAllPerros();
+        res.json(perros);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-// Obtener un perro por ID
 export const getPerroById = async (req, res) => {
     try {
-        const perro = await Perro.findByPk(req.params.id);
+        const perro = await PerroService.getPerroById(req.params.id);
         if (perro) {
-            res.status(200).json(perro);
+            res.json(perro);
         } else {
-            res.status(404).json({ message: 'Perro no encontrado' });
+            res.status(404).json({ message: 'Perro not found' });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-// Actualizar un perro
 export const updatePerro = async (req, res) => {
     try {
-        const perro = await Perro.findByPk(req.params.id);
-        if (perro) {
-            await perro.update(req.body);
-            res.status(200).json(perro);
+        const updatedPerro = await PerroService.updatePerro(req.params.id, req.body);
+        if (updatedPerro) {
+            res.json(updatedPerro);
         } else {
-            res.status(404).json({ message: 'Perro no encontrado' });
+            res.status(404).json({ message: 'Perro not found' });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+export const deletePerro = async (req, res) => {
+    try {
+        const deleted = await PerroService.deletePerro(req.params.id);
+        if (deleted) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({ message: 'Perro not found' });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
-
-// Eliminar un perro
-export const deletePerro = async (req, res) => {
+export const getPerrosPorTamano = async (req, res) => {
     try {
-        const perro = await Perro.findByPk(req.params.id);
-        if (perro) {
-            await perro.destroy();
-            res.status(204).json({ message: 'Perro eliminado' });
-        } else {
-            res.status(404).json({ message: 'Perro no encontrado' });
-        }
+        const tamano = req.params.tamano;
+        const perros = await PerroService.getPerrosPorTamano(tamano);
+        res.json(perros);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getPerrosPorEstado = async (req, res) => {
+    try {
+        const estado = req.params.estado;
+        const perros = await PerroService.getPerrosPorEstado(estado);
+        res.json(perros);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

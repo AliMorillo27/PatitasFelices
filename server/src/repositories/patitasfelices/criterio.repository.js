@@ -1,27 +1,27 @@
-import { Criterio } from '../models/patitasfelices/criterio.model.js';
+import { Criterio } from '../../models/index.js';
 
-export class CriterioRepository {
-    async getAllCriterios() {
-        return await Criterio.findAll();
-    }
+const CriterioRepository = {
+    createCriterio: async (criterioData, transaction) => {
+        return Criterio.create(criterioData, { transaction });
+    },
 
-    async getCriterioById(id) {
-        return await Criterio.findByPk(id);
-    }
+    getAllCriterios: async () => {
+        return Criterio.findAll();
+    },
 
-    async createCriterio(criterio) {
-        return await Criterio.create(criterio);
-    }
+    getCriterioById: async (id) => {
+        return Criterio.findByPk(id);
+    },
 
-    async updateCriterio(id, criterio) {
-        const existingCriterio = await Criterio.findByPk(id);
-        if (existingCriterio) {
-            return await existingCriterio.update(criterio);
+    updateCriterio: async (id, criterioData) => {
+        const criterio = await Criterio.findByPk(id);
+        if (criterio) {
+            return criterio.update(criterioData);
         }
         return null;
-    }
+    },
 
-    async deleteCriterio(id) {
+    deleteCriterio: async (id) => {
         const criterio = await Criterio.findByPk(id);
         if (criterio) {
             await criterio.destroy();
@@ -29,4 +29,6 @@ export class CriterioRepository {
         }
         return false;
     }
-}
+};
+
+export default CriterioRepository;

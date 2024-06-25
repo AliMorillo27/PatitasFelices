@@ -1,71 +1,56 @@
-import { sequelize } from "../../database/database.js";
-import { UsuarioRepository } from "../../repositories/index.js";
+import { UsuarioRepository } from '../../repositories/index.js';
+import bcrypt from 'bcrypt';
 
 const UsuarioService = {
-  createUsuario: async (usuarioData) => {
-    const t = await sequelize.transaction();
-    try {
-      const newUsuario = await UsuarioRepository.createUsuario(usuarioData, t);
+    createUsuario: async (usuarioData) => {
+        const { contrasena } = usuarioData;
 
-      if (usuarioData.tipo === "Adoptante") {
-        await UsuarioRepository.createAdoptante(
-          {
-            id_usuario: newUsuario.id_usuario,
-            nombre: usuarioData.nombre,
-            apellido: usuarioData.apellido,
-            cedula: usuarioData.cedula,
-            genero: usuarioData.genero,
-            direccion: usuarioData.direccion,
-            telefono: usuarioData.telefono,
-            email: usuarioData.email,
-            contraseña: usuarioData.contraseña,
-            edad: usuarioData.edad,
-            tiene_ninos: usuarioData.tiene_ninos,
-            tiene_mascota: usuarioData.tiene_mascota,
-            nivel_actividad: usuarioData.nivel_actividad,
-            nivel_energia: usuarioData.nivel_energia,
-            tamaño_perro_preferido: usuarioData.tamaño_perro_preferido,
-            experiencia_con_perros: usuarioData.experiencia_con_perros,
-          },
-          t
-        );
-      }
+        // Validación de la contraseña
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        if (!passwordRegex.test(contrasena)) {
+            throw new Error('La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número.');
+        }
 
-      await t.commit();
-      return newUsuario;
-    } catch (error) {
-      await t.rollback();
-      throw error;
+        // Encriptar la contraseña
+        const hashedPassword = await bcrypt.hash(contrasena, 10);
+        usuarioData.contrasena = hashedPassword;
+
+        return UsuarioRepository.createUsuario(usuarioData);
+    },
+
+    getAllUsuarios: async () => {
+        return UsuarioRepository.getAllUsuarios();
+    },
+
+    getUsuarioById: async (id) => {
+        return UsuarioRepository.getUsuarioById(id);
+    },
+
+    updateUsuario: async (id, usuarioData) => {
+        return UsuarioRepository.updateUsuario(id, usuarioData);
+    },
+
+    deleteUsuario: async (id) => {
+        return UsuarioRepository.deleteUsuario(id);
+    },
+
+    loginUsuario: async (email, contrasena) => {
+        const usuario = await UsuarioRepository.getAllUsuarios({
+            where: { email }
+        });
+
+        if (usuario.length === 0) {
+            throw new Error('Email o contraseña incorrectos.');
+        }
+
+        const validPassword = await bcrypt.compare(contrasena, usuario[0].contrasena);
+
+        if (!validPassword) {
+            throw new Error('Email o contraseña incorrectos.');
+        }
+
+        return usuario[0];
     }
-  },
-
-  getUsuarios: async () => {
-    return UsuarioRepository.findAllUsuarios();
-  },
-
-  getUsuarioById: async (id) => {
-    const usuario = await UsuarioRepository.findUsuarioById(id);
-    if (!usuario) {
-      throw new Error("Usuario no encontrado");
-    }
-    return usuario;
-  },
-
-  updateUsuario: async (id, usuarioData) => {
-    const usuario = await UsuarioRepository.findUsuarioById(id);
-    if (!usuario) {
-      throw new Error("Usuario no encontrado");
-    }
-    return UsuarioRepository.updateUsuario(usuario, usuarioData);
-  },
-
-  deleteUsuario: async (id) => {
-    const usuario = await UsuarioRepository.findUsuarioById(id);
-    if (!usuario) {
-      throw new Error("Usuario no encontrado");
-    }
-    return UsuarioRepository.deleteUsuario(usuario);
-  },
 };
 
 export default UsuarioService;

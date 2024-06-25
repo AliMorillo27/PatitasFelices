@@ -1,61 +1,67 @@
-import { AdoptanteService } from "../../services/index.service.js";
+import { AdoptanteService } from '../../services/index.js';
 
 export const createAdoptante = async (req, res) => {
-  try {
-    const adoptante = await AdoptanteService.createAdoptante(req.body);
-    res.status(201).json(adoptante);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+    try {
+        const adoptante = await AdoptanteService.createAdoptante(req.body);
+        res.status(201).json(adoptante);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-export const getAdoptantes = async (req, res) => {
-  try {
-    const adoptantes = await AdoptanteService.getAllAdoptantes();
-    res.status(200).json(adoptantes);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+export const getAllAdoptantes = async (req, res) => {
+    try {
+        const adoptantes = await AdoptanteService.getAllAdoptantes();
+        res.json(adoptantes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const getAdoptanteById = async (req, res) => {
-  try {
-    const adoptante = await AdoptanteService.getAdoptanteById(req.params.id);
-    if (adoptante) {
-      res.status(200).json(adoptante);
-    } else {
-      res.status(404).json({ message: "Adoptante no encontrado" });
+    try {
+        const adoptante = await AdoptanteService.getAdoptanteById(req.params.id);
+        if (adoptante) {
+            res.json(adoptante);
+        } else {
+            res.status(404).json({ message: 'Adoptante no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
 
 export const updateAdoptante = async (req, res) => {
-  try {
-    const adoptante = await AdoptanteService.updateAdoptante(
-      req.params.id,
-      req.body
-    );
-    if (adoptante) {
-      res.status(200).json(adoptante);
-    } else {
-      res.status(404).json({ message: "Adoptante no encontrado" });
+    try {
+        const updatedAdoptante = await AdoptanteService.updateAdoptante(req.params.id, req.body);
+        if (updatedAdoptante) {
+            res.json(updatedAdoptante);
+        } else {
+            res.status(404).json({ message: 'Adoptante no encontrado' });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
 
 export const deleteAdoptante = async (req, res) => {
-  try {
-    const success = await AdoptanteService.deleteAdoptante(req.params.id);
-    if (success) {
-      res.status(204).json({ message: "Adoptante eliminado" });
-    } else {
-      res.status(404).json({ message: "Adoptante no encontrado" });
+    try {
+        const deleted = await AdoptanteService.deleteAdoptante(req.params.id);
+        if (deleted) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({ message: 'Adoptante no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+};
+
+export const loginAdoptante = async (req, res) => {
+    try {
+        const adoptante = await AdoptanteService.loginAdoptante(req.body.email, req.body.contraseña);
+        res.json(adoptante);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
