@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Perro</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Registro de Perro</h2>
+        <form>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre" value="Max">
+            </div>
+            <div class="form-group">
+                <label for="edad">Edad</label>
+                <input type="number" class="form-control" id="edad" placeholder="Edad" value="2">
+            </div>
+            <div class="form-group">
+                <label for="raza">Raza</label>
+                <input type="text" class="form-control" id="raza" placeholder="Raza" value="Labrador">
+            </div>
+            <div class="form-group">
+                <label for="tamano">Tamaño (kg)</label>
+                <input type="number" step="0.1" class="form-control" id="tamano" placeholder="Tamaño" value="30.5">
+            </div>
+            <div class="form-group">
+                <label for="genero">Género</label>
+                <select id="genero" class="form-control">
+                    <option>Selecciona...</option>
+                    <option selected>Macho</option>
+                    <option>Hembra</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción">Perro amigable y juguetón.</textarea>
+            </div>
+            <div class="form-group">
+                <label for="nivel_energia">Nivel de Energía</label>
+                <input type="number" class="form-control" id="nivel_energia" placeholder="Nivel de Energía" value="4">
+            </div>
+            <div class="form-group">
+                <label for="bueno_con_ninos">¿Bueno con niños?</label>
+                <select id="bueno_con_ninos" class="form-control">
+                    <option>Selecciona...</option>
+                    <option selected>Si</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bueno_con_mascota">¿Bueno con otras mascotas?</label>
+                <select id="bueno_con_mascota" class="form-control">
+                    <option>Selecciona...</option>
+                    <option selected>Si</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nivel_formacion">Nivel de Formación</label>
+                <select id="nivel_formacion" class="form-control">
+                    <option>Selecciona...</option>
+                    <option selected>Básico</option>
+                    <option>Intermedio</option>
+                    <option>Avanzado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Estado</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="adoptado" value="adoptado" disabled>
+                    <label class="form-check-label" for="adoptado">
+                        Adoptado
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="disponible" value="disponible" disabled>
+                    <label class="form-check-label" for="disponible">
+                        Disponible
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="fallecido" value="fallecido" disabled>
+                    <label class="form-check-label" for="fallecido">
+                        Fallecido
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="enfermo" value="enfermo" disabled>
+                    <label class="form-check-label" for="enfermo">
+                        Enfermo
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="devuelto" value="devuelto" checked>
+                    <label class="form-check-label" for="devuelto">
+                        Devuelto
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
