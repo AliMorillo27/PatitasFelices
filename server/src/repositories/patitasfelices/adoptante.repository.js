@@ -13,6 +13,14 @@ const AdoptanteRepository = {
         return Adoptante.findByPk(id);
     },
 
+    getAdoptanteByCedula: async (cedula) => {
+        return Adoptante.findOne({
+            where: {
+                cedula: cedula
+            }
+        });
+    },
+
     updateAdoptante: async (id, adoptanteData) => {
         const adoptante = await Adoptante.findByPk(id);
         if (adoptante) {

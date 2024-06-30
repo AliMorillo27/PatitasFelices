@@ -13,6 +13,10 @@ const UsuarioRepository = {
         return Usuario.findByPk(id);
     },
 
+    getUsuariosByTipo: async (tipo) => {
+        return Usuario.findAll({ where: { tipo } });
+    },
+
     updateUsuario: async (id, usuarioData) => {
         const usuario = await Usuario.findByPk(id);
         if (usuario) {

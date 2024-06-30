@@ -11,6 +11,37 @@ const AdoptanteService = {
         if (edad < 18) {
             throw new Error('El adoptante debe tener al menos 18 años.');
         }
+        //validacion de cedula
+        if (cedula.length !== 10 || !/^\d+$/.test(cedula)) {
+            throw new Error("Ingrese una cédula válida de 10 dígitos.");
+        } else {
+            // Convertir la cédula a un array de números
+            let digitos = cedula.split('').map(Number);
+          
+            // Extraer el último dígito (dígito verificador)
+            const digitoVerificador = digitos.pop();
+          
+            // Multiplicar los dígitos impares por 2 y sumar los dígitos
+            const sumaImpares = digitos.filter((_, index) => index % 2 === 0).reduce((acc, val) => {
+              let multiplicacion = val * 2;
+              if (multiplicacion >= 10) multiplicacion -= 9;
+              return acc + multiplicacion;
+            }, 0);
+          
+            // Sumar los dígitos pares
+            const sumaPares = digitos.filter((_, index) => index % 2 !== 0).reduce((acc, val) => acc + val, 0);
+          
+            // Sumar pares e impares
+            const sumaTotal = sumaImpares + sumaPares;
+          
+            // Obtener el número inmediato superior múltiplo de 10
+            const digitoCalculado = (Math.ceil(sumaTotal / 10) * 10 - sumaTotal) % 10;
+          
+            // Verificar si el dígito calculado coincide con el dígito verificador
+            if (digitoCalculado !== digitoVerificador) {
+              throw new Error("Ingrese una cédula válida.");
+            }
+        }
 
         // Verificación de cédula y email únicos
         const existingAdoptante = await AdoptanteRepository.getAllAdoptantes({
@@ -63,6 +94,10 @@ const AdoptanteService = {
 
     updateAdoptante: async (id, adoptanteData) => {
         return AdoptanteRepository.updateAdoptante(id, adoptanteData);
+    },
+    
+    getAdoptanteByCedula: async (cedula) => {
+        return AdoptanteRepository.getAdoptanteByCedula(cedula);
     },
 
     deleteAdoptante: async (id) => {

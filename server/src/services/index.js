@@ -1,3 +1,4 @@
+//src/services/index.js
 import AdoptanteService from './patitasfelices/adoptante.service.js';
 import CriterioService from './patitasfelices/criterio.service.js';
 import EstadoService from './patitasfelices/estado.service.js';
@@ -5,9 +6,8 @@ import HistoriaAdopcionService from './patitasfelices/historiaadopcion.service.j
 import PerroService from './patitasfelices/perro.service.js';
 import RecursoeduService from './patitasfelices/recursoedu.service.js';
 import SolicitudAdopcionService from './patitasfelices/solicitudadop.service.js';
-import TestService from './patitasfelices/test.service.js';
 import UsuarioService from './patitasfelices/usuario.service.js';
-import IAService from './patitasfelices/ia.service.js';
+import recomendarService from './patitasfelices/recommendation.service.js';
 
 export {
     AdoptanteService,
@@ -17,7 +17,6 @@ export {
     PerroService,
     RecursoeduService,
     SolicitudAdopcionService,
-    TestService,
     UsuarioService,
-    IAService,
+    recomendarService,
 };

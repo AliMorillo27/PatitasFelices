@@ -5,9 +5,7 @@ import HistoriaAdopcionRepository from './patitasfelices/historiaadopcion.reposi
 import PerroRepository from './patitasfelices/perro.repository.js';
 import RecursoeduRepository from './patitasfelices/recursoedu.repository.js';
 import SolicitudAdopcionRepository from './patitasfelices/solicitudadop.repository.js';
-import TestRepository from './patitasfelices/test.repository.js';
 import UsuarioRepository from './patitasfelices/usuario.repository.js';
-import IARepository from './patitasfelices/ia.repository.js'; 
 
 export {
     AdoptanteRepository,
@@ -17,7 +15,5 @@ export {
     PerroRepository,
     RecursoeduRepository,
     SolicitudAdopcionRepository,
-    TestRepository,
     UsuarioRepository,
-    IARepository,
 };

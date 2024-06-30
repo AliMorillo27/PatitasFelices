@@ -15,7 +15,23 @@ const UsuarioService = {
         const hashedPassword = await bcrypt.hash(contrasena, 10);
         usuarioData.contrasena = hashedPassword;
 
+        if (usuarioData.tipo === 'administrador') {
+            const existingAdmin = await UsuarioRepository.getUsuariosByTipo('administrador');
+            if (existingAdmin.length > 0) {
+                throw new Error('Ya existe un administrador en el sistema.');
+            }
+        }
+
+        if (usuarioData.tipo === 'empleado') {
+            const existingEmpleados = await UsuarioRepository.getUsuariosByTipo('empleado');
+            if (existingEmpleados.length >= 2) {
+                throw new Error('No se pueden agregar más de 2 empleados en el sistema.');
+            }
+        }
+
         return UsuarioRepository.createUsuario(usuarioData);
+
+
     },
 
     getAllUsuarios: async () => {
@@ -31,6 +47,10 @@ const UsuarioService = {
     },
 
     deleteUsuario: async (id) => {
+        const usuario = await UsuarioRepository.getUsuarioById(id);
+        if (usuario.tipo === 'administrador') {
+            throw new Error('No se puede eliminar al administrador.');
+        }
         return UsuarioRepository.deleteUsuario(id);
     },
 

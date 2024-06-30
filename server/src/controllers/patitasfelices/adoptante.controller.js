@@ -65,3 +65,15 @@ export const loginAdoptante = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+export const getAdoptanteByCedula = async (req, res) => {
+    try {
+        const adoptante = await AdoptanteService.getAdoptanteByCedula(req.params.cedula);
+        if (adoptante) {
+            res.json(adoptante);
+        } else {
+            res.status(404).json({ message: 'Adoptante no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
