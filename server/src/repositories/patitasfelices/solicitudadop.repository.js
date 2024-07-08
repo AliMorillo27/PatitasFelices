@@ -5,8 +5,8 @@ const SolicitudAdopcionRepository = {
         return SolicitudAdopcion.create(solicitudAdopcionData, { transaction });
     },
 
-    getAllSolicitudesAdopcion: async () => {
-        return SolicitudAdopcion.findAll();
+    getAllSolicitudesAdopcion: async (query = {}) => {
+        return SolicitudAdopcion.findAll(query);
     },
 
     getSolicitudAdopcionById: async (id) => {

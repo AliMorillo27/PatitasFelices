@@ -28,6 +28,13 @@ const EstadoRepository = {
             return true;
         }
         return false;
+    },
+    getEstadoByNombre: async (nombre) => {
+        return Estado.findOne({
+            where: {
+                estado: nombre
+            }
+        });
     }
 };
 

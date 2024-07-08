@@ -75,3 +75,29 @@ export const getPerrosPorEstado = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+export const getPerrosPorRaza = async (req, res) => {
+    try {
+        const raza = req.params.raza;
+        const perros = await PerroService.getPerrosPorRaza(raza);
+        res.json(perros);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+export const getPerrosPorEdad = async (req, res) => {
+    try {
+        const edad = req.params.edad;
+        const perros = await PerroService.getPerrosPorEdad(edad);
+        res.json(perros);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+export const getPerrosOrdenadosPorNombre = async (req, res) => {
+    try {
+        const perros = await PerroService.getPerrosOrdenadosPorNombre();
+        res.json(perros);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

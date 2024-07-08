@@ -13,10 +13,20 @@ export const Adoptante = sequelize.define('tb_adoptante', {
   nombre: {
     type: DataTypes.STRING(100),
     allowNull: false,
+    validate: {
+      isAlpha: true, 
+      notEmpty: true,
+      len: [3, 100]
+    },
   },
   apellido: {
     type: DataTypes.STRING(100),
     allowNull: false,
+    validate: {
+      isAlpha: true, 
+      notEmpty: true,
+      len: [3, 100]
+    },
   },
   cedula: {
     type: DataTypes.STRING(100),
@@ -52,6 +62,7 @@ export const Adoptante = sequelize.define('tb_adoptante', {
     validate: {
       isInt: true,
       min: 18,
+      max: 70, 
     },
   },
   tiene_ninos: {

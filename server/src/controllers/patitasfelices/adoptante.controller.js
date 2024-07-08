@@ -77,3 +77,12 @@ export const getAdoptanteByCedula = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getAdoptantesOrdenadosPorNombre = async (req, res) => {
+    try {
+        const adoptantes = await AdoptanteService.getAdoptantesOrdenadosPorNombre();
+        res.json(adoptantes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

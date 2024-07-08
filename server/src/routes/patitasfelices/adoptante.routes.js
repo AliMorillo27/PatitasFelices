@@ -6,7 +6,8 @@ import {
     updateAdoptante,
     deleteAdoptante,
     loginAdoptante,
-    getAdoptanteByCedula
+    getAdoptanteByCedula,
+    getAdoptantesOrdenadosPorNombre,
 } from '../../controllers/patitasfelices/adoptante.controller.js';
 
 const router = Router();
@@ -18,5 +19,6 @@ router.put('/:id', updateAdoptante);
 router.delete('/:id', deleteAdoptante);
 router.post('/login', loginAdoptante);
 router.get('/cedula/:cedula', getAdoptanteByCedula);
+router.get('/ordenados/nombre', getAdoptantesOrdenadosPorNombre);
 
 export default router;

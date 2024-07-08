@@ -5,11 +5,25 @@ import { Op } from 'sequelize';
 
 const AdoptanteService = {
     createAdoptante: async (adoptanteData) => {
-        const { cedula, email, contrasena, edad, nombre, apellido, genero, direccion, telefono } = adoptanteData;
+        const { cedula, email, contrasena, edad, nombre, apellido, genero, direccion, telefono,tiene_ninos,tiene_mascota,nivel_actividad,nivel_energia,tamano_perro_preferido,experiencia_con_perros } = adoptanteData;
+
+        // Validación de campos obligatorios
+        if (!cedula || !email || !contrasena || !edad || !nombre || !apellido || !genero || !direccion || !telefono || !tiene_ninos || !tiene_mascota || !nivel_actividad || !nivel_energia || !tamano_perro_preferido || !experiencia_con_perros) {
+            throw new Error('Todos los campos son obligatorios.');
+        }
+
+        // Validación de nombre y apellido solo letras y mínimo 3 caracteres
+        const nameRegex = /^[A-Za-z\s]+$/;
+        if (!nameRegex.test(nombre) || nombre.length < 3) {
+            throw new Error('El nombre solo debe contener letras y debe tener al menos 3 caracteres.');
+        }
+        if (!nameRegex.test(apellido) || apellido.length < 3) {
+            throw new Error('El apellido solo debe contener letras y debe tener al menos 3 caracteres.');
+        }
 
         // Verificación de edad
-        if (edad < 18) {
-            throw new Error('El adoptante debe tener al menos 18 años.');
+        if (edad < 18|| edad > 70) {
+            throw new Error('El adoptante debe tener al menos 18 años y no más de 70 años.');
         }
         //validacion de cedula
         if (cedula.length !== 10 || !/^\d+$/.test(cedula)) {
@@ -120,7 +134,13 @@ const AdoptanteService = {
         }
 
         return adoptante[0];
-    }
+    },
+
+    getAdoptantesOrdenadosPorNombre: async () => {
+        return AdoptanteRepository.getAllAdoptantes({
+            order: [['nombre', 'ASC']]
+        });
+    },
 };
 
 export default AdoptanteService;
