@@ -1,9 +1,8 @@
-// src/services/patitasfelices/recommendation.service.js
 import axios from 'axios';
 import { Perro } from '../../models/patitasfelices/perro.model.js';
 import { Adoptante } from '../../models/patitasfelices/adoptante.model.js';
 
-const getForAdoptante = async (adoptanteId) => {
+const getForAdoptante = async (adoptanteId, numRecommendations = 5) => {
     try {
         const adoptante = await getAdoptante(adoptanteId);
         const perros = await getPerros();
@@ -11,7 +10,8 @@ const getForAdoptante = async (adoptanteId) => {
         console.log('Sending request to Flask with preferences and perros:', preferences, perros); // Agregar detalles para la depuración
         const response = await axios.post('http://localhost:5000/recommend', {
             preferences,
-            perros
+            perros,
+            numRecommendations
         });
         return response.data;
     } catch (error) {
@@ -20,13 +20,14 @@ const getForAdoptante = async (adoptanteId) => {
     }
 };
 
-const getForVisitor = async (preferences) => {
+const getForVisitor = async (preferences, numRecommendations = 5) => {
     try {
         const perros = await getPerros();
         console.log('Sending request to Flask with preferences and perros:', preferences, perros); // Agregar detalles para la depuración
         const response = await axios.post('http://localhost:5000/recommend', {
             preferences,
-            perros
+            perros,
+            numRecommendations
         });
         return response.data;
     } catch (error) {
@@ -52,7 +53,7 @@ const getPerros = async () => {
             where: {
                 id_estado: [1, 5]
             },
-            attributes: ['id_perro', 'nombre', 'edad', 'raza', 'tamano', 'genero', 'descripcion']
+            attributes: ['id_perro', 'nombre', 'edad', 'raza', 'tamano', 'genero', 'descripcion', 'imagen_url']
         });
         return perros.map(perro => perro.toJSON());
     } catch (error) {

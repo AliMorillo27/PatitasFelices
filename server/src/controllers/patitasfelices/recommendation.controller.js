@@ -1,11 +1,10 @@
-// src/controllers/patitasfelices/recommendation.controller.js
 import recommendationService from '../../services/patitasfelices/recommendation.service.js';
 
 export const getRecommendations = async (req, res) => {
-    const { id_adoptante } = req.body;
+    const { id_adoptante, numRecommendations } = req.body;
     
     try {
-        const recommendations = await recommendationService.getForAdoptante(id_adoptante);
+        const recommendations = await recommendationService.getForAdoptante(id_adoptante, numRecommendations);
         res.json(recommendations);
     } catch (error) {
         console.error('Error in getRecommendations:', error.message);
@@ -14,10 +13,10 @@ export const getRecommendations = async (req, res) => {
 };
 
 export const getVisitorRecommendations = async (req, res) => {
-    const { preferences } = req.body; // Obtener las preferencias directamente del cuerpo de la solicitud
+    const { preferences, numRecommendations } = req.body; // Obtener las preferencias directamente del cuerpo de la solicitud
     
     try {
-        const recommendations = await recommendationService.getForVisitor(preferences);
+        const recommendations = await recommendationService.getForVisitor(preferences, numRecommendations);
         res.json(recommendations);
     } catch (error) {
         console.error('Error in getVisitorRecommendations:', error.message);

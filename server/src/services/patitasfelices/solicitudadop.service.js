@@ -1,5 +1,6 @@
 import { SolicitudAdopcionRepository, AdoptanteRepository, PerroRepository } from '../../repositories/index.js';
 import { Op } from 'sequelize';
+import sendEmail from './email.service.js';
 
 const SolicitudAdopcionService = {
     createSolicitudAdopcion: async (solicitudAdopcionData) => {
@@ -36,13 +37,13 @@ const SolicitudAdopcionService = {
                 ]
             }
         });
-        
+
         if (solicitudesPendientes.length > 0) {
             throw new Error('Ya existe una solicitud pendiente para este perro y adoptante.');
         }        
 
-          // Verificación de adoptante con más de dos perros adoptados
-          const solicitudesAprobadas = await SolicitudAdopcionRepository.getAllSolicitudesAdopcion({
+        // Verificación de adoptante con más de dos perros adoptados
+        const solicitudesAprobadas = await SolicitudAdopcionRepository.getAllSolicitudesAdopcion({
             where: {
                 id_adoptante,
                 estado: 'aprobada'
@@ -53,7 +54,20 @@ const SolicitudAdopcionService = {
             throw new Error('El adoptante ya tiene dos perros adoptados.');
         }
 
-        return SolicitudAdopcionRepository.createSolicitudAdopcion(solicitudAdopcionData);
+        const nuevaSolicitud = await SolicitudAdopcionRepository.createSolicitudAdopcion(solicitudAdopcionData);
+
+        // Obtener detalles del adoptante y del perro
+        const adoptante = await AdoptanteRepository.getAdoptanteById(id_adoptante);
+        const perro = await PerroRepository.getPerroById(id_perro);
+
+        // Enviar notificación por correo electrónico al administrador
+        const adminEmail = process.env.ADMIN_EMAIL;
+        const subject = 'Nueva solicitud de adopción';
+        const text = `Hola,\n\nSe ha creado una nueva solicitud de adopción para el perro ${perro.nombre} por el adoptante ${adoptante.nombre} ${adoptante.apellido}.\n\nSaludos,\nEquipo Patitas Felices`;
+
+        await sendEmail(adminEmail, subject, text);
+
+        return nuevaSolicitud;
     },
 
     getAllSolicitudesAdopcion: async () => {
@@ -81,7 +95,22 @@ const SolicitudAdopcionService = {
             await PerroRepository.updatePerro(solicitudAdopcion.id_perro, { id_estado: 5 });
         }
 
-        return SolicitudAdopcionRepository.updateSolicitudAdopcion(id, solicitudAdopcionData);
+        const updatedSolicitud = await SolicitudAdopcionRepository.updateSolicitudAdopcion(id, solicitudAdopcionData);
+
+        // Obtener detalles del adoptante y del perro
+        const adoptante = await AdoptanteRepository.getAdoptanteById(solicitudAdopcion.id_adoptante);
+        const perro = await PerroRepository.getPerroById(solicitudAdopcion.id_perro);
+
+        // Enviar notificación por correo electrónico
+        if (solicitudAdopcionData.estado === 'aprobada' || solicitudAdopcionData.estado === 'rechazada') {
+            const estado = solicitudAdopcionData.estado === 'aprobada' ? 'aprobada' : 'rechazada';
+            const subject = `Solicitud de adopción ${estado}`;
+            const text = `Hola ${adoptante.nombre} ${adoptante.apellido},\n\nTu solicitud de adopción para el perro ${perro.nombre} ha sido ${estado}. Gracias por tu interés en adoptar uno de nuestros perros.\n\nSaludos,\nEquipo Patitas Felices`;
+
+            await sendEmail(adoptante.email, subject, text);
+        }
+
+        return updatedSolicitud;
     },
 
     deleteSolicitudAdopcion: async (id) => {
