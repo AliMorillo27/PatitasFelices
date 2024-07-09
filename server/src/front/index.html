@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patitas Felices</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero {
+            background-image: url('images/background.png'); /* Reemplaza con la URL de tu imagen */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .dog-card img {
+            width: 100%;
+            height: auto;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero {
+                padding: 50px 0;
+            }
+            .hero h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="images/logo1.png" alt="Logo" style="height: 30px; margin-right: 10px;"> <!-- Reemplaza con la URL de tu logo -->
+                Patitas Felices
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Dogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recursos.html">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-warning mr-2" href="#">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="login.html">Login</a> <!-- Redirecciona a la página de login -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Find your new best friend</h1>
+        <div class="search-bar input-group mt-4">
+            <input type="text" class="form-control" placeholder="Search for adoptable dogs">
+            <div class="input-group-append">
+                <button class="btn btn-warning" type="button">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card dog-card">
+                    <img src="your-image-url-here" class="card-img-top" alt="Milo">
+                    <div class="card-body">
+                        <h5 class="card-title">Milo</h5>
+                        <p class="card-text">Male, 2 years old</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card dog-card">
+                    <img src="your-image-url-here" class="card-img-top" alt="Chewy">
+                    <div class="card-body">
+                        <h5 class="card-title">Chewy</h5>
+                        <p class="card-text">Male, 1 year old</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card dog-card">
+                    <img src="your-image-url-here" class="card-img-top" alt="Luna">
+                    <div class="card-body">
+                        <h5 class="card-title">Luna</h5>
+                        <p class="card-text">Female, 3 years old</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card dog-card">
+                    <img src="your-image-url-here" class="card-img-top" alt="Bella">
+                    <div class="card-body">
+                        <h5 class="card-title">Bella</h5>
+                        <p class="card-text">Female, 6 months old</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
