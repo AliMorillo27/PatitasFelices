@@ -1,0 +1,79 @@
+.inicio-container {
+  text-align: center;
+  background-image: url('https://fondosmil.com/fondo/37827.jpg'); /* Cambia esta URL por la de tu imagen */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 75vh; /* Asegura que cubra toda la altura de la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero {
+  padding: 50px 20px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.hero p {
+  margin: 10px 0;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.hero-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff6600;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.dogs-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente para las tarjetas de los perros */
+  border-radius: 10px;
+}
+
+.dog-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 200px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dog-card img {
+  width: 100%;
+  height: auto;
+}
+
+.dog-card div {
+  padding: 10px;
+}
+
+.footer-container {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  width: 100%;
+}
