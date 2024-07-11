@@ -6,8 +6,9 @@ const SolicitudAdopcionService = {
     createSolicitudAdopcion: async (solicitudAdopcionData) => {
         const { id_adoptante, id_perro, estado } = solicitudAdopcionData;
 
-        // Establecer estado por defecto a 'pendiente'
+        // Establecer estado por defecto a 'pendiente' y fecha de solicitud a la fecha actual
         solicitudAdopcionData.estado = 'pendiente';
+        solicitudAdopcionData.fechaSolicitud = new Date();
 
         // Verificación de adoptante y perro válidos
         const adoptanteValido = await AdoptanteRepository.getAdoptanteById(id_adoptante);
@@ -70,8 +71,25 @@ const SolicitudAdopcionService = {
         return nuevaSolicitud;
     },
 
-    getAllSolicitudesAdopcion: async () => {
-        return SolicitudAdopcionRepository.getAllSolicitudesAdopcion();
+    getAllSolicitudesAdopcion: async ({ page = 1, estado }) => {
+        const limit = 10;  // Número de solicitudes por página
+        const offset = (page - 1) * limit;
+        let where = {};
+
+        if (estado) {
+            where.estado = estado;
+        }
+
+        const { rows, count } = await SolicitudAdopcionRepository.getAllSolicitudesAdopcion({
+            where,
+            limit,
+            offset
+        });
+
+        return {
+            solicitudes: rows,
+            totalPages: Math.ceil(count / limit)
+        };
     },
 
     getSolicitudAdopcionById: async (id) => {
@@ -90,9 +108,22 @@ const SolicitudAdopcionService = {
             throw new Error('Solicitud de adopción no encontrada.');
         }
 
-        if (solicitudAdopcionData.rechazado_por_devolucion) {
-            solicitudAdopcionData.estado = 'rechazada';
-            await PerroRepository.updatePerro(solicitudAdopcion.id_perro, { id_estado: 5 });
+        // Lógica para actualizar el estado de la solicitud y el estado del perro
+        if (solicitudAdopcionData.rechazado_por_devolucion !== undefined) {
+            if (solicitudAdopcionData.rechazado_por_devolucion) {
+                solicitudAdopcionData.estado = 'rechazada';
+                await PerroRepository.updatePerro(solicitudAdopcion.id_perro, { id_estado: 5 });
+            } else if (!solicitudAdopcionData.rechazado_por_devolucion) {
+                solicitudAdopcionData.estado = 'aprobada';
+                await PerroRepository.updatePerro(solicitudAdopcion.id_perro, { id_estado: 2 });
+            }
+        }
+
+        if (solicitudAdopcionData.estado === 'aprobada') {
+            await PerroRepository.updatePerro(solicitudAdopcion.id_perro, { id_estado: 2 });
+        } else if (solicitudAdopcionData.estado === 'rechazada') {
+            solicitudAdopcionData.rechazado_por_devolucion = false;
+            await PerroRepository.updatePerro(solicitudAdopcion.id_perro, { id_estado: 1 });
         }
 
         const updatedSolicitud = await SolicitudAdopcionRepository.updateSolicitudAdopcion(id, solicitudAdopcionData);

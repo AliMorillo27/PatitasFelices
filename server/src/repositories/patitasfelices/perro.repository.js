@@ -5,8 +5,18 @@ const PerroRepository = {
         return Perro.create(perroData, { transaction });
     },
 
-    getAllPerros: async (query = {}) => {
-        return Perro.findAll(query);
+    getAllPerros: async (pagination) => {
+        const { limit, offset, filters } = pagination;
+        return Perro.findAll({
+            where: filters,
+            limit,
+            offset,
+            order: [['createdAt', 'DESC']] // Ordenar por fecha de creación para mostrar el más reciente primero
+        });
+    },
+
+    countAllPerros: async (filters) => {
+        return Perro.count({ where: filters });
     },
 
     getPerroById: async (id) => {

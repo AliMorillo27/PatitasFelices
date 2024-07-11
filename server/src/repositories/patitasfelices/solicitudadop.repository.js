@@ -5,8 +5,14 @@ const SolicitudAdopcionRepository = {
         return SolicitudAdopcion.create(solicitudAdopcionData, { transaction });
     },
 
-    getAllSolicitudesAdopcion: async (query = {}) => {
-        return SolicitudAdopcion.findAll(query);
+    getAllSolicitudesAdopcion: async ({ where = {}, limit, offset }) => {
+        const { rows, count } = await SolicitudAdopcion.findAndCountAll({
+            where,
+            limit,
+            offset
+        });
+
+        return { rows, count };
     },
 
     getSolicitudAdopcionById: async (id) => {

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { Perro } from '../../models/patitasfelices/perro.model.js';
 import { Adoptante } from '../../models/patitasfelices/adoptante.model.js';
+import { SolicitudAdopcion } from '../../models/patitasfelices/solicitudadop.model.js';
+import { Op } from 'sequelize';
 
 const getForAdoptante = async (adoptanteId, numRecommendations = 5) => {
     try {
@@ -73,7 +75,67 @@ const generatePreferences = (adoptante) => {
     `;
 };
 
+const getAdoptanteByUsuarioId = async (usuarioId) => {
+    try {
+        const adoptante = await Adoptante.findOne({ where: { id_usuario: usuarioId } });
+        if (!adoptante) throw new Error(`Adoptante with user id ${usuarioId} not found`);
+        return adoptante.toJSON();
+    } catch (error) {
+        console.error('Error fetching adoptante by user id:', error.message);
+        throw new Error(`Error fetching adoptante: ${error.message}`);
+    }
+};
+const updateAdoptantePreferences = async (id_adoptante, preferences) => {
+    try {
+        await Adoptante.update(preferences, { where: { id_adoptante } });
+    } catch (error) {
+        console.error('Error updating adoptante preferences:', error.message);
+        throw new Error(`Error updating preferences: ${error.message}`);
+    }
+};
+
+const createAdoptionRequest = async (adoptionData) => {
+    const { id_adoptante, id_perro } = adoptionData;
+
+    // Verificar si el adoptante tiene solicitudes rechazadas por devolución
+    const hasRejectedReturn = await SolicitudAdopcion.findOne({
+        where: {
+            id_adoptante,
+            rechazado_por_devolucion: true
+        }
+    });
+
+    if (hasRejectedReturn) {
+        throw new Error('No puede adoptar porque ha devuelto un perro anteriormente.');
+    }
+
+    // Verificar si ya existe una solicitud pendiente para el mismo adoptante o perro
+    const hasPendingRequest = await SolicitudAdopcion.findOne({
+        where: {
+            [Op.or]: [
+                { id_adoptante, estado: 'pendiente' },
+                { id_perro, estado: 'pendiente' }
+            ]
+        }
+    });
+
+    if (hasPendingRequest) {
+        throw new Error('Ya tiene una solicitud pendiente para este perro o ya existe una solicitud pendiente para este adoptante.');
+    }
+
+    // Crear la solicitud de adopción
+    try {
+        await SolicitudAdopcion.create(adoptionData);
+    } catch (error) {
+        console.error('Error creating adoption request:', error.message);
+        throw new Error(`Error creating adoption request: ${error.message}`);
+    }
+};
+
 export default {
     getForAdoptante,
-    getForVisitor
+    getForVisitor,
+    getAdoptanteByUsuarioId,
+    updateAdoptantePreferences,
+    createAdoptionRequest
 };

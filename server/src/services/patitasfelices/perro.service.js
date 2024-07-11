@@ -2,10 +2,10 @@ import { PerroRepository, EstadoRepository } from '../../repositories/index.js';
 
 const PerroService = {
     createPerro: async (perroData) => {
-        const { nombre, edad, raza, tamano, genero, descripcion, nivel_energia, bueno_con_ninos, bueno_con_mascota, nivel_formacion, id_estado,imagen_url } = perroData;
+        const { nombre, edad, raza, tamano, genero, descripcion, nivel_energia, bueno_con_ninos, bueno_con_mascota, nivel_formacion, id_estado, imagen_url } = perroData;
 
         // Verificación de campos obligatorios
-        if (!nombre || !edad || !raza || !tamano || !genero || !descripcion || !nivel_energia || !bueno_con_ninos || !bueno_con_mascota|| !nivel_formacion|| !imagen_url) {
+        if (!nombre || !edad || !raza || !tamano || !genero || !descripcion || !nivel_energia || !bueno_con_ninos || !bueno_con_mascota || !nivel_formacion || !imagen_url) {
             throw new Error('Todos los campos obligatorios deben estar completos.');
         }
 
@@ -39,8 +39,12 @@ const PerroService = {
         return PerroRepository.createPerro(perroData);
     },
 
-    getAllPerros: async () => {
-        return PerroRepository.getAllPerros();
+    getAllPerros: async (pagination) => {
+        return PerroRepository.getAllPerros(pagination);
+    },
+
+    countAllPerros: async (filters) => {
+        return PerroRepository.countAllPerros(filters);
     },
 
     getPerroById: async (id) => {
@@ -54,21 +58,15 @@ const PerroService = {
             }
         });
     },
+
     getPerrosPorEstado: async (estado) => {
-        // Busca el estado por nombre
-        const estadoEncontrado = await EstadoRepository.getEstadoByNombre(estado);
-        if (!estadoEncontrado) {
-            throw new Error(`El estado ${estado} no existe.`);
-        }
-    
-        // Busca los perros por id_estado
         return PerroRepository.getAllPerros({
             where: {
-                id_estado: estadoEncontrado.id_estado
+                id_estado: estado
             }
         });
     },
-    
+
     updatePerro: async (id, perroData) => {
         const existingPerro = await PerroRepository.getPerroById(id);
 
@@ -108,7 +106,7 @@ const PerroService = {
             !bueno_con_ninos ||
             !bueno_con_mascota ||
             !nivel_formacion ||
-            !!imagen_url ||
+            !imagen_url ||
             id_estado === undefined
         ) {
             throw new Error('Todos los campos obligatorios deben estar completos.');
