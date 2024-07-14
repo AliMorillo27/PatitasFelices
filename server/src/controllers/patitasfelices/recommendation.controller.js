@@ -17,6 +17,8 @@ export const getRecommendations = async (req, res) => {
 export const getVisitorRecommendations = async (req, res) => {
     const { preferences, numRecommendations } = req.body; // Obtener las preferencias directamente del cuerpo de la solicitud
     
+    console.log('Request body:', req.body);
+    
     try {
         const recommendations = await recommendationService.getForVisitor(preferences, numRecommendations);
         res.json(recommendations);
@@ -25,6 +27,7 @@ export const getVisitorRecommendations = async (req, res) => {
         res.status(500).json({ error: `Error fetching recommendations for visitor: ${error.message}` });
     }
 };
+
 
 export const getAdoptanteByUsuarioId = async (req, res) => {
     const { id_usuario } = req.params;
