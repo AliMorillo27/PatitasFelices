@@ -1,0 +1,113 @@
+/* Responsive Styles for GestionarAdoptantes Component */
+
+/* Container Styles */
+.gestionar-adoptantes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Form Styles */
+  .gestionar-adoptantes-form {
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+  }
+  
+  .gestionar-adoptantes-form label {
+    font-weight: bold;
+  }
+  
+  .gestionar-adoptantes-form input,
+  .gestionar-adoptantes-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e67e22; /* Naranja para los bordes */
+    border-radius: 4px;
+  }
+  
+  .gestionar-adoptantes-form button {
+    padding: 8px 12px; /* Ajuste de tamaño más pequeño */
+    background-color: #e67e22; /* Naranja para el fondo */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .gestionar-adoptantes-form button:hover {
+    background-color: #d35400; /* Tonos más oscuros de naranja al pasar el mouse */
+  }
+  
+  /* Table Styles */
+  .gestionar-adoptantes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .gestionar-adoptantes-table th,
+  .gestionar-adoptantes-table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0; /* Gris claro para bordes de tabla */
+    text-align: left;
+  }
+  
+  .gestionar-adoptantes-table th {
+    background-color: #f2f2f2; /* Fondo gris claro para encabezados */
+    font-weight: bold;
+  }
+  
+  .gestionar-adoptantes-table td {
+    font-size: 14px;
+  }
+  
+  /* Pagination Styles */
+  .gestionar-adoptantes-pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .gestionar-adoptantes-pagination button {
+    padding: 8px 16px;
+    background-color: #e67e22; /* Naranja para botones de paginación */
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+  
+  .gestionar-adoptantes-pagination button:hover {
+    background-color: #d35400; /* Tonos más oscuros de naranja al pasar el mouse */
+  }
+  
+  /* Error Message Styles */
+  .gestionar-adoptantes-error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  /* Responsive Adjustments */
+  @media screen and (max-width: 768px) {
+    .gestionar-adoptantes-form {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .gestionar-adoptantes-form input,
+    .gestionar-adoptantes-form select {
+      width: 100%;
+    }
+    
+    .gestionar-adoptantes-form button {
+      padding: 8px 12px; /* Ajuste de tamaño más pequeño */
+      margin-top: 10px; /* Ajuste de margen para alineación con el cuadro de texto */
+    }
+  }
+  
+  
+  

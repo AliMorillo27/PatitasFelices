@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/GestionarSolicitudes.css'; // Asegúrate de tener este archivo CSS importado
 
 const GestionarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
@@ -11,7 +12,7 @@ const GestionarSolicitudes = () => {
     comentario: '',
     descripcion: '',
     estado: 'pendiente',
-    fechaSolicitud: new Date().toISOString().split('T')[0],  // Fecha actual
+    fechaSolicitud: new Date().toISOString().split('T')[0],
     rechazado_por_devolucion: false
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +38,7 @@ const GestionarSolicitudes = () => {
     } catch (error) {
       console.error('Error fetching solicitudes:', error);
     }
-  };  
+  };
 
   const fetchPerros = async () => {
     try {
@@ -100,7 +101,7 @@ const GestionarSolicitudes = () => {
       comentario: '',
       descripcion: '',
       estado: 'pendiente',
-      fechaSolicitud: new Date().toISOString().split('T')[0],  // Fecha actual
+      fechaSolicitud: new Date().toISOString().split('T')[0],
       rechazado_por_devolucion: false
     });
     setIsEditing(false);
@@ -111,7 +112,7 @@ const GestionarSolicitudes = () => {
   const handleEdit = (solicitud) => {
     setForm({
       ...solicitud,
-      fechaSolicitud: new Date(solicitud.fechaSolicitud).toISOString().split('T')[0] // Convertir fecha a formato adecuado para el input date
+      fechaSolicitud: new Date(solicitud.fechaSolicitud).toISOString().split('T')[0]
     });
     setIsEditing(true);
     setCurrentId(solicitud.idSolicitud);
@@ -139,12 +140,12 @@ const GestionarSolicitudes = () => {
   };
 
   return (
-    <div>
+    <div className="gestionar-solicitudes-container">
       <h2>Gestionar Solicitudes</h2>
-      <button onClick={resetForm}>Crear Nueva Solicitud</button>
+      <button className="create-button" onClick={resetForm}>Crear Nueva Solicitud</button>
       {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form className="solicitud-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label>Perro</label>
           <select value={form.id_perro} onChange={(e) => setForm({ ...form, id_perro: e.target.value })}>
             <option value="">Seleccione un perro</option>
@@ -152,9 +153,9 @@ const GestionarSolicitudes = () => {
               <option key={perro.id_perro} value={perro.id_perro}>{perro.nombre}</option>
             ))}
           </select>
-          {errors.id_perro && <p>{errors.id_perro}</p>}
+          {errors.id_perro && <p className="error-message">{errors.id_perro}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Adoptante</label>
           <select value={form.id_adoptante} onChange={(e) => setForm({ ...form, id_adoptante: e.target.value })}>
             <option value="">Seleccione un adoptante</option>
@@ -162,21 +163,21 @@ const GestionarSolicitudes = () => {
               <option key={adoptante.id_adoptante} value={adoptante.id_adoptante}>{adoptante.nombre} {adoptante.apellido}</option>
             ))}
           </select>
-          {errors.id_adoptante && <p>{errors.id_adoptante}</p>}
+          {errors.id_adoptante && <p className="error-message">{errors.id_adoptante}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Comentario</label>
           <input type="text" value={form.comentario} onChange={(e) => setForm({ ...form, comentario: e.target.value })} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Descripción</label>
           <input type="text" value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Fecha Solicitud</label>
           <input type="date" value={form.fechaSolicitud} onChange={(e) => setForm({ ...form, fechaSolicitud: e.target.value })} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Estado</label>
           <select value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })}>
             <option value="pendiente">Pendiente</option>
@@ -184,19 +185,19 @@ const GestionarSolicitudes = () => {
             <option value="rechazada">Rechazada</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Rechazado por Devolución</label>
           <select value={form.rechazado_por_devolucion} onChange={(e) => setForm({ ...form, rechazado_por_devolucion: e.target.value })}>
             <option value={false}>No</option>
             <option value={true}>Sí</option>
           </select>
         </div>
-        <button type="submit">Guardar</button>
+        <button type="submit" className="submit-button">Guardar</button>
       </form>
 
       <h3>Lista de Solicitudes</h3>
-      <form onSubmit={handleFilterSubmit}>
-        <div>
+      <form className="filter-form" onSubmit={handleFilterSubmit}>
+        <div className="form-group">
           <label>Filtrar por Estado</label>
           <select name="estado" onChange={handleFilterChange}>
             <option value="">Todos</option>
@@ -205,39 +206,42 @@ const GestionarSolicitudes = () => {
             <option value="rechazada">Rechazada</option>
           </select>
         </div>
-        <button type="submit">Filtrar</button>
+        <button type="submit" className="filter-button">Filtrar</button>
       </form>
-      
-      <table>
-        <thead>
-          <tr>
-            <th>Perro</th>
-            <th>Adoptante</th>
-            <th>Comentario</th>
-            <th>Descripción</th>
-            <th>Fecha Solicitud</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {solicitudes.map(solicitud => (
-            <tr key={solicitud.idSolicitud}>
-              <td>{solicitud.id_perro}</td>
-              <td>{solicitud.id_adoptante}</td>
-              <td>{solicitud.comentario}</td>
-              <td>{solicitud.descripcion}</td>
-              <td>{solicitud.fechaSolicitud}</td>
-              <td>{solicitud.estado}</td>
-              <td>
-                <button onClick={() => handleEdit(solicitud)}>Editar</button>
-                <button onClick={() => handleDelete(solicitud.idSolicitud)}>Eliminar</button>
-              </td>
+
+      <div className="solicitudes-table-container">
+        <table className="solicitudes-table">
+          <thead>
+            <tr>
+              <th>Perro</th>
+              <th>Adoptante</th>
+              <th>Comentario</th>
+              <th>Descripción</th>
+              <th>Fecha Solicitud</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div>
+          </thead>
+          <tbody>
+            {solicitudes.map(solicitud => (
+              <tr key={solicitud.idSolicitud}>
+                <td>{solicitud.id_perro}</td>
+                <td>{solicitud.id_adoptante}</td>
+                <td>{solicitud.comentario}</td>
+                <td>{solicitud.descripcion}</td>
+                <td>{solicitud.fechaSolicitud}</td>
+                <td>{solicitud.estado}</td>
+                <td>
+                  <button className="edit-button" onClick={() => handleEdit(solicitud)}>Editar</button>
+                  <button className="delete-button" onClick={() => handleDelete(solicitud.idSolicitud)}>Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="pagination">
         {Array.from({ length: totalPages }, (_, index) => (
           <button key={index} onClick={() => setCurrentPage(index + 1)}>
             {index + 1}

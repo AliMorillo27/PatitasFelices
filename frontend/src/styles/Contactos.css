@@ -1,0 +1,48 @@
+/* Contactos.css */
+.contactos-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .contactos-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contactos-content p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .contactos-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .contactos-content li {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+  
+  @media (min-width: 768px) {
+    .contactos-content p, 
+    .contactos-content li {
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .contactos-content {
+      max-width: 800px;
+    }
+  
+    .contactos-content p, 
+    .contactos-content li {
+      font-size: 1.2rem;
+    }
+  }
+  

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/Register.css'; // Ajusta la ruta según la ubicación de tu archivo CSS
 
 const Register = () => {
   const [tipo, setTipo] = useState('adoptante');
@@ -94,7 +95,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Registrarse</h2>
       <label>
         Tipo de Usuario:
@@ -230,3 +231,4 @@ const Register = () => {
 };
 
 export default Register;
+

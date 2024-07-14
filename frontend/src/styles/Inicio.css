@@ -1,3 +1,4 @@
+/* Inicio.css */
 .inicio-container {
   text-align: center;
   background-image: url('https://fondosmil.com/fondo/37827.jpg'); /* Cambia esta URL por la de tu imagen */
@@ -8,6 +9,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 20px; /* Añadido para mejor apariencia en pantallas pequeñas */
 }
 
 .hero {
@@ -25,6 +27,7 @@
 
 .hero p {
   margin: 10px 0;
+  font-size: 1.2rem; /* Tamaño de fuente ajustado */
 }
 
 .hero-buttons {
@@ -55,7 +58,8 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
-  width: 200px;
+  width: 100%; /* Ancho ajustado al 100% */
+  max-width: 200px; /* Ancho máximo de 200px */
   text-align: center;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -77,3 +81,32 @@
   padding: 20px 0;
   width: 100%;
 }
+
+@media (min-width: 768px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+  }
+
+  .dogs-gallery {
+    justify-content: space-around;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero p {
+    font-size: 1.8rem;
+  }
+
+  .dogs-gallery {
+    justify-content: flex-start;
+  }
+}
+

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/GestionarPerros.css'; // Importar el archivo CSS
 
 const GestionarPerros = () => {
   const [perros, setPerros] = useState([]);
@@ -143,26 +144,26 @@ const GestionarPerros = () => {
   };
 
   return (
-    <div>
+    <div className="gestionar-perros">
       <h2>Gestionar Perros</h2>
-      <button onClick={resetForm}>Crear Nuevo Perro</button>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <button className="new-dog-button" onClick={resetForm}>Crear Nuevo Perro</button>
+      <form className="dog-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label>Nombre</label>
           <input type="text" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} />
-          {errors.nombre && <p>{errors.nombre}</p>}
+          {errors.nombre && <p className="error">{errors.nombre}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>URL de Imagen</label>
           <input type="text" value={form.imagen_url} onChange={(e) => setForm({ ...form, imagen_url: e.target.value })} />
-          {errors.imagen_url && <p>{errors.imagen_url}</p>}
+          {errors.imagen_url && <p className="error">{errors.imagen_url}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Edad</label>
           <input type="number" value={form.edad} onChange={(e) => setForm({ ...form, edad: e.target.value })} />
-          {errors.edad && <p>{errors.edad}</p>}
+          {errors.edad && <p className="error">{errors.edad}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Raza</label>
           <select value={form.raza} onChange={(e) => setForm({ ...form, raza: e.target.value })}>
             <option value="PEQUEÑO">Pequeño</option>
@@ -171,43 +172,43 @@ const GestionarPerros = () => {
             <option value="GIGANTE">Gigante</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Tamaño</label>
           <input type="number" value={form.tamano} onChange={(e) => setForm({ ...form, tamano: e.target.value })} />
-          {errors.tamano && <p>{errors.tamano}</p>}
+          {errors.tamano && <p className="error">{errors.tamano}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Género</label>
           <select value={form.genero} onChange={(e) => setForm({ ...form, genero: e.target.value })}>
             <option value="Macho">Macho</option>
             <option value="Hembra">Hembra</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Descripción</label>
           <textarea value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })}></textarea>
-          {errors.descripcion && <p>{errors.descripcion}</p>}
+          {errors.descripcion && <p className="error">{errors.descripcion}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Nivel de Energía</label>
           <input type="number" value={form.nivel_energia} onChange={(e) => setForm({ ...form, nivel_energia: e.target.value })} />
-          {errors.nivel_energia && <p>{errors.nivel_energia}</p>}
+          {errors.nivel_energia && <p className="error">{errors.nivel_energia}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Bueno con Niños</label>
           <select value={form.bueno_con_ninos} onChange={(e) => setForm({ ...form, bueno_con_ninos: e.target.value })}>
             <option value="Si">Si</option>
             <option value="No">No</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Bueno con Mascotas</label>
           <select value={form.bueno_con_mascota} onChange={(e) => setForm({ ...form, bueno_con_mascota: e.target.value })}>
             <option value="Si">Si</option>
             <option value="No">No</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Nivel de Formación</label>
           <select value={form.nivel_formacion} onChange={(e) => setForm({ ...form, nivel_formacion: e.target.value })}>
             <option value="BAJO">Bajo</option>
@@ -215,7 +216,7 @@ const GestionarPerros = () => {
             <option value="ALTO">Alto</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Estado</label>
           <select value={form.id_estado} onChange={(e) => setForm({ ...form, id_estado: e.target.value })}>
             <option value="1">Disponible</option>
@@ -229,7 +230,7 @@ const GestionarPerros = () => {
       </form>
 
       <h3>Lista de Perros</h3>
-      <div>
+      <div className="filters">
         <label>
           Raza:
           <input type="text" name="raza" value={filters.raza} onChange={handleFilterChange} />
@@ -254,7 +255,7 @@ const GestionarPerros = () => {
           </select>
         </label>
       </div>
-      <table>
+      <table className="dog-table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -293,7 +294,7 @@ const GestionarPerros = () => {
           ))}
         </tbody>
       </table>
-      <div>
+      <div className="pagination">
         {Array.from({ length: totalPages }, (_, index) => (
           <button key={index} onClick={() => setCurrentPage(index + 1)}>
             {index + 1}
@@ -305,3 +306,4 @@ const GestionarPerros = () => {
 };
 
 export default GestionarPerros;
+

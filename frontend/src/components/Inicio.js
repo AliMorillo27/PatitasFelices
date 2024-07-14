@@ -33,9 +33,10 @@ const Inicio = () => {
           <p>No hay perros disponibles en este momento.</p>
         )}
       </section>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
 
 export default Inicio;
+

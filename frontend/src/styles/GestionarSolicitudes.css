@@ -1,0 +1,123 @@
+/* Estilos para el componente GestionarSolicitudes */
+
+.gestionar-solicitudes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .create-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .create-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .solicitud-form, .filter-form {
+    margin-bottom: 20px;
+  }
+  
+  .solicitud-form .form-group, .filter-form .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .solicitud-form label, .filter-form label {
+    font-weight: bold;
+  }
+  
+  .solicitud-form input, .solicitud-form select, .filter-form select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .solicitud-form .submit-button, .filter-form .filter-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .solicitud-form .submit-button:hover, .filter-form .filter-button:hover {
+    background-color: #218838;
+  }
+  
+  .solicitudes-table-container {
+    overflow-x: auto;
+  }
+  
+  .solicitudes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .solicitudes-table th, .solicitudes-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .solicitudes-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .solicitudes-table td {
+    text-align: center;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .pagination button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination button.active {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    /* Estilos específicos para dispositivos móviles y tablets */
+    .gestionar-solicitudes-container {
+      padding: 10px;
+    }
+  
+    .solicitud-form input, .solicitud-form select, .filter-form select {
+      font-size: 14px;
+    }
+  
+    .solicitudes-table th, .solicitudes-table td {
+      padding: 6px;
+    }
+  
+    .solicitud-form, .filter-form {
+      font-size: 14px;
+    }
+  }
+  

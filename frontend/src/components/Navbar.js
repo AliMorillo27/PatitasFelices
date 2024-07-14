@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import '../styles/Navbar.css'; // Asegúrate de ajustar la ruta según la ubicación de tu archivo CSS
+import logoImage from '../assets/logo.png'; // Importa la imagen del logo
 
 const Navbar = () => {
   const { auth, logout } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   const renderLinks = () => {
     if (auth.isAuthenticated) {
@@ -48,8 +54,10 @@ const Navbar = () => {
           <li><Link to="/recursos">Recursos</Link></li>
           <li><Link to="/contactos">Contactos</Link></li>
           <li><Link to="/nosotros">Nosotros</Link></li>
-          <li><Link to="/login">Iniciar Sesión</Link></li>
-          <li><Link to="/register">Registrarse</Link></li>
+          <div className="auth-links">
+            <li><Link to="/login">Iniciar Sesión</Link></li>
+            <li><Link to="/register">Registrarse</Link></li>
+          </div>
         </>
       );
     }
@@ -57,9 +65,19 @@ const Navbar = () => {
 
   return (
     <nav>
-      <ul>
-        {renderLinks()}
-      </ul>
+      <div className="nav-container">
+        <div className="logo">
+          <Link to="/">
+            <img src={logoImage} alt="Logo" className="logo-image" />
+          </Link>
+        </div>
+        <div className="menu-icon" onClick={handleToggle}>
+          &#9776;
+        </div>
+        <ul className={`nav-links ${isOpen ? 'nav-active' : ''}`}>
+          {renderLinks()}
+        </ul>
+      </div>
     </nav>
   );
 };

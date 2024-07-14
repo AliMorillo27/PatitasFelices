@@ -1,0 +1,110 @@
+/* Estilos para el componente Recomendar */
+
+.recomendar-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.num-recommendations-input,
+.recommend-button,
+.save-preferences-button,
+.edit-preferences-button,
+.adopt-button,
+.submit-adoption-button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.num-recommendations-input {
+  border: 1px solid #ccc;
+}
+
+.recommend-button,
+.save-preferences-button,
+.edit-preferences-button,
+.submit-adoption-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.recommend-button:hover,
+.save-preferences-button:hover,
+.edit-preferences-button:hover,
+.submit-adoption-button:hover {
+  background-color: #0056b3;
+}
+
+.edit-preferences {
+  margin-bottom: 20px;
+}
+
+.edit-preferences label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.edit-preferences select,
+.adoption-input,
+.adoption-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.adoption-textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+.recommendations-list {
+  list-style: none;
+  padding: 0;
+}
+
+.recommendation-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.recommendation-item p {
+  margin: 5px 0;
+}
+
+.recommendation-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .num-recommendations-input,
+  .recommend-button,
+  .save-preferences-button,
+  .edit-preferences-button,
+  .adopt-button,
+  .submit-adoption-button {
+    font-size: 14px;
+  }
+
+  .recommendation-item p {
+    font-size: 14px;
+  }
+}
+
+  

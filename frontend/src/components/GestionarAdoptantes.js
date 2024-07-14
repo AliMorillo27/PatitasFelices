@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/GestionarAdoptantes.css'; // Asegúrate de ajustar la ruta según sea necesario
 
 const GestionarAdoptantes = () => {
   const [adoptantes, setAdoptantes] = useState([]);
@@ -144,25 +145,25 @@ const GestionarAdoptantes = () => {
   };
 
   return (
-    <div>
+    <div className="gestionar-adoptantes-container">
       <h2>Gestionar Adoptantes</h2>
       <button onClick={resetForm}>Crear Nuevo Adoptante</button>
-      {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
+      {errors.server && <p className="gestionar-adoptantes-error">{errors.server}</p>}
+      <form className="gestionar-adoptantes-form" onSubmit={handleSubmit}>
         <div>
           <label>Nombre</label>
           <input type="text" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} />
-          {errors.nombre && <p>{errors.nombre}</p>}
+          {errors.nombre && <p className="gestionar-adoptantes-error">{errors.nombre}</p>}
         </div>
         <div>
           <label>Apellido</label>
           <input type="text" value={form.apellido} onChange={(e) => setForm({ ...form, apellido: e.target.value })} />
-          {errors.apellido && <p>{errors.apellido}</p>}
+          {errors.apellido && <p className="gestionar-adoptantes-error">{errors.apellido}</p>}
         </div>
         <div>
           <label>Cédula</label>
           <input type="text" value={form.cedula} onChange={(e) => setForm({ ...form, cedula: e.target.value })} />
-          {errors.cedula && <p>{errors.cedula}</p>}
+          {errors.cedula && <p className="gestionar-adoptantes-error">{errors.cedula}</p>}
         </div>
         <div>
           <label>Género</label>
@@ -182,17 +183,17 @@ const GestionarAdoptantes = () => {
         <div>
           <label>Email</label>
           <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          {errors.email && <p>{errors.email}</p>}
+          {errors.email && <p className="gestionar-adoptantes-error">{errors.email}</p>}
         </div>
         <div>
           <label>Contraseña</label>
           <input type="password" value={form.contrasena} onChange={(e) => setForm({ ...form, contrasena: e.target.value })} />
-          {errors.contrasena && <p>{errors.contrasena}</p>}
+          {errors.contrasena && <p className="gestionar-adoptantes-error">{errors.contrasena}</p>}
         </div>
         <div>
           <label>Edad</label>
           <input type="number" value={form.edad} onChange={(e) => setForm({ ...form, edad: e.target.value })} />
-          {errors.edad && <p>{errors.edad}</p>}
+          {errors.edad && <p className="gestionar-adoptantes-error">{errors.edad}</p>}
         </div>
         <div>
           <label>Tiene Niños</label>
@@ -236,15 +237,15 @@ const GestionarAdoptantes = () => {
       </form>
 
       <h3>Lista de Adoptantes</h3>
-      <form onSubmit={handleFilterSubmit}>
+      <form className="gestionar-adoptantes-form" onSubmit={handleFilterSubmit}>
         <div>
           <label>Filtrar por Nombre</label>
           <input type="text" name="nombre" onChange={handleFilterChange} />
         </div>
-        <button type="submit">Filtrar</button>
+        <button type="submit" className="filter-button">Filtrar</button>
       </form>
       
-      <table>
+      <table className="gestionar-adoptantes-table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -289,7 +290,7 @@ const GestionarAdoptantes = () => {
           ))}
         </tbody>
       </table>
-      <div>
+      <div className="gestionar-adoptantes-pagination">
         {Array.from({ length: totalPages }, (_, index) => (
           <button key={index} onClick={() => setCurrentPage(index + 1)}>
             {index + 1}
@@ -301,3 +302,4 @@ const GestionarAdoptantes = () => {
 };
 
 export default GestionarAdoptantes;
+

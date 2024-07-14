@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/Solicitar.css'; // Asegúrate de ajustar la ruta según la ubicación de tu archivo CSS
 
 const Solicitar = ({ idAdoptante, idPerro }) => {
   const [form, setForm] = useState({
@@ -47,19 +48,20 @@ const Solicitar = ({ idAdoptante, idPerro }) => {
   };
 
   return (
-    <div>
+    <div className="solicitar-container">
       <h2>Solicitar Adopción</h2>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className="error-message">{errors.server}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Comentario</label>
           <input
             type="text"
             value={form.comentario}
             onChange={(e) => setForm({ ...form, comentario: e.target.value })}
           />
+          {errors.id_perro && <p className="error-message">{errors.id_perro}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Descripción</label>
           <input
             type="text"
@@ -67,10 +69,11 @@ const Solicitar = ({ idAdoptante, idPerro }) => {
             onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
           />
         </div>
-        <button type="submit">Enviar Solicitud</button>
+        <button type="submit" className="submit-button">Enviar Solicitud</button>
       </form>
     </div>
   );
 };
 
 export default Solicitar;
+

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
+import '../styles/Recomendar.css'; // Asegúrate de importar el archivo CSS
 
 const Recomendar = () => {
   const { auth } = useContext(AuthContext);
@@ -124,18 +125,19 @@ const Recomendar = () => {
   };
 
   return (
-    <div>
+    <div className="recomendar-container">
       <input
         type="number"
         value={numRecommendations}
         onChange={(e) => setNumRecommendations(e.target.value)}
         min="1"
         placeholder="Número de Recomendaciones"
+        className="num-recommendations-input"
       />
-      <button onClick={handleRecommend}>Recomendar</button>
+      <button onClick={handleRecommend} className="recommend-button">Recomendar</button>
 
       {isEditing ? (
-        <div>
+        <div className="edit-preferences">
           <h3>Editar Preferencias</h3>
           <label>
             Tiene niños:
@@ -193,30 +195,31 @@ const Recomendar = () => {
               <option value="EXPERTO">Experto</option>
             </select>
           </label>
-          <button onClick={handleSavePreferences}>Guardar Preferencias</button>
+          <button onClick={handleSavePreferences} className="save-preferences-button">Guardar Preferencias</button>
         </div>
       ) : (
-        <button onClick={handleEditToggle}>Editar Preferencias</button>
+        <button onClick={handleEditToggle} className="edit-preferences-button">Editar Preferencias</button>
       )}
 
       {recommendations.length > 0 && (
-        <ul>
+        <ul className="recommendations-list">
           {recommendations.map((rec, index) => (
-            <li key={index}>
-              <img src={rec.imagen_url} alt={rec.nombre} />
+            <li key={index} className="recommendation-item">
+              <img src={rec.imagen_url} alt={rec.nombre} className="recommendation-image" />
               <p>Nombre: {rec.nombre}</p>
               <p>Edad: {rec.edad}</p>
               <p>Raza: {rec.raza}</p>
               <p>Tamaño: {rec.tamano}</p>
               <p>Género: {rec.genero}</p>
-              <button onClick={() => handleAdoptClick(rec)}>Adoptar</button>
+              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p> {/* Mostrar el puntaje de similitud */}
+              <button onClick={() => handleAdoptClick(rec)} className="adopt-button">Adoptar</button>
             </li>
           ))}
         </ul>
       )}
 
       {isAdopting && selectedPerro && (
-        <div>
+        <div className="adoption-form">
           <h3>Solicitud de Adopción para {selectedPerro.nombre}</h3>
           <label>
             Fecha de Solicitud:
@@ -225,6 +228,7 @@ const Recomendar = () => {
               name="fechaSolicitud"
               value={adoptionData.fechaSolicitud}
               onChange={handleAdoptionInputChange}
+              className="adoption-input"
             />
           </label>
           <label>
@@ -233,6 +237,7 @@ const Recomendar = () => {
               name="comentario"
               value={adoptionData.comentario}
               onChange={handleAdoptionInputChange}
+              className="adoption-textarea"
             />
           </label>
           <label>
@@ -241,9 +246,10 @@ const Recomendar = () => {
               name="descripcion"
               value={adoptionData.descripcion}
               onChange={handleAdoptionInputChange}
+              className="adoption-textarea"
             />
           </label>
-          <button onClick={handleAdoptSubmit}>Enviar Solicitud</button>
+          <button onClick={handleAdoptSubmit} className="submit-adoption-button">Enviar Solicitud</button>
         </div>
       )}
     </div>
