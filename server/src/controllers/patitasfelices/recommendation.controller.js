@@ -25,6 +25,7 @@ export const getVisitorRecommendations = async (req, res) => {
         res.status(500).json({ error: `Error fetching recommendations for visitor: ${error.message}` });
     }
 };
+
 export const getAdoptanteByUsuarioId = async (req, res) => {
     const { id_usuario } = req.params;
 

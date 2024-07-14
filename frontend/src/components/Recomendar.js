@@ -209,6 +209,7 @@ const Recomendar = () => {
               <p>Raza: {rec.raza}</p>
               <p>Tamaño: {rec.tamano}</p>
               <p>Género: {rec.genero}</p>
+              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p> {/* Mostrar el puntaje de similitud */}
               <button onClick={() => handleAdoptClick(rec)}>Adoptar</button>
             </li>
           ))}
