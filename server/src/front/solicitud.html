@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Adopción</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/logo1.png" alt="Logo" style="height: 30px; margin-right: 10px;"> <!-- Reemplaza con la URL de tu logo -->
+            Patitas Felices
+        </a>
+        <h2>Solicitud de Adopción</h2>
+        <form>
+            <div class="form-group">
+                <label for="fechaSolicitud">Fecha de Solicitud</label>
+                <input type="date" class="form-control" id="fechaSolicitud" value="2024-01-01">
+            </div>
+            <div class="form-group">
+                <label for="comentario">Comentario</label>
+                <textarea class="form-control" id="comentario" rows="3" placeholder="Comentario">Interesado en adoptar a Max.</textarea>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción">Solicito la adopción de Max.</textarea>
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select id="estado" class="form-control">
+                    <option>Selecciona...</option>
+                    <option selected>Pendiente</option>
+                    <option>Aprobada</option>
+                    <option>Rechazada</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_perro">ID del Perro</label>
+                <input type="number" class="form-control" id="id_perro" placeholder="ID del Perro" value="1">
+            </div>
+            <div class="form-group">
+                <label for="id_adoptante">ID del Adoptante</label>
+                <input type="number" class="form-control" id="id_adoptante" placeholder="ID del Adoptante" value="2">
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
