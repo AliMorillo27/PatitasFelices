@@ -27,7 +27,7 @@ const getForVisitor = async (preferences, numRecommendations = 5) => {
         const perros = await getPerros();
         console.log('Sending request to Flask with preferences and perros:', preferences, perros); // Agregar detalles para la depuración
         const response = await axios.post('http://localhost:5000/recommend', {
-            preferences,
+            preferences: JSON.stringify(preferences),  // Asegúrate de enviar las preferencias como un string
             perros,
             numRecommendations
         });

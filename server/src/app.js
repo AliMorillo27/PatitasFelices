@@ -1,6 +1,7 @@
+// src/app.js
 import express from 'express';
 import cors from 'cors';
-import routes from './routes/index.js';
+import routes from './routes/index.js';  // Asegúrate de que la ruta sea correcta
 
 const app = express();
 
@@ -11,6 +12,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.static('../uploads')); // Asegúrate de servir la carpeta de cargas estáticas
 
 // Usa las rutas
 app.use('/api', routes);

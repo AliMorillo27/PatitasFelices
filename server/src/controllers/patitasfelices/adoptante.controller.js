@@ -11,9 +11,26 @@ export const createAdoptante = async (req, res) => {
 
 export const getAllAdoptantes = async (req, res) => {
     try {
-        const adoptantes = await AdoptanteService.getAllAdoptantes();
-        res.json(adoptantes);
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10; // Puedes ajustar el límite de elementos por página
+        const offset = (page - 1) * limit;
+
+        const filters = {};
+
+        if (req.query.nombre) filters.nombre = req.query.nombre;
+        if (req.query.apellido) filters.apellido = req.query.apellido;
+        if (req.query.cedula) filters.cedula = req.query.cedula;
+
+        const result = await AdoptanteService.getAllAdoptantes({ limit, offset, filters });
+        const totalAdoptantes = await AdoptanteService.countAllAdoptantes(filters);
+
+        res.json({
+            adoptantes: result,
+            totalPages: Math.ceil(totalAdoptantes / limit),
+            currentPage: page
+        });
     } catch (error) {
+        console.error('Error fetching adoptantes:', error);
         res.status(500).json({ message: error.message });
     }
 };

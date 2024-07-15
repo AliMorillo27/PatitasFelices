@@ -11,7 +11,8 @@ export const createSolicitudAdopcion = async (req, res) => {
 
 export const getAllSolicitudesAdopcion = async (req, res) => {
     try {
-        const solicitudesAdopcion = await SolicitudAdopcionService.getAllSolicitudesAdopcion();
+        const { page = 1, estado } = req.query;
+        const solicitudesAdopcion = await SolicitudAdopcionService.getAllSolicitudesAdopcion({ page, estado });
         res.json(solicitudesAdopcion);
     } catch (error) {
         res.status(500).json({ message: error.message });

@@ -1,5 +1,7 @@
+// src/models/adoptante.model.js
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../database/database.js';
+import { Usuario } from './usuarios.model.js'; // Importa el modelo de Usuario
 
 export const Adoptante = sequelize.define('tb_adoptante', {
   id_adoptante: {
@@ -103,4 +105,12 @@ export const Adoptante = sequelize.define('tb_adoptante', {
   schema: "patitasfelices",
   tableName: 'tb_adoptante',
   timestamps: true,
+  hooks: {
+    afterDestroy: async (adoptante, options) => {
+      const usuario = await Usuario.findByPk(adoptante.id_usuario);
+      if (usuario) {
+        await usuario.destroy(options);
+      }
+    }
+  }
 });

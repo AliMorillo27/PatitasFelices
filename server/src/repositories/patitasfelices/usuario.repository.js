@@ -17,18 +17,18 @@ const UsuarioRepository = {
         return Usuario.findAll({ where: { tipo } });
     },
 
-    updateUsuario: async (id, usuarioData) => {
+    updateUsuario: async (id, usuarioData, transaction) => {
         const usuario = await Usuario.findByPk(id);
         if (usuario) {
-            return usuario.update(usuarioData);
+            return usuario.update(usuarioData, { transaction });
         }
         return null;
     },
 
-    deleteUsuario: async (id) => {
+    deleteUsuario: async (id, transaction) => {
         const usuario = await Usuario.findByPk(id);
         if (usuario) {
-            await usuario.destroy();
+            await usuario.destroy({ transaction });
             return true;
         }
         return false;

@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Inicio from './components/Inicio';
@@ -10,12 +11,12 @@ import RecomendarVisitante from './components/RecomendarVisitante';
 import Solicitar from './components/Solicitar';
 import Login from './components/Login';
 import Register from './components/Register';
-import GestionarPerros from './components/GestionarPerros'; // Importa el nuevo componente
-import GestionarSolicitudes from './components/GestionarSolicitudes';
-import GestionarAdoptantes from './components/GestionarAdoptantes';
+import CrearPerro from './components/GestionarPerros/CrearPerro';
+import ListarPerros from './components/GestionarPerros/ListarPerros';
+import CrearAdoptante from './components/GestionarAdoptantes/CrearAdoptante';
+import ListarAdoptantes from './components/GestionarAdoptantes/ListarAdoptantes';
 import Navbar from './components/Navbar';
 import AuthProvider from './AuthContext';
-
 
 function App() {
   return (
@@ -33,10 +34,10 @@ function App() {
           <Route path="/solicitar" element={<Solicitar />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/gestionar/perros" element={<GestionarPerros />} /> 
-          <Route path="/gestionar/solicitudes" element={<GestionarSolicitudes />} />
-          <Route path="/gestionar/adoptantes" element={<GestionarAdoptantes />} />
-
+          <Route path="/gestionar/perros/crear" element={<CrearPerro />} />
+          <Route path="/gestionar/perros/listar" element={<ListarPerros />} />
+          <Route path="/gestionar/adoptantes/crear" element={<CrearAdoptante />} />
+          <Route path="/gestionar/adoptantes/listar" element={<ListarAdoptantes />} />
         </Routes>
       </Router>
     </AuthProvider>

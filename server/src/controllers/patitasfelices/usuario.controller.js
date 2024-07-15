@@ -59,7 +59,8 @@ export const deleteUsuario = async (req, res) => {
 
 export const loginUsuario = async (req, res) => {
     try {
-        const usuario = await UsuarioService.loginUsuario(req.body.email, req.body.contraseña);
+        const { email, contrasena } = req.body;
+        const usuario = await UsuarioService.loginUsuario(email, contrasena);
         res.json(usuario);
     } catch (error) {
         res.status(400).json({ message: error.message });

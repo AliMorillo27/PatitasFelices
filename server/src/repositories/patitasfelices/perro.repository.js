@@ -11,7 +11,7 @@ const PerroRepository = {
             where: filters,
             limit,
             offset,
-            order: [['createdAt', 'DESC']] // Ordenar por fecha de creación para mostrar el más reciente primero
+            order: [['updatedAt', 'DESC']] // Ordenar por fecha de creación para mostrar el más reciente primero
         });
     },
 

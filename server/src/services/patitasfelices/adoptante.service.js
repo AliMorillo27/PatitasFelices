@@ -2,6 +2,7 @@ import AdoptanteRepository from '../../repositories/patitasfelices/adoptante.rep
 import UsuarioRepository from '../../repositories/patitasfelices/usuario.repository.js';
 import bcrypt from 'bcrypt';
 import { Op } from 'sequelize';
+import { sequelize } from '../../database/database.js';
 
 const AdoptanteService = {
     createAdoptante: async (adoptanteData) => {
@@ -98,8 +99,12 @@ const AdoptanteService = {
         return AdoptanteRepository.createAdoptante(adoptanteData);
     },
 
-    getAllAdoptantes: async () => {
-        return AdoptanteRepository.getAllAdoptantes();
+    getAllAdoptantes: async (pagination) => {
+        return AdoptanteRepository.getAllAdoptantes(pagination);
+    },
+
+    countAllAdoptantes: async (filters) => {
+        return AdoptanteRepository.countAllAdoptantes(filters);
     },
 
     getAdoptanteById: async (id) => {
@@ -115,7 +120,15 @@ const AdoptanteService = {
     },
 
     deleteAdoptante: async (id) => {
-        return AdoptanteRepository.deleteAdoptante(id);
+        return sequelize.transaction(async (transaction) => {
+            const adoptante = await AdoptanteRepository.getAdoptanteById(id);
+            if (adoptante) {
+                await AdoptanteRepository.deleteAdoptante(id, transaction);
+                await UsuarioRepository.deleteUsuario(adoptante.id_usuario, transaction);
+                return true;
+            }
+            return false;
+        });
     },
 
     loginAdoptante: async (email, contrasena) => {

@@ -5,20 +5,22 @@ const AdoptanteRepository = {
         return Adoptante.create(adoptanteData, { transaction });
     },
 
-    getAllAdoptantes: async (query={}) => {
-        return Adoptante.findAll(query);
+    getAllAdoptantes: async (pagination) => {
+        const { limit, offset, filters } = pagination;
+        return Adoptante.findAll({
+            where: filters,
+            limit,
+            offset,
+            order: [['updatedAt', 'DESC']]
+        });
+    },
+
+    countAllAdoptantes: async (filters) => {
+        return Adoptante.count({ where: filters });
     },
 
     getAdoptanteById: async (id) => {
         return Adoptante.findByPk(id);
-    },
-
-    getAdoptanteByCedula: async (cedula) => {
-        return Adoptante.findOne({
-            where: {
-                cedula: cedula
-            }
-        });
     },
 
     updateAdoptante: async (id, adoptanteData) => {

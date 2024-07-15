@@ -2,7 +2,24 @@ import { PerroService } from '../../services/index.js';
 
 export const createPerro = async (req, res) => {
     try {
-        const perro = await PerroService.createPerro(req.body);
+        const { nombre, edad, raza, tamano, genero, descripcion, nivel_energia, bueno_con_ninos, bueno_con_mascota, nivel_formacion, id_estado } = req.body;
+        const imagen_url = req.body.imagen_url || null;
+
+        const perro = await PerroService.createPerro({
+            nombre,
+            edad,
+            raza,
+            tamano,
+            genero,
+            descripcion,
+            nivel_energia,
+            bueno_con_ninos,
+            bueno_con_mascota,
+            nivel_formacion,
+            id_estado,
+            imagen_url
+        });
+
         res.status(201).json(perro);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -11,8 +28,25 @@ export const createPerro = async (req, res) => {
 
 export const getAllPerros = async (req, res) => {
     try {
-        const perros = await PerroService.getAllPerros();
-        res.json(perros);
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10; // Puedes ajustar el límite de elementos por página
+        const offset = (page - 1) * limit;
+
+        const filters = {};
+
+        if (req.query.raza) filters.raza = req.query.raza;
+        if (req.query.edad) filters.edad = req.query.edad;
+        if (req.query.tamano) filters.tamano = req.query.tamano;
+        if (req.query.estado) filters.id_estado = req.query.estado;
+
+        const result = await PerroService.getAllPerros({ limit, offset, filters });
+        const totalPerros = await PerroService.countAllPerros(filters);
+
+        res.json({
+            perros: result,
+            totalPages: Math.ceil(totalPerros / limit),
+            currentPage: page
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -33,7 +67,10 @@ export const getPerroById = async (req, res) => {
 
 export const updatePerro = async (req, res) => {
     try {
-        const updatedPerro = await PerroService.updatePerro(req.params.id, req.body);
+        const { id } = req.params;
+        const perroData = req.body;
+
+        const updatedPerro = await PerroService.updatePerro(id, perroData);
         if (updatedPerro) {
             res.json(updatedPerro);
         } else {
@@ -56,6 +93,7 @@ export const deletePerro = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 export const getPerrosPorTamano = async (req, res) => {
     try {
         const tamano = req.params.tamano;
@@ -75,6 +113,7 @@ export const getPerrosPorEstado = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 export const getPerrosPorRaza = async (req, res) => {
     try {
         const raza = req.params.raza;
@@ -84,6 +123,7 @@ export const getPerrosPorRaza = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 export const getPerrosPorEdad = async (req, res) => {
     try {
         const edad = req.params.edad;
@@ -93,6 +133,7 @@ export const getPerrosPorEdad = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 export const getPerrosOrdenadosPorNombre = async (req, res) => {
     try {
         const perros = await PerroService.getPerrosOrdenadosPorNombre();
