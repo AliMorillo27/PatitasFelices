@@ -1,0 +1,71 @@
+.donar-container {
+    background-image: url('../assets/background2.jpg'); /* Imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .donar-container h1 {
+    text-align: center;
+    color: #d9534f; /* Tono anaranjado */
+  }
+  
+  .donar-content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+  }
+  
+  .donar-section {
+    margin-bottom: 20px;
+  }
+  
+  .donar-section h3 {
+    color: #d9534f; /* Tono anaranjado */
+  }
+  
+  .donar-section p {
+    margin-bottom: 10px;
+  }
+  
+  .image {
+    width: 200px; /* Tamaño reducido del contenedor */
+    height: 200px; /* Tamaño reducido del contenedor */
+    background-size: contain; /* Mantener la proporción */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+  
+  .vet-image {
+    background-image: url('../assets/d1.png'); /* Reemplazar con la ruta de tu imagen */
+  }
+  
+  .spay-neuter-image {
+    background-image: url('../assets/d2.png'); /* Reemplazar con la ruta de tu imagen */
+  }
+  
+  .care-image {
+    background-image: url('../assets/d3.png'); /* Reemplazar con la ruta de tu imagen */
+  }
+  
+  .banco-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .bank-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .logo-icon {
+    width: 50px;
+    height: 50px;
+  }
+  

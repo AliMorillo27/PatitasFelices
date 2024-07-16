@@ -1,48 +1,63 @@
 /* Contactos.css */
 .contactos-container {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .contactos-content {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .contactos-content p {
-    font-size: 1rem;
-    margin-bottom: 20px;
-  }
-  
-  .contactos-content ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .contactos-content li {
-    font-size: 1rem;
-    margin: 10px 0;
-  }
-  
-  @media (min-width: 768px) {
-    .contactos-content p, 
-    .contactos-content li {
-      font-size: 1.1rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .contactos-content {
-      max-width: 800px;
-    }
-  
-    .contactos-content p, 
-    .contactos-content li {
-      font-size: 1.2rem;
-    }
-  }
+  font-family: Arial, sans-serif;
+  background: #ffecd1; /* Fondo de color anaranjado claro */
+  padding: 20px;
+}
+
+.contactos-header {
+  background-image: url('../assets/logo.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 150px auto; /* Ajusta el tamaño del logo según sea necesario */
+  padding-left: 170px; /* Espacio para el logo */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.contactos-header h1 {
+  font-size: 2em;
+  color: #d45a00; /* Color anaranjado oscuro para el texto */
+  margin: 0;
+}
+
+.contactos-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.contactos-info, .contactos-message {
+  width: 48%;
+}
+
+.contactos-info h2, .contactos-message h2 {
+  font-size: 1.5em;
+  color: #d45a00; /* Color anaranjado oscuro para los encabezados */
+  margin-bottom: 10px;
+}
+
+.contactos-info p, .contactos-message p {
+  color: #4d4d4d; /* Color gris oscuro para el texto */
+  line-height: 1.5;
+}
+
+.contactos-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contactos-info ul li {
+  margin-bottom: 10px;
+  color: #4d4d4d; /* Color gris oscuro para los elementos de la lista */
+}
+
+.contactos-info ul h2 {
+  margin-top: 20px;
+}
+
+.contactos-message p {
+  margin-bottom: 10px;
+}
+
   
