@@ -147,7 +147,7 @@ const GestionarAdoptantes = () => {
   return (
     <div className="gestionar-adoptantes-container">
       <h2>Gestionar Adoptantes</h2>
-      <button onClick={resetForm}>Crear Nuevo Adoptante</button>
+      <button onClick={resetForm} className="submit-adoption-button" >Crear Nuevo Adoptante</button>
       {errors.server && <p className="gestionar-adoptantes-error">{errors.server}</p>}
       <form className="gestionar-adoptantes-form" onSubmit={handleSubmit}>
         <div>

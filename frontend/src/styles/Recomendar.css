@@ -1,72 +1,47 @@
-/* Estilos para el componente Recomendar */
-
 .recomendar-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: #fff4e6; /* Fondo en un tono suave de naranja */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.num-recommendations-input,
-.recommend-button,
-.save-preferences-button,
-.edit-preferences-button,
-.adopt-button,
-.submit-adoption-button {
-  display: block;
+h3 {
+  color: #ff7f50; /* Título en un tono naranja más fuerte */
+}
+
+input,
+select,
+textarea {
   width: 100%;
-  margin-bottom: 10px;
   padding: 10px;
-  font-size: 16px;
-  border-radius: 4px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .num-recommendations-input {
-  border: 1px solid #ccc;
+  width: calc(100% - 22px); /* Ajustar el tamaño del input numérico */
 }
 
-.recommend-button,
-.save-preferences-button,
-.edit-preferences-button,
-.submit-adoption-button {
-  background-color: #007bff;
-  color: white;
+button {
+  padding: 10px 20px;
+  background-color: #ff7f50; /* Botones en tono naranja */
+  color: #fff;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.recommend-button:hover,
-.save-preferences-button:hover,
-.edit-preferences-button:hover,
-.submit-adoption-button:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #e67345; /* Cambio de color al pasar el mouse */
 }
 
-.edit-preferences {
-  margin-bottom: 20px;
-}
-
-.edit-preferences label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.edit-preferences select,
-.adoption-input,
-.adoption-textarea {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.adoption-textarea {
-  resize: vertical;
-  height: 80px;
+.edit-preferences,
+.adoption-form {
+  margin-top: 20px;
 }
 
 .recommendations-list {
@@ -75,36 +50,44 @@
 }
 
 .recommendation-item {
-  margin-bottom: 20px;
-  padding: 10px;
   background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.recommendation-item p {
-  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recommendation-image {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
+  max-width: 100%;
+  border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  .num-recommendations-input,
-  .recommend-button,
-  .save-preferences-button,
-  .edit-preferences-button,
-  .adopt-button,
-  .submit-adoption-button {
-    font-size: 14px;
-  }
-
-  .recommendation-item p {
-    font-size: 14px;
-  }
+.adoption-input,
+.adoption-textarea {
+  width: calc(100% - 22px); /* Ajustar el tamaño de los inputs y textareas */
 }
+
+.adoption-form h3 {
+  color: #ff7f50;
+}
+
+.save-preferences-button,
+.edit-preferences-button,
+.recommend-button,
+.adopt-button,
+.submit-adoption-button {
+  background-color: #ff7f50;
+  color: #fff;
+}
+
+.save-preferences-button:hover,
+.edit-preferences-button:hover,
+.recommend-button:hover,
+.adopt-button:hover,
+.submit-adoption-button:hover {
+  background-color: #e67345;
+}
+
 
   

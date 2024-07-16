@@ -51,7 +51,7 @@ const Navbar = () => {
           <li><Link to="/">Inicio</Link></li>
           <li><Link to="/perros">Perros</Link></li>
           <li><Link to="/recomendar-visitante">Recomendar</Link></li>
-          <li><Link to="/recursos">Recursos</Link></li>
+          <li><Link to="/donar">Donar</Link></li>
           <li><Link to="/contactos">Contactos</Link></li>
           <li><Link to="/nosotros">Nosotros</Link></li>
           <div className="auth-links">

@@ -15,6 +15,7 @@ import GestionarSolicitudes from './components/GestionarSolicitudes';
 import GestionarAdoptantes from './components/GestionarAdoptantes';
 import Navbar from './components/Navbar';
 import AuthProvider from './AuthContext';
+import Donar from './components/donar';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/perros" element={<Perros />} />
           <Route path="/contactos" element={<Contactos />} />
           <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/donar" element={<Donar/>} />
           <Route path="/recursos" element={<Recursos />} />
           <Route path="/recomendar" element={<Recomendar />} />
           <Route path="/recomendar-visitante" element={<RecomendarVisitante />} />
