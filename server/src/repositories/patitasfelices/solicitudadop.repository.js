@@ -1,4 +1,4 @@
-import { SolicitudAdopcion } from '../../models/index.js';
+import { SolicitudAdopcion, Adoptante, Perro } from '../../models/index.js';
 
 const SolicitudAdopcionRepository = {
     createSolicitudAdopcion: async (solicitudAdopcionData, transaction) => {
@@ -8,15 +8,29 @@ const SolicitudAdopcionRepository = {
     getAllSolicitudesAdopcion: async ({ where = {}, limit, offset }) => {
         const { rows, count } = await SolicitudAdopcion.findAndCountAll({
             where,
+            include: [
+                { model: Adoptante, attributes: ['nombre', 'apellido'] },
+                { model: Perro, attributes: ['nombre'] }
+            ],
             limit,
-            offset
+            offset,
+            order: [['createdAt', 'DESC']]
         });
-
+    
         return { rows, count };
     },
+    
+    countAllSolicitudes: async (filters) => {
+        return SolicitudAdopcion.count({ where: filters });
+    },    
 
     getSolicitudAdopcionById: async (id) => {
-        return SolicitudAdopcion.findByPk(id);
+        return SolicitudAdopcion.findByPk(id, {
+            include: [
+                { model: Adoptante, attributes: ['nombre', 'apellido'] },
+                { model: Perro, attributes: ['nombre'] }
+            ]
+        });
     },
 
     updateSolicitudAdopcion: async (id, solicitudAdopcionData) => {
@@ -34,6 +48,23 @@ const SolicitudAdopcionRepository = {
             return true;
         }
         return false;
+    },
+    
+    getDevoluciones: async ({ limit, offset }) => {
+        const { rows, count } = await SolicitudAdopcion.findAndCountAll({
+            where: {
+                rechazado_por_devolucion: true
+            },
+            include: [
+                { model: Adoptante, attributes: ['nombre', 'apellido'] },
+                { model: Perro, attributes: ['nombre'] }
+            ],
+            limit,
+            offset,
+            order: [['fecha_devolucion', 'DESC']]
+        });
+
+        return { rows, count };
     }
 };
 

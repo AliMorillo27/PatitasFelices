@@ -19,9 +19,13 @@ export const SolicitudAdopcion = sequelize.define('tb_solicitudadopcion', {
   estado: {
     type: DataTypes.STRING(100),
   },
-  rechazado_por_devolucion: {  // Nuevo atributo
+  rechazado_por_devolucion: {  
     type: DataTypes.BOOLEAN,
     defaultValue: false,
+  },
+  fecha_devolucion: {
+    type: DataTypes.DATE,
+    allowNull: true, // Permitir valores nulos para devoluciones no realizadas
   },
 }, {
   schema: "patitasfelices",

@@ -52,7 +52,7 @@ const Solicitar = ({ idAdoptante, idPerro }) => {
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Comentario</label>
+          <label>Motivo</label>
           <input
             type="text"
             value={form.comentario}
@@ -60,7 +60,7 @@ const Solicitar = ({ idAdoptante, idPerro }) => {
           />
         </div>
         <div>
-          <label>Descripción</label>
+          <label>Compromiso</label>
           <input
             type="text"
             value={form.descripcion}

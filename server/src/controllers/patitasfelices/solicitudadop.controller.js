@@ -11,13 +11,27 @@ export const createSolicitudAdopcion = async (req, res) => {
 
 export const getAllSolicitudesAdopcion = async (req, res) => {
     try {
-        const { page = 1, estado } = req.query;
-        const solicitudesAdopcion = await SolicitudAdopcionService.getAllSolicitudesAdopcion({ page, estado });
-        res.json(solicitudesAdopcion);
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10; // Ajusta el límite de elementos por página si es necesario
+        const offset = (page - 1) * limit;
+
+        const filters = {};
+
+        if (req.query.estado) filters.estado = req.query.estado;
+
+        const { rows, count } = await SolicitudAdopcionService.getAllSolicitudesAdopcion({ limit, offset, filters });
+        const totalSolicitudes = await SolicitudAdopcionService.countAllSolicitudes(filters);
+
+        res.json({
+            solicitudes: rows,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 export const getSolicitudAdopcionById = async (req, res) => {
     try {
@@ -54,6 +68,17 @@ export const deleteSolicitudAdopcion = async (req, res) => {
             res.status(404).json({ message: 'Solicitud de adopción no encontrada' });
         }
     } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getDevoluciones = async (req, res) => {
+    try {
+        const { page = 1 } = req.query;
+        const devoluciones = await SolicitudAdopcionService.getDevoluciones({ page });
+        res.json(devoluciones);
+    } catch (error) {
+        console.error('Error fetching devoluciones:', error); // Agrega este log
         res.status(500).json({ message: error.message });
     }
 };

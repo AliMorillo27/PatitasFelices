@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/Recomendar.css'; // Importa el archivo CSS
 
 const RecomendarVisitante = () => {
   const [numRecommendations, setNumRecommendations] = useState(1);
@@ -34,8 +35,8 @@ const RecomendarVisitante = () => {
   };
 
   return (
-    <div>
-      <h1>Recomendar un Perro (Visitante)</h1>
+    <div className="recomendar-container">
+      <h1>Recomendar un Perro </h1>
       <div>
         <label>
           Tiene niños:
@@ -100,7 +101,7 @@ const RecomendarVisitante = () => {
           min="1"
           placeholder="Número de Recomendaciones"
         />
-        <button onClick={handleRecommend}>Recomendar</button>
+        <button className="recomendar-button" onClick={handleRecommend}>Recomendar</button>
       </div>
 
       {recommendations.length > 0 && (
@@ -113,7 +114,10 @@ const RecomendarVisitante = () => {
               <p>Raza: {rec.raza}</p>
               <p>Tamaño: {rec.tamano}</p>
               <p>Género: {rec.genero}</p>
-              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p> {/* Mostrar el puntaje de similitud */}
+              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p>
+              <div className="similarity-bar-container">
+                <div className="similarity-bar" style={{ width: `${rec.puntaje_similitud * 100}%` }}></div>
+              </div>
             </li>
           ))}
         </ul>

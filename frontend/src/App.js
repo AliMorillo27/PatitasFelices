@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Inicio from './components/Inicio';
@@ -13,8 +12,18 @@ import Login from './components/Login';
 import Register from './components/Register';
 import CrearPerro from './components/GestionarPerros/CrearPerro';
 import ListarPerros from './components/GestionarPerros/ListarPerros';
+import EditarPerro from './components/GestionarPerros/EditarPerro'; 
 import CrearAdoptante from './components/GestionarAdoptantes/CrearAdoptante';
 import ListarAdoptantes from './components/GestionarAdoptantes/ListarAdoptantes';
+import EditarAdoptante from './components/GestionarAdoptantes/EditarAdoptante';
+import CrearEmpleado from './components/GestionarEmpleados/CrearEmpleado';
+import ListarEmpleados from './components/GestionarEmpleados/ListarEmpleados';
+import EditarEmpleado from './components/GestionarEmpleados/EditarEmpleado';
+import CrearSolicitud from './components/GestionarSolicitudes/CrearSolicitud';
+import SolicitudesPendientes from './components/GestionarSolicitudes/SolicitudesPendientes';
+import ListarSolicitudes from './components/GestionarSolicitudes/ListarSolicitudes';
+import RegistrarDevolucion from './components/GestionarDevoluciones/RegistrarDevolucion';
+import VerDevoluciones from './components/GestionarDevoluciones/VerDevoluciones';
 import Navbar from './components/Navbar';
 import AuthProvider from './AuthContext';
 
@@ -36,8 +45,18 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/gestionar/perros/crear" element={<CrearPerro />} />
           <Route path="/gestionar/perros/listar" element={<ListarPerros />} />
+          <Route path="/gestionar/perros/editar/:id" element={<EditarPerro />} /> 
           <Route path="/gestionar/adoptantes/crear" element={<CrearAdoptante />} />
           <Route path="/gestionar/adoptantes/listar" element={<ListarAdoptantes />} />
+          <Route path="/gestionar/adoptantes/editar/:id" element={<EditarAdoptante />} />
+          <Route path="/gestionar/empleados/crear" element={<CrearEmpleado />} />
+          <Route path="/gestionar/empleados/listar" element={<ListarEmpleados />} />
+          <Route path="/gestionar/empleados/editar/:id" element={<EditarEmpleado />} />
+          <Route path="/gestionar/solicitudes/crear" element={<CrearSolicitud />} />
+          <Route path="/gestionar/solicitudes/pendientes" element={<SolicitudesPendientes />} />
+          <Route path="/gestionar/solicitudes/listar" element={<ListarSolicitudes />} />
+          <Route path="/gestionar/devoluciones/registrar" element={<RegistrarDevolucion />} />
+          <Route path="/gestionar/devoluciones/ver" element={<VerDevoluciones />} />
         </Routes>
       </Router>
     </AuthProvider>

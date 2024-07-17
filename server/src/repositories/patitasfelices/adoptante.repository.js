@@ -1,4 +1,5 @@
 import { Adoptante } from '../../models/index.js';
+import { Op } from 'sequelize';
 
 const AdoptanteRepository = {
     createAdoptante: async (adoptanteData, transaction) => {
@@ -38,6 +39,17 @@ const AdoptanteRepository = {
             return true;
         }
         return false;
+    },
+
+    getAdoptanteByCedulaOEmail: async (cedula, email) => {
+        return Adoptante.findAll({
+            where: {
+                [Op.or]: [
+                    { cedula },
+                    { email }
+                ]
+            }
+        });
     }
 };
 

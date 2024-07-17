@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../../styles/EditarEmpleado.css'; // Asegúrate de importar el archivo CSS
 
 const EditarPerro = () => {
   const { id } = useParams();
@@ -103,26 +104,30 @@ const EditarPerro = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate('/gestionar/perros/listar');
+  };
+
   return (
-    <div>
+    <div className="editar-empleado-container">
       <h2>Editar Perro</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Nombre</label>
           <input type="text" name="nombre" value={form.nombre} onChange={handleInputChange} />
-          {errors.nombre && <p>{errors.nombre}</p>}
+          {errors.nombre && <p className="error">{errors.nombre}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>URL de Imagen</label>
           <input type="file" accept="image/*" onChange={handleImageChange} />
-          {errors.imagen_url && <p>{errors.imagen_url}</p>}
+          {errors.imagen_url && <p className="error">{errors.imagen_url}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Edad</label>
           <input type="number" name="edad" value={form.edad} onChange={handleInputChange} />
-          {errors.edad && <p>{errors.edad}</p>}
+          {errors.edad && <p className="error">{errors.edad}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Raza</label>
           <select name="raza" value={form.raza} onChange={handleInputChange}>
             <option value="PEQUEÑO">Pequeño</option>
@@ -131,43 +136,43 @@ const EditarPerro = () => {
             <option value="GIGANTE">Gigante</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Tamaño</label>
           <input type="number" name="tamano" value={form.tamano} onChange={handleInputChange} />
-          {errors.tamano && <p>{errors.tamano}</p>}
+          {errors.tamano && <p className="error">{errors.tamano}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Género</label>
           <select name="genero" value={form.genero} onChange={handleInputChange}>
             <option value="Macho">Macho</option>
             <option value="Hembra">Hembra</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Descripción</label>
           <textarea name="descripcion" value={form.descripcion} onChange={handleInputChange}></textarea>
-          {errors.descripcion && <p>{errors.descripcion}</p>}
+          {errors.descripcion && <p className="error">{errors.descripcion}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Nivel de Energía</label>
           <input type="number" name="nivel_energia" value={form.nivel_energia} onChange={handleInputChange} />
-          {errors.nivel_energia && <p>{errors.nivel_energia}</p>}
+          {errors.nivel_energia && <p className="error">{errors.nivel_energia}</p>}
         </div>
-        <div>
+        <div className="form-group">
           <label>Bueno con Niños</label>
           <select name="bueno_con_ninos" value={form.bueno_con_ninos} onChange={handleInputChange}>
             <option value="Si">Si</option>
             <option value="No">No</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Bueno con Mascotas</label>
           <select name="bueno_con_mascota" value={form.bueno_con_mascota} onChange={handleInputChange}>
             <option value="Si">Si</option>
             <option value="No">No</option>
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Nivel de Formación</label>
           <select name="nivel_formacion" value={form.nivel_formacion} onChange={handleInputChange}>
             <option value="BAJO">Bajo</option>
@@ -175,7 +180,10 @@ const EditarPerro = () => {
             <option value="ALTO">Alto</option>
           </select>
         </div>
-        <button type="submit">Guardar</button>
+        <div className="form-buttons">
+          <button type="submit" className="save-btn">Guardar</button>
+          <button type="button" className="cancel-btn" onClick={handleCancel}>Cancelar</button>
+        </div>
       </form>
     </div>
   );

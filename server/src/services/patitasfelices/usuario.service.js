@@ -34,8 +34,9 @@ const UsuarioService = {
 
     },
 
-    getAllUsuarios: async () => {
-        return UsuarioRepository.getAllUsuarios();
+    getAllUsuarios: async (query) => {
+        const { tipo } = query;
+        return UsuarioRepository.getAllUsuarios({ where: { tipo } });
     },
 
     getUsuarioById: async (id) => {

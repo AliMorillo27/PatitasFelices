@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Solicitar from './Solicitar'; // Importar el componente Solicitar
+import '../styles/Perros.css'; // Importar el archivo CSS
 
 const Perros = ({ idAdoptante }) => {
   const [perros, setPerros] = useState([]);
@@ -38,9 +39,9 @@ const Perros = ({ idAdoptante }) => {
   };
 
   return (
-    <div>
+    <div className="perros-container">
       <h2>Perros Disponibles</h2>
-      <div>
+      <div className="filters">
         <label>
           Raza:
           <input type="text" name="raza" value={filters.raza} onChange={handleChange} />
@@ -54,36 +55,50 @@ const Perros = ({ idAdoptante }) => {
           <input type="text" name="tamano" value={filters.tamano} onChange={handleChange} />
         </label>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Raza</th>
-            <th>Edad</th>
-            <th>Tamaño</th>
-            <th>Género</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(perros) && perros.map(perro => (
-            <tr key={perro.id_perro}>
-              <td>{perro.nombre}</td>
-              <td>{perro.raza}</td>
-              <td>{perro.edad}</td>
-              <td>{perro.tamano}</td>
-              <td>{perro.genero}</td>
-              <td>{perro.descripcion}</td>
-              <td>
-                <button onClick={() => handleAdoptar(perro.id_perro)}>Adoptar</button>
-              </td>
+      <div className="table-container">
+        <table className="perros-table">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Raza</th>
+              <th>Edad</th>
+              <th>Tamaño</th>
+              <th>Género</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {Array.isArray(perros) && perros.map(perro => (
+              <tr key={perro.id_perro}>
+                <td>
+                  {perro.imagen_url && (
+                    <img
+                      src={`http://localhost:3000/${perro.imagen_url.startsWith('http') ? perro.imagen_url : perro.imagen_url}`}
+                      alt={perro.nombre}
+                      width="100"
+                    />
+                  )}
+                </td>
+                <td>{perro.nombre}</td>
+                <td>{perro.raza}</td>
+                <td>{perro.edad}</td>
+                <td>{perro.tamano}</td>
+                <td>{perro.genero}</td>
+                <td>{perro.descripcion}</td>
+                <td>
+                  <button onClick={() => handleAdoptar(perro.id_perro)}>Adoptar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {selectedPerroId && (
-        <Solicitar idAdoptante={idAdoptante} idPerro={selectedPerroId} />
+        <div className="solicitar-container">
+          <Solicitar idAdoptante={idAdoptante} idPerro={selectedPerroId} />
+        </div>
       )}
     </div>
   );

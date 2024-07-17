@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
+import '../styles/Recomendar.css'; // Importa el archivo CSS
 
 const Recomendar = () => {
   const { auth } = useContext(AuthContext);
@@ -123,10 +124,21 @@ const Recomendar = () => {
     }
   };
 
+  const handleCancelAdoption = () => {
+    setIsAdopting(false);
+    setAdoptionData({
+      fechaSolicitud: '',
+      comentario: '',
+      descripcion: ''
+    });
+  };
+
   return (
-    <div>
+    <div className="recomendar-container">
+      <label htmlFor="numRecommendations">Número de Recomendaciones:</label>
       <input
         type="number"
+        id="numRecommendations"
         value={numRecommendations}
         onChange={(e) => setNumRecommendations(e.target.value)}
         min="1"
@@ -193,7 +205,10 @@ const Recomendar = () => {
               <option value="EXPERTO">Experto</option>
             </select>
           </label>
-          <button onClick={handleSavePreferences}>Guardar Preferencias</button>
+          <div className="buttons-container">
+            <button onClick={handleSavePreferences}>Guardar Preferencias</button>
+            <button className="cancel-button" onClick={handleEditToggle}>Cancelar</button>
+          </div>
         </div>
       ) : (
         <button onClick={handleEditToggle}>Editar Preferencias</button>
@@ -209,7 +224,10 @@ const Recomendar = () => {
               <p>Raza: {rec.raza}</p>
               <p>Tamaño: {rec.tamano}</p>
               <p>Género: {rec.genero}</p>
-              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p> {/* Mostrar el puntaje de similitud */}
+              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p>
+              <div className="similarity-bar-container">
+                <div className="similarity-bar" style={{ width: `${rec.puntaje_similitud * 100}%` }}></div>
+              </div>
               <button onClick={() => handleAdoptClick(rec)}>Adoptar</button>
             </li>
           ))}
@@ -219,15 +237,6 @@ const Recomendar = () => {
       {isAdopting && selectedPerro && (
         <div>
           <h3>Solicitud de Adopción para {selectedPerro.nombre}</h3>
-          <label>
-            Fecha de Solicitud:
-            <input
-              type="date"
-              name="fechaSolicitud"
-              value={adoptionData.fechaSolicitud}
-              onChange={handleAdoptionInputChange}
-            />
-          </label>
           <label>
             Comentario:
             <textarea
@@ -244,7 +253,10 @@ const Recomendar = () => {
               onChange={handleAdoptionInputChange}
             />
           </label>
-          <button onClick={handleAdoptSubmit}>Enviar Solicitud</button>
+          <div className="buttons-container">
+            <button onClick={handleAdoptSubmit}>Enviar Solicitud</button>
+            <button className="cancel-button" onClick={handleCancelAdoption}>Cancelar</button>
+          </div>
         </div>
       )}
     </div>

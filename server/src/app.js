@@ -1,6 +1,7 @@
 // src/app.js
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import routes from './routes/index.js';  // Asegúrate de que la ruta sea correcta
 
 const app = express();
@@ -12,7 +13,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static('../uploads')); // Asegúrate de servir la carpeta de cargas estáticas
+
+// Configurar la carpeta de cargas estáticas
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Asegúrate de servir la carpeta de cargas estáticas
 
 // Usa las rutas
 app.use('/api', routes);

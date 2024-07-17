@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/Register.css'; // Asegúrate de que la ruta sea correcta
 
 const Register = () => {
   const [tipo, setTipo] = useState('adoptante');
@@ -94,7 +95,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Registrarse</h2>
       <label>
         Tipo de Usuario:
