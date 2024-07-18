@@ -42,7 +42,7 @@ const Inicio = () => {
       </header>
       <section className="dogs-gallery">
         {dogs.length > 0 ? (
-          dogs.map(dog => (
+          dogs.slice(0, 6).map(dog => (
             <div className="dog-card" key={dog.id_perro}>
               <img
                 src={`http://localhost:3000/${dog.imagen_url.startsWith('http') ? dog.imagen_url : dog.imagen_url}`}
