@@ -4,9 +4,9 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({ isAuthenticated: false, userType: null, id_adoptante: null });
+  const [redirectPath, setRedirectPath] = useState(null);
 
   useEffect(() => {
-    // Cargar el estado de autenticación desde localStorage al cargar la aplicación
     const storedAuth = localStorage.getItem('auth');
     if (storedAuth) {
       setAuth(JSON.parse(storedAuth));
@@ -22,10 +22,11 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     setAuth({ isAuthenticated: false, userType: null, id_adoptante: null });
     localStorage.removeItem('auth');
+    setRedirectPath(null);
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, redirectPath, setRedirectPath }}>
       {children}
     </AuthContext.Provider>
   );
