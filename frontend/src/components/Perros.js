@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Solicitar from './Solicitar'; // Importar el componente Solicitar
-import '../styles/Perros.css'; // Importar el archivo CSS
+import { AuthContext } from '../AuthContext';
+import Solicitar from './Solicitar';
+import Modal from 'react-modal';
+import { useNavigate, useLocation } from 'react-router-dom';
+import '../styles/Perros.css';
 
-const Perros = ({ idAdoptante }) => {
+const Perros = () => {
+  const { auth, setRedirectPath } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [perros, setPerros] = useState([]);
   const [filters, setFilters] = useState({
     raza: '',
@@ -11,15 +17,28 @@ const Perros = ({ idAdoptante }) => {
     tamano: '',
   });
   const [selectedPerroId, setSelectedPerroId] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false); // Nuevo estado para el modal de inicio de sesión
 
   useEffect(() => {
     fetchPerros();
   }, [filters]);
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const perroId = queryParams.get('adoptar');
+
+    if (auth.isAuthenticated && perroId) {
+      setSelectedPerroId(perroId);
+      setModalIsOpen(true);
+      setRedirectPath(null);
+    }
+  }, [auth.isAuthenticated, location.search]);
+
   const fetchPerros = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/perros', {
-        params: { ...filters, id_estado: [1, 5] } // Solo mostrar perros disponibles y devueltos
+        params: { ...filters, estado: [1, 5] } // Solo mostrar perros disponibles y devueltos
       });
       setPerros(response.data.perros || []);
     } catch (error) {
@@ -35,7 +54,28 @@ const Perros = ({ idAdoptante }) => {
   };
 
   const handleAdoptar = (id) => {
-    setSelectedPerroId(id); // Establecer el ID del perro seleccionado para la adopción
+    if (!auth.isAuthenticated) {
+      setSelectedPerroId(id);
+      setLoginPromptOpen(true); // Mostrar el modal de inicio de sesión
+    } else {
+      setSelectedPerroId(id);
+      setModalIsOpen(true);
+    }
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setSelectedPerroId(null);
+  };
+
+  const closeLoginPrompt = () => {
+    setLoginPromptOpen(false);
+    setSelectedPerroId(null);
+  };
+
+  const handleLoginRedirect = () => {
+    setRedirectPath(`/perros?adoptar=${selectedPerroId}`);
+    navigate('/login');
   };
 
   return (
@@ -95,11 +135,29 @@ const Perros = ({ idAdoptante }) => {
           </tbody>
         </table>
       </div>
-      {selectedPerroId && (
-        <div className="solicitar-container">
-          <Solicitar idAdoptante={idAdoptante} idPerro={selectedPerroId} />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Solicitud de Adopción"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <Solicitar idAdoptante={auth.id_adoptante} idPerro={selectedPerroId} closeModal={closeModal} />
+      </Modal>
+      <Modal
+        isOpen={loginPromptOpen}
+        onRequestClose={closeLoginPrompt}
+        contentLabel="Iniciar Sesión"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <button className="close-modal-btn" onClick={closeLoginPrompt}>X</button> {/* Botón X para cerrar */}
+        <h2>Por favor, inicie sesión primero</h2>
+        <div className="button-container">
+          <button onClick={handleLoginRedirect}>Iniciar Sesión</button>
+          <button className="close-btn" onClick={closeLoginPrompt}>Cerrar</button>
         </div>
-      )}
+      </Modal>
     </div>
   );
 };
