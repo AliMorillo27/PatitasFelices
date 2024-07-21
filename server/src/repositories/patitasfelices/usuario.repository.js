@@ -35,4 +35,5 @@ const UsuarioRepository = {
     }
 };
 
+
 export default UsuarioRepository;

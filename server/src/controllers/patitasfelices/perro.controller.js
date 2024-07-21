@@ -29,7 +29,7 @@ export const createPerro = async (req, res) => {
 export const getAllPerros = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-        const limit = 10; // Puedes ajustar el límite de elementos por página
+        const limit = parseInt(req.query.limit) || 10; // Default to 10 if not specified
         const offset = (page - 1) * limit;
 
         const filters = {};

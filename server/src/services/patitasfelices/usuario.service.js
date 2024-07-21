@@ -1,7 +1,7 @@
-import { UsuarioRepository } from '../../repositories/index.js';
+import AdoptanteRepository from '../../repositories/patitasfelices/adoptante.repository.js'; // Ajusta la ruta según la estructura de tu proyecto
+import UsuarioRepository from '../../repositories/patitasfelices/usuario.repository.js';
 import bcrypt from 'bcrypt';
-import sendEmail from './email.service.js';
-import jwt from 'jsonwebtoken';
+import { Op } from 'sequelize';
 
 const UsuarioService = {
     createUsuario: async (usuarioData) => {
@@ -32,8 +32,6 @@ const UsuarioService = {
         }
 
         return UsuarioRepository.createUsuario(usuarioData);
-
-
     },
 
     getAllUsuarios: async (query) => {
@@ -58,21 +56,32 @@ const UsuarioService = {
     },
 
     loginUsuario: async (email, contrasena) => {
-        const usuario = await UsuarioRepository.getAllUsuarios({
+        const usuarios = await UsuarioRepository.getAllUsuarios({
             where: { email }
         });
 
-        if (usuario.length === 0) {
+        if (usuarios.length === 0) {
             throw new Error('Email o contraseña incorrectos.');
         }
 
-        const validPassword = await bcrypt.compare(contrasena, usuario[0].contrasena);
+        const usuario = usuarios[0];
+        const validPassword = await bcrypt.compare(contrasena, usuario.contrasena);
 
         if (!validPassword) {
             throw new Error('Email o contraseña incorrectos.');
         }
 
-        return usuario[0];
+        let id_adoptante = null;
+        if (usuario.tipo === 'adoptante') {
+            const adoptante = await AdoptanteRepository.getAdoptanteByUsuarioId(usuario.id_usuario);
+            id_adoptante = adoptante ? adoptante.id_adoptante : null;
+        }
+
+        return {
+            id_usuario: usuario.id_usuario,
+            tipo: usuario.tipo,
+            id_adoptante: id_adoptante
+        };
     },
 
     solicitarRestablecimientoContrasena: async (email) => {

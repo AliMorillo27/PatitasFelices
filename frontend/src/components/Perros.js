@@ -20,9 +20,13 @@ const Perros = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [loginPromptOpen, setLoginPromptOpen] = useState(false); // Nuevo estado para el modal de inicio de sesión
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(10); // Límite de elementos por página, configurable por el usuario
+
   useEffect(() => {
     fetchPerros();
-  }, [filters]);
+  }, [filters, currentPage, limit]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -38,9 +42,10 @@ const Perros = () => {
   const fetchPerros = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/perros', {
-        params: { ...filters, estado: [1, 5] } // Solo mostrar perros disponibles y devueltos
+        params: { ...filters, estado: [1, 5], page: currentPage, limit } // Solo mostrar perros disponibles y devueltos
       });
       setPerros(response.data.perros || []);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error('Error fetching perros:', error);
     }
@@ -51,6 +56,11 @@ const Perros = () => {
       ...filters,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleLimitChange = (e) => {
+    setLimit(e.target.value);
+    setCurrentPage(1); // Reset to first page on limit change
   };
 
   const handleAdoptar = (id) => {
@@ -94,24 +104,35 @@ const Perros = () => {
           Tamaño:
           <input type="text" name="tamano" value={filters.tamano} onChange={handleChange} />
         </label>
+        <label>
+          Mostrar por página:
+          <input
+            type="number"
+            value={limit}
+            onChange={handleLimitChange}
+            min="1"
+          />
+        </label>
       </div>
       <div className="table-container">
         <table className="perros-table">
           <thead>
             <tr>
-              <th>Imagen</th>
+              <th></th>
+              <th>Perro</th>
               <th>Nombre</th>
               <th>Raza</th>
               <th>Edad</th>
               <th>Tamaño</th>
               <th>Género</th>
               <th>Descripción</th>
-              <th>Acciones</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(perros) && perros.map(perro => (
+            {Array.isArray(perros) && perros.map((perro, index) => (
               <tr key={perro.id_perro}>
+                <td>{(currentPage - 1) * limit + index + 1}</td>
                 <td>
                   {perro.imagen_url && (
                     <img
@@ -134,6 +155,17 @@ const Perros = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={index + 1 === currentPage ? 'active' : ''}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
       <Modal
         isOpen={modalIsOpen}

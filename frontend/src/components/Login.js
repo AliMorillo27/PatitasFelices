@@ -2,17 +2,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import axios from 'axios';
-import MessageModal from './MessageModal'; // Asegúrate de que este componente esté correctamente importado
-import '../styles/Login.css'; // Estilos para el login y el modal
-import welcomeImage from '../assets/logo.png'; 
+import MessageModal from './MessageModal';
+import '../styles/Login.css';
+import welcomeImage from '../assets/logo.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const [modalType, setModalType] = useState(''); // 'success' para bienvenidas y 'error' para errores
-  const [modalImage, setModalImage] = useState(null); // Estado para la imagen del modal
+  const [modalType, setModalType] = useState('');
+  const [modalImage, setModalImage] = useState(null);
   const navigate = useNavigate();
   const { auth, login, redirectPath, setRedirectPath } = useContext(AuthContext);
 
@@ -22,28 +22,35 @@ const Login = () => {
         navigate(redirectPath);
         setRedirectPath(null);
       } else {
-        navigate('/'); // Redirigir al inicio si no hay redirectPath
+        navigate('/');
       }
     }
   }, [auth.isAuthenticated, redirectPath, navigate, setRedirectPath]);
 
   const handleLogin = async () => {
     try {
+      console.log('Datos de inicio de sesión:', { email, contrasena });
       const response = await axios.post('http://localhost:3000/api/usuarios/login', { email, contrasena });
-      const { tipo, id_usuario } = response.data;
+      const { tipo, id_usuario, id_adoptante } = response.data;
+
+      if (id_adoptante) {
+        console.log('ID Adoptante:', id_adoptante);
+      }
+
       setModalMessage('Bienvenido a Patitas Felices');
       setModalOpen(true);
       setModalType('welcome');
-      setModalImage(welcomeImage); // Establecer la imagen del modal
+      setModalImage(welcomeImage);
       setTimeout(() => {
         setModalOpen(false);
-        login(tipo, id_usuario);
-      }, 2500); // Cerrar el modal automáticamente después de 2.5 segundos
+        login(tipo, id_usuario, id_adoptante);
+      }, 2500);
     } catch (error) {
+      console.error('Error al iniciar sesión:', error.response ? error.response.data : error.message);
       setModalMessage('Email o contraseña incorrectos');
       setModalOpen(true);
       setModalType('error');
-      setModalImage(null); // No mostrar imagen en caso de error
+      setModalImage(null);
     }
   };
 
@@ -69,7 +76,7 @@ const Login = () => {
         <button className="login-button" onClick={handleLogin}>Iniciar Sesión</button>
         <div className="register-link-container">
           <Link to="/register" className="register-link">Crear cuenta</Link>
-          <Link to="/recuperar-contrasena" className="register-link">Recuperar contrasena</Link>
+          <Link to="/recuperar-contrasena" className="register-link">Recuperar contraseña</Link>
         </div>
       </div>
       <MessageModal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} type={modalType} image={modalImage} />

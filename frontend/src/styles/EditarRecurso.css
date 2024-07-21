@@ -1,0 +1,77 @@
+/* EditarRecurso.css */
+.editar-recurso-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.editar-recurso-container h2 {
+    text-align: center;
+    color: #4CAF50; /* Verde limón */
+}
+
+.editar-recurso-container form div {
+    margin-bottom: 15px;
+}
+
+.editar-recurso-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.editar-recurso-container input,
+.editar-recurso-container select,
+.editar-recurso-container textarea,
+.editar-recurso-container .ql-container {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.editar-recurso-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #8BC34A; /* Verde limón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.editar-recurso-container button[type="button"] {
+    background-color: #f44336; /* Rojo para el botón cancelar */
+}
+
+.editar-recurso-container p {
+    color: #f44336;
+    font-size: 12px;
+}
+
+.editar-recurso-container input[type="number"],
+.editar-recurso-container input[type="text"],
+.editar-recurso-container input[type="email"],
+.editar-recurso-container input[type="password"],
+.editar-recurso-container select,
+.editar-recurso-container textarea,
+.editar-recurso-container .ql-container {
+    background-color: #f9f9f9; /* Fondo claro */
+    transition: border-color 0.3s ease-in-out;
+}
+
+.editar-recurso-container input[type="number"]:focus,
+.editar-recurso-container input[type="text"]:focus,
+.editar-recurso-container input[type="email"]:focus,
+.editar-recurso-container input[type="password"]:focus,
+.editar-recurso-container select:focus,
+.editar-recurso-container textarea:focus,
+.editar-recurso-container .ql-container:focus {
+    border-color: #8BC34A; /* Verde limón */
+}

@@ -1,0 +1,104 @@
+.listar-recursos-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #8BC34A; /* Verde limón */
+  }
+  
+  .filters-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter label {
+    margin-right: 10px;
+  }
+  
+  .filter select,
+  .filter input {
+    width: auto;
+    padding: 5px;
+  }
+  
+  .crear-btn {
+    background-color: #8BC34A; /* Verde limón */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .crear-btn:hover {
+    background-color: #8BC34A;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  button {
+    margin: 5px 0;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  .eliminar-btn {
+    background-color: #f44336; /* Rojo */
+    color: white;
+  }
+  .eliminar-btn:hover {
+    background-color: #b8382e;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background-color: #8BC34A; /* Verde limón */
+    color: white;
+  }
+  
