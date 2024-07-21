@@ -5,8 +5,18 @@ const RecursoeduRepository = {
         return Recursoedu.create(recursoeduData, { transaction });
     },
 
-    getAllRecursoedu: async () => {
-        return Recursoedu.findAll();
+    getAllRecursosedu: async (pagination) => {
+        const { limit, offset, filters } = pagination;
+        return Recursoedu.findAll({
+            where: filters,
+            limit,
+            offset,
+            order: [['updatedAt', 'DESC']] // Ordenar por fecha de actualización para mostrar el más reciente primero
+        });
+    },
+
+    countAllRecursosedu: async (filters) => {
+        return Recursoedu.count({ where: filters });
     },
 
     getRecursoeduById: async (id) => {

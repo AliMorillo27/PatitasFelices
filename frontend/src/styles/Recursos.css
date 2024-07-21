@@ -1,64 +1,70 @@
 .recursos-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .titulo-principal {
-    text-align: center;
-    font-size: 2.5em;
-    color: #2c3e50;
-    margin-bottom: 40px;
-  }
-  
-  .consejo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #ecf0f1;
-    padding-bottom: 20px;
-  }
-  
-  .imagen {
-    flex: 1;
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 8px;
-    margin-right: 20px;
-  }
-  
-  .imagen.alimentacion {
-    background-image: url('../assets/bella.jpeg');
-  }
-  
-  .imagen.ejercicio {
-    background-image: url('../assets/buster.jpeg');
-  }
-  
-  .imagen.veterinario {
-    background-image: url('../assets/charlie.jpeg');
-  }
-  
-  .imagen.higiene {
-    background-image: url('../assets/coco.jpeg');
-  }
-  
-  .texto {
-    flex: 2;
-  }
-  
-  .texto h2 {
-    font-size: 1.8em;
-    color: #27ae60;
-    margin-bottom: 10px;
-  }
-  
-  .texto p {
-    font-size: 1.2em;
-    color: #34495e;
-    line-height: 1.6;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-principal {
+  text-align: center;
+  color: #4CAF50; /* Verde limón */
+}
+
+.recursos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.recurso-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s, box-shadow 0.3s; /* Agrega transición para el hover */
+}
+
+.recurso-card:hover {
+  transform: translateY(-5px); /* Eleva ligeramente la tarjeta */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+}
+
+.imagen-recurso,
+.video-recurso {
+  width: 100%;
+  height: 200px; /* Tamaño uniforme */
+  border-radius: 5px;
+  object-fit: cover; /* Mantener relación de aspecto */
+}
+
+.texto {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.texto h2 {
+  color: #333;
+}
+
+.ver-mas {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  color: white;
+  background-color: #8BC34A; /* Verde limón */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.ver-mas:hover {
+  background-color: #4CAF50; /* Verde limón más oscuro */
+}

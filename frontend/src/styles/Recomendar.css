@@ -104,3 +104,57 @@
 .recomendar-container button[type="submit"]:hover {
   background-color: #76a142;
 }
+/* Estilos para el modal */
+.Modal {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Modal h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Modal button {
+  background-color: #4CAF50; /* Verde para el botón Enviar Solicitud */
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  width: auto; /* Para evitar que ocupen todo el ancho */
+  min-width: 120px; /* Ancho mínimo para mantener la estética */
+}
+
+.Modal button:hover {
+  background-color: #408843;
+}
+
+.Modal .cancel-button {
+  background-color: #f44336; /* Rojo para el botón Cancelar */
+}
+
+.Modal .cancel-button:hover {
+  background-color: #d32f2f;
+}

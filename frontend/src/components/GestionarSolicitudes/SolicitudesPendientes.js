@@ -37,7 +37,6 @@ const SolicitudesPendientes = () => {
     try {
       await axios.put(`http://localhost:3000/api/solicitudes-adopcion/${id}`, { estado: 'rechazada' });
       // Refrescar la lista de solicitudes pendientes
-      window.location.reload();
       setSolicitudes(solicitudes.filter(solicitud => solicitud.idSolicitud !== id));
     } catch (error) {
       console.error('Error rejecting solicitud:', error);

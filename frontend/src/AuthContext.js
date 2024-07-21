@@ -13,8 +13,8 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (userType, id_adoptante) => {
-    const newAuth = { isAuthenticated: true, userType, id_adoptante };
+  const login = (userType, id_usuario, id_adoptante) => {
+    const newAuth = { isAuthenticated: true, userType, id_usuario, id_adoptante };
     setAuth(newAuth);
     localStorage.setItem('auth', JSON.stringify(newAuth));
   };

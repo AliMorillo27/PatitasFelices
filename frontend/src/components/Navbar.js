@@ -68,6 +68,15 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
+            {<li>
+              <button onClick={() => handleDropdown('recursos')}>Gestionar Recursos</button>
+              {dropdown === 'recursos' && (
+                <ul className="dropdown-menu">
+                  <li><Link to="/gestionar/recursos/crear">Crear</Link></li>
+                  <li><Link to="/gestionar/recursos/listar">Listar</Link></li>
+                </ul>
+              )}
+            </li>}
             <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
@@ -111,6 +120,15 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
+            {<li>
+              <button onClick={() => handleDropdown('recursos')}>Gestionar Recursos</button>
+              {dropdown === 'recursos' && (
+                <ul className="dropdown-menu">
+                  <li><Link to="/gestionar/recursos/crear">Crear</Link></li>
+                  <li><Link to="/gestionar/recursos/listar">Listar</Link></li>
+                </ul>
+              )}
+            </li>}
             <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );

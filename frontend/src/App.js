@@ -28,6 +28,10 @@ import Navbar from './components/Navbar';
 import AuthProvider from './AuthContext';
 import RecuperarContrasena from './components/RecuperarContrasena';
 import RestablecerContrasena from './components/RestablecerContrasena';
+import ListarRecursos from './components/GestionarRecursos/ListarRecursos';
+import CrearRecurso from './components/GestionarRecursos/CrearRecurso';
+import EditarRecurso from './components/GestionarRecursos/EditarRecurso';
+import VisualizarRecurso from './components/VisualizarRecurso';
 
 function App() {
   return (
@@ -61,6 +65,10 @@ function App() {
           <Route path="/gestionar/devoluciones/ver" element={<VerDevoluciones />} />
           <Route path="/recuperar-contrasena" element={<RecuperarContrasena />} />
           <Route path="/restablecer-contrasena" element={<RestablecerContrasena />} />
+          <Route path="/gestionar/recursos/crear" element={<CrearRecurso />} />
+          <Route path="/gestionar/recursos/listar" element={<ListarRecursos />} />
+          <Route path="/gestionar/recursos/editar/:id" element={<EditarRecurso />} />
+          <Route path="/recursos/:id" element={<VisualizarRecurso />} />
         </Routes>
       </Router>
     </AuthProvider>

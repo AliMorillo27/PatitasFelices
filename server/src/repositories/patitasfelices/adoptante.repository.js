@@ -50,6 +50,11 @@ const AdoptanteRepository = {
                 ]
             }
         });
+    },
+    getAdoptanteByUsuarioId: async (id_usuario) => {
+        return Adoptante.findOne({
+            where: { id_usuario }
+        });
     }
 };
 

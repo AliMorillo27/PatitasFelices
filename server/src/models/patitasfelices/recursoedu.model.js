@@ -1,3 +1,4 @@
+// src/models/Recursoedu.js
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../database/database.js';
 
@@ -18,6 +19,15 @@ export const Recursoedu = sequelize.define('tb_recursoedu', {
     type: DataTypes.DATE,
   },
   tipo: {
+    type: DataTypes.STRING,
+  },
+  imagen_url: {
+    type: DataTypes.STRING,
+  },
+  video_url: {
+    type: DataTypes.STRING,
+  },
+  pdf_url: {
     type: DataTypes.STRING,
   },
 }, {

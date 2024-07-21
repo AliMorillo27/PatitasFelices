@@ -8,7 +8,7 @@ import recursoeduRoutes from './patitasfelices/recursoedu.routes.js';
 import solicitudAdopcionRoutes from './patitasfelices/solicitudadop.routes.js';
 import usuarioRoutes from './patitasfelices/usuario.routes.js';
 import recomendarRoutes from './patitasfelices/recommendation.routes.js'
-import holaRoutes from './patitasfelices/hola.routes.js';  
+import holaRoutes from './patitasfelices/hola.routes.js';  // Nueva ruta
 import uploadRoutes from './patitasfelices/upload.routes.js';
 
 
