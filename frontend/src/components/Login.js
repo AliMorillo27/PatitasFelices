@@ -1,59 +1,85 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import axios from 'axios';
+import MessageModal from './MessageModal';
+import '../styles/Login.css';
+import welcomeImage from '../assets/logo.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [modalImage, setModalImage] = useState(null);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { auth, login, redirectPath, setRedirectPath } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      if (redirectPath) {
+        navigate(redirectPath);
+        setRedirectPath(null);
+      } else {
+        navigate('/');
+      }
+    }
+  }, [auth.isAuthenticated, redirectPath, navigate, setRedirectPath]);
 
   const handleLogin = async () => {
     try {
+      console.log('Datos de inicio de sesión:', { email, contrasena });
       const response = await axios.post('http://localhost:3000/api/usuarios/login', { email, contrasena });
-      const { tipo, id_usuario } = response.data; // Obtener id_usuario de la respuesta de inicio de sesión
-      
-      if (tipo === 'adoptante') {
-        // Solo intentar obtener id_adoptante si el usuario es un adoptante
-        try {
-          const adoptanteResponse = await axios.get(`http://localhost:3000/api/adoptantes/usuario/${id_usuario}`);
-          const { id_adoptante } = adoptanteResponse.data; // Obtener id_adoptante de la respuesta
-          console.log('Login response:', response.data);  // Verificar respuesta de inicio de sesión
-          console.log('Adoptante response:', adoptanteResponse.data);  // Verificar respuesta de adoptante
-          login(tipo, id_adoptante);
-        } catch (adoptanteError) {
-          console.error('Error al obtener adoptante:', adoptanteError.response?.data || adoptanteError.message);
-          alert('Error al obtener adoptante');
-        }
-      } else {
-        // Si no es un adoptante, no intentar obtener el id_adoptante
-        login(tipo, null);
+      const { tipo, id_usuario, id_adoptante } = response.data;
+
+      if (id_adoptante) {
+        console.log('ID Adoptante:', id_adoptante);
       }
-      
-      navigate('/');
+
+      setModalMessage('Bienvenido a Patitas Felices');
+      setModalOpen(true);
+      setModalType('welcome');
+      setModalImage(welcomeImage);
+      setTimeout(() => {
+        setModalOpen(false);
+        login(tipo, id_usuario, id_adoptante);
+      }, 2500);
     } catch (error) {
-      console.error('Error al iniciar sesión:', error.response?.data || error.message);
-      alert('Email o contraseña incorrectos');
+      console.error('Error al iniciar sesión:', error.response ? error.response.data : error.message);
+      setModalMessage('Email o contraseña incorrectos');
+      setModalOpen(true);
+      setModalType('error');
+      setModalImage(null);
     }
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
-      <input
-        type="email"
-        placeholder="Correo Electrónico"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={contrasena}
-        onChange={(e) => setContrasena(e.target.value)}
-      />
-      <button onClick={handleLogin}>Iniciar Sesión</button>
+    <div className="login-background">
+      <div className="login-container">
+        <h2 className="login-title">Iniciar Sesión</h2>
+        <div className="login-icon"></div>
+        <input
+          className="login-input"
+          type="email"
+          placeholder="Correo Electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="login-input"
+          type="password"
+          placeholder="Contraseña"
+          value={contrasena}
+          onChange={(e) => setContrasena(e.target.value)}
+        />
+        <button className="login-button" onClick={handleLogin}>Iniciar Sesión</button>
+        <div className="register-link-container">
+          <Link to="/register" className="register-link">Crear cuenta</Link>
+          <Link to="/recuperar-contrasena" className="register-link">Recuperar contraseña</Link>
+        </div>
+      </div>
+      <MessageModal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} type={modalType} image={modalImage} />
     </div>
   );
 };

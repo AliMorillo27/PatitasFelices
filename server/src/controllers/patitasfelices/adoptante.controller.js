@@ -5,6 +5,7 @@ export const createAdoptante = async (req, res) => {
         const adoptante = await AdoptanteService.createAdoptante(req.body);
         res.status(201).json(adoptante);
     } catch (error) {
+        console.error('Error al crear adoptante:', error.message);
         res.status(400).json({ message: error.message });
     }
 };

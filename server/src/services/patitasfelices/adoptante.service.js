@@ -6,7 +6,7 @@ import { sequelize } from '../../database/database.js';
 
 const AdoptanteService = {
     createAdoptante: async (adoptanteData) => {
-        const { cedula, email, contrasena, edad, nombre, apellido, genero, direccion, telefono,tiene_ninos,tiene_mascota,nivel_actividad,nivel_energia,tamano_perro_preferido,experiencia_con_perros } = adoptanteData;
+        const { cedula, email, contrasena, edad, nombre, apellido, genero, direccion, telefono, tiene_ninos, tiene_mascota, nivel_actividad, nivel_energia, tamano_perro_preferido, experiencia_con_perros } = adoptanteData;
 
         // Validación de campos obligatorios
         if (!cedula || !email || !contrasena || !edad || !nombre || !apellido || !genero || !direccion || !telefono || !tiene_ninos || !tiene_mascota || !nivel_actividad || !nivel_energia || !tamano_perro_preferido || !experiencia_con_perros) {
@@ -23,10 +23,11 @@ const AdoptanteService = {
         }
 
         // Verificación de edad
-        if (edad < 18|| edad > 70) {
+        if (edad < 18 || edad > 70) {
             throw new Error('El adoptante debe tener al menos 18 años y no más de 70 años.');
         }
-        //validacion de cedula
+
+        // Validación de cédula
         if (cedula.length !== 10 || !/^\d+$/.test(cedula)) {
             throw new Error("Ingrese una cédula válida de 10 dígitos.");
         } else {
@@ -59,14 +60,9 @@ const AdoptanteService = {
         }
 
         // Verificación de cédula y email únicos
-        const existingAdoptante = await AdoptanteRepository.getAllAdoptantes({
-            where: {
-                [Op.or]: [
-                    { cedula },
-                    { email }
-                ]
-            }
-        });
+        const existingAdoptante = await AdoptanteRepository.getAdoptanteByCedulaOEmail(cedula, email);
+
+        console.log('existingAdoptante:', existingAdoptante); // Debug
 
         if (existingAdoptante.length > 0) {
             throw new Error('La cédula o el email ya están registrados.');

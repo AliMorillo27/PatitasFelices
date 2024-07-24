@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const GestionarPerros = () => {
@@ -30,11 +30,7 @@ const GestionarPerros = () => {
     estado: ''
   });
 
-  useEffect(() => {
-    fetchPerros();
-  }, [currentPage, filters]);
-
-  const fetchPerros = async () => {
+  const fetchPerros = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/perros', {
         params: { page: currentPage, ...filters }
@@ -44,7 +40,11 @@ const GestionarPerros = () => {
     } catch (error) {
       console.error('Error fetching perros:', error);
     }
-  };
+  }, [currentPage, filters]);
+
+  useEffect(() => {
+    fetchPerros();
+  }, [currentPage, filters, fetchPerros]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -121,7 +121,10 @@ const GestionarPerros = () => {
   };
 
   const handleEdit = (perro) => {
-    setForm(perro);
+    setForm({
+      ...perro,
+      id_estado: perro.id_estado // Asegurar que el estado se mantenga igual al editar
+    });
     setIsEditing(true);
     setCurrentId(perro.id_perro);
   };
@@ -215,16 +218,7 @@ const GestionarPerros = () => {
             <option value="ALTO">Alto</option>
           </select>
         </div>
-        <div>
-          <label>Estado</label>
-          <select value={form.id_estado} onChange={(e) => setForm({ ...form, id_estado: e.target.value })}>
-            <option value="1">Disponible</option>
-            <option value="2">Adoptado</option>
-            <option value="3">Enfermo</option>
-            <option value="4">Fallecido</option>
-            <option value="5">Devuelto</option>
-          </select>
-        </div>
+        {/* Eliminado el campo Estado */}
         <button type="submit">Guardar</button>
       </form>
 

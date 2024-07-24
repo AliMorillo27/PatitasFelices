@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import MessageModal from './MessageModal';
+import '../styles/Perros.css';
 
-const Solicitar = ({ idAdoptante, idPerro }) => {
+const Solicitar = ({ idAdoptante, idPerro, closeModal }) => {
   const [form, setForm] = useState({
     id_perro: idPerro || '',
     id_adoptante: idAdoptante,
@@ -11,6 +13,8 @@ const Solicitar = ({ idAdoptante, idPerro }) => {
     rechazado_por_devolucion: false,
   });
   const [errors, setErrors] = useState({});
+  const [messageModalOpen, setMessageModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const validateForm = () => {
     const newErrors = {};
@@ -29,46 +33,50 @@ const Solicitar = ({ idAdoptante, idPerro }) => {
 
     try {
       await axios.post('http://localhost:3000/api/solicitudes-adopcion', form);
-      alert('Solicitud enviada correctamente');
-      setForm({
-        id_perro: '',
-        id_adoptante: idAdoptante,
-        comentario: '',
-        descripcion: '',
-        estado: 'pendiente',
-        rechazado_por_devolucion: false,
-      });
+      setMessage('Solicitud enviada correctamente');
+      setMessageModalOpen(true); // Abre el modal con el mensaje
     } catch (error) {
-      console.error('Error sending solicitud:', error.response ? error.response.data : error.message);
+      console.error('Error al enviar la solicitud:', error.response ? error.response.data : error.message);
       if (error.response) {
         setErrors({ server: error.response.data.message });
       }
     }
   };
 
+  const closeMessageModal = () => {
+    setMessageModalOpen(false);
+    closeModal(); // Cierra ambos modales si es necesario
+  };
+
   return (
-    <div>
+    <div className="solicitar-modal">
       <h2>Solicitar Adopción</h2>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className="error-message">{errors.server}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Comentario</label>
-          <input
-            type="text"
+          <label>Motivo</label>
+          <textarea
             value={form.comentario}
             onChange={(e) => setForm({ ...form, comentario: e.target.value })}
+            rows="3"
+            style={{ resize: 'vertical' }}
           />
         </div>
         <div>
-          <label>Descripción</label>
-          <input
-            type="text"
+          <label>Compromiso</label>
+          <textarea
             value={form.descripcion}
             onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
+            rows="3"
+            style={{ resize: 'vertical' }}
           />
         </div>
-        <button type="submit">Enviar Solicitud</button>
+        <div className="button-container">
+          <button type="submit" className="submit-btn">Enviar Solicitud</button>
+          <button type="button" className="close-btn" onClick={closeModal}>Cerrar</button>
+        </div>
       </form>
+      <MessageModal isOpen={messageModalOpen} message={message} onClose={closeMessageModal} />
     </div>
   );
 };

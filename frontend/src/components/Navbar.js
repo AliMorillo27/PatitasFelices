@@ -1,14 +1,20 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import '../styles/Navbar.css'; // Asegúrate de ajustar la ruta según la ubicación de tu archivo CSS
 
 const Navbar = () => {
   const { auth, logout } = useContext(AuthContext);
   const [dropdown, setDropdown] = useState(null);
+  const navigate = useNavigate(); // Hook para la navegación
 
   const handleDropdown = (menu) => {
     setDropdown(dropdown === menu ? null : menu);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/'); // Redirigir al inicio después de cerrar sesión
   };
 
   const renderLinks = () => {
@@ -47,12 +53,22 @@ const Navbar = () => {
               <button onClick={() => handleDropdown('solicitudes')}>Gestionar Solicitudes</button>
               {dropdown === 'solicitudes' && (
                 <ul className="dropdown-menu">
-                  <li><Link to="/gestionar/solicitudes/crear">Crear</Link></li>
-                  <li><Link to="/gestionar/solicitudes/listar">Listar</Link></li>
+                  <li><Link to="/gestionar/solicitudes/crear">Crear Solicitud</Link></li>
+                  <li><Link to="/gestionar/solicitudes/pendientes">Pendientes</Link></li>
+                  <li><Link to="/gestionar/solicitudes/listar">Solicitudes</Link></li>
                 </ul>
               )}
             </li>
             <li>
+              <button onClick={() => handleDropdown('devoluciones')}>Gestionar Devoluciones</button>
+              {dropdown === 'devoluciones' && (
+                <ul className="dropdown-menu">
+                  <li><Link to="/gestionar/devoluciones/registrar">Registrar</Link></li>
+                  <li><Link to="/gestionar/devoluciones/ver">Ver</Link></li>
+                </ul>
+              )}
+            </li>
+            {<li>
               <button onClick={() => handleDropdown('recursos')}>Gestionar Recursos</button>
               {dropdown === 'recursos' && (
                 <ul className="dropdown-menu">
@@ -60,8 +76,8 @@ const Navbar = () => {
                   <li><Link to="/gestionar/recursos/listar">Listar</Link></li>
                 </ul>
               )}
-            </li>
-            <li><button onClick={logout}>Cerrar Sesión</button></li>
+            </li>}
+            <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
       } else if (auth.userType === 'empleado') {
@@ -89,12 +105,22 @@ const Navbar = () => {
               <button onClick={() => handleDropdown('solicitudes')}>Gestionar Solicitudes</button>
               {dropdown === 'solicitudes' && (
                 <ul className="dropdown-menu">
-                  <li><Link to="/gestionar/solicitudes/crear">Crear</Link></li>
-                  <li><Link to="/gestionar/solicitudes/listar">Listar</Link></li>
+                  <li><Link to="/gestionar/solicitudes/crear">Crear Solicitud</Link></li>
+                  <li><Link to="/gestionar/solicitudes/pendientes">Pendientes</Link></li>
+                  <li><Link to="/gestionar/solicitudes/listar">Solicitudes</Link></li>
                 </ul>
               )}
             </li>
             <li>
+              <button onClick={() => handleDropdown('devoluciones')}>Gestionar Devoluciones</button>
+              {dropdown === 'devoluciones' && (
+                <ul className="dropdown-menu">
+                  <li><Link to="/gestionar/devoluciones/registrar">Registrar</Link></li>
+                  <li><Link to="/gestionar/devoluciones/ver">Ver</Link></li>
+                </ul>
+              )}
+            </li>
+            {<li>
               <button onClick={() => handleDropdown('recursos')}>Gestionar Recursos</button>
               {dropdown === 'recursos' && (
                 <ul className="dropdown-menu">
@@ -102,8 +128,8 @@ const Navbar = () => {
                   <li><Link to="/gestionar/recursos/listar">Listar</Link></li>
                 </ul>
               )}
-            </li>
-            <li><button onClick={logout}>Cerrar Sesión</button></li>
+            </li>}
+            <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
       } else if (auth.userType === 'adoptante') {
@@ -111,10 +137,9 @@ const Navbar = () => {
           <>
             <li><Link to="/">Inicio</Link></li>
             <li><Link to="/perros">Perros</Link></li>
-            <li><Link to="/solicitar">Solicitar Adopción</Link></li>
             <li><Link to="/recomendar">Recomendar</Link></li>
             <li><Link to="/recursos">Recursos</Link></li>
-            <li><button onClick={logout}>Cerrar Sesión</button></li>
+            <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
       }
@@ -136,6 +161,7 @@ const Navbar = () => {
 
   return (
     <nav>
+      <div className="logo"></div>
       <ul>
         {renderLinks()}
       </ul>

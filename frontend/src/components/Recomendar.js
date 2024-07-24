@@ -1,6 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
+import Solicitar from './Solicitar'; // Asegúrate de importar el componente Solicitar
+import MessageModal from './MessageModal'; // Asegúrate de que este componente esté correctamente importado
+import '../styles/Recomendar.css'; // Importa el archivo CSS
 
 const Recomendar = () => {
   const { auth } = useContext(AuthContext);
@@ -16,13 +20,12 @@ const Recomendar = () => {
     tamano_perro_preferido: '',
     experiencia_con_perros: ''
   });
-  const [isAdopting, setIsAdopting] = useState(false);
-  const [selectedPerro, setSelectedPerro] = useState(null);
-  const [adoptionData, setAdoptionData] = useState({
-    fechaSolicitud: '',
-    comentario: '',
-    descripcion: ''
-  });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [modalImage, setModalImage] = useState(null);
+  const [adoptionModalIsOpen, setAdoptionModalIsOpen] = useState(false);
+  const [selectedPerroId, setSelectedPerroId] = useState(null);
 
   useEffect(() => {
     const fetchAdoptante = async () => {
@@ -49,7 +52,9 @@ const Recomendar = () => {
 
   const handleRecommend = async () => {
     if (!auth.isAuthenticated) {
-      alert('Por favor, inicie sesión primero');
+      setModalMessage('Por favor, inicie sesión primero');
+      setModalType('error');
+      setModalOpen(true);
       return;
     }
 
@@ -61,6 +66,9 @@ const Recomendar = () => {
       setRecommendations(response.data);
     } catch (error) {
       console.error('Error fetching recommendations:', error);
+      setModalMessage('Error al obtener recomendaciones');
+      setModalType('error');
+      setModalOpen(true);
     }
   };
 
@@ -82,51 +90,33 @@ const Recomendar = () => {
       setIsEditing(false);
       const updatedAdoptante = { ...adoptante, ...preferences };
       setAdoptante(updatedAdoptante);
+      setModalMessage('Preferencias guardadas con éxito');
+      setModalType('success');
+      setModalOpen(true);
     } catch (error) {
       console.error('Error saving preferences:', error);
+      setModalMessage('Error al guardar preferencias');
+      setModalType('error');
+      setModalOpen(true);
     }
   };
 
   const handleAdoptClick = (perro) => {
-    setSelectedPerro(perro);
-    setIsAdopting(true);
+    setSelectedPerroId(perro.id_perro);
+    setAdoptionModalIsOpen(true);
   };
 
-  const handleAdoptionInputChange = (e) => {
-    const { name, value } = e.target;
-    setAdoptionData({
-      ...adoptionData,
-      [name]: value
-    });
-  };
-
-  const handleAdoptSubmit = async () => {
-    try {
-      await axios.post('http://localhost:3000/api/solicitudes-adopcion', {
-        id_adoptante: auth.id_adoptante,
-        id_perro: selectedPerro.id_perro,
-        fechaSolicitud: adoptionData.fechaSolicitud,
-        comentario: adoptionData.comentario,
-        descripcion: adoptionData.descripcion,
-        rechazado_por_devolucion: false
-      });
-      setIsAdopting(false);
-      setAdoptionData({
-        fechaSolicitud: '',
-        comentario: '',
-        descripcion: ''
-      });
-      alert('Solicitud de adopción enviada con éxito.');
-    } catch (error) {
-      alert(error.response?.data?.error || 'Error al enviar la solicitud de adopción.');
-      console.error('Error submitting adoption request:', error);
-    }
+  const closeAdoptionModal = () => {
+    setAdoptionModalIsOpen(false);
+    setSelectedPerroId(null);
   };
 
   return (
-    <div>
+    <div className="recomendar-container">
+      <label htmlFor="numRecommendations">Número de Recomendaciones:</label>
       <input
         type="number"
+        id="numRecommendations"
         value={numRecommendations}
         onChange={(e) => setNumRecommendations(e.target.value)}
         min="1"
@@ -193,7 +183,10 @@ const Recomendar = () => {
               <option value="EXPERTO">Experto</option>
             </select>
           </label>
-          <button onClick={handleSavePreferences}>Guardar Preferencias</button>
+          <div className="buttons-container">
+            <button onClick={handleSavePreferences}>Guardar Preferencias</button>
+            <button className="cancel-button" onClick={handleEditToggle}>Cancelar</button>
+          </div>
         </div>
       ) : (
         <button onClick={handleEditToggle}>Editar Preferencias</button>
@@ -209,44 +202,27 @@ const Recomendar = () => {
               <p>Raza: {rec.raza}</p>
               <p>Tamaño: {rec.tamano}</p>
               <p>Género: {rec.genero}</p>
-              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p> {/* Mostrar el puntaje de similitud */}
+              <p>Puntaje de Similitud: {rec.puntaje_similitud}</p>
+              <div className="similarity-bar-container">
+                <div className="similarity-bar" style={{ width: `${rec.puntaje_similitud * 100}%` }}></div>
+              </div>
               <button onClick={() => handleAdoptClick(rec)}>Adoptar</button>
             </li>
           ))}
         </ul>
       )}
 
-      {isAdopting && selectedPerro && (
-        <div>
-          <h3>Solicitud de Adopción para {selectedPerro.nombre}</h3>
-          <label>
-            Fecha de Solicitud:
-            <input
-              type="date"
-              name="fechaSolicitud"
-              value={adoptionData.fechaSolicitud}
-              onChange={handleAdoptionInputChange}
-            />
-          </label>
-          <label>
-            Comentario:
-            <textarea
-              name="comentario"
-              value={adoptionData.comentario}
-              onChange={handleAdoptionInputChange}
-            />
-          </label>
-          <label>
-            Descripción:
-            <textarea
-              name="descripcion"
-              value={adoptionData.descripcion}
-              onChange={handleAdoptionInputChange}
-            />
-          </label>
-          <button onClick={handleAdoptSubmit}>Enviar Solicitud</button>
-        </div>
-      )}
+      <Modal
+        isOpen={adoptionModalIsOpen}
+        onRequestClose={closeAdoptionModal}
+        contentLabel="Solicitud de Adopción"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <Solicitar idAdoptante={auth.id_adoptante} idPerro={selectedPerroId} closeModal={closeAdoptionModal} />
+      </Modal>
+
+      <MessageModal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} type={modalType} image={modalImage} />
     </div>
   );
 };

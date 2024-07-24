@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import MessageModal from './MessageModal'; // Asegúrate de que la ruta sea correcta
+import '../styles/Register.css'; // Asegúrate de que la ruta sea correcta
 
 const Register = () => {
   const [tipo, setTipo] = useState('adoptante');
@@ -20,6 +23,11 @@ const Register = () => {
     tamano_perro_preferido: 'PEQUEÑO',
     experiencia_con_perros: 'PRINCIPIANTE',
   });
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState(''); // 'success' para éxitos y 'error' para errores
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -85,16 +93,26 @@ const Register = () => {
           await axios.post('http://localhost:3000/api/usuarios', dataToSend);
         }
 
-        alert('Registro exitoso');
+        setModalMessage('Registro exitoso');
+        setModalType('success');
+        setModalOpen(true);
+
+        setTimeout(() => {
+          setModalOpen(false);
+          navigate('/login'); // Redirigir al login después de 2 segundos
+        }, 2000);
+
       } catch (error) {
         console.error('Error en el registro:', error.response.data);
-        alert('Error en el registro: ' + error.response.data.message);
+        setModalMessage('Error en el registro: ' + error.response.data.message);
+        setModalType('error');
+        setModalOpen(true);
       }
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Registrarse</h2>
       <label>
         Tipo de Usuario:
@@ -225,6 +243,13 @@ const Register = () => {
       )}
 
       <button onClick={handleRegister}>Registrarse</button>
+
+      <MessageModal
+        isOpen={modalOpen}
+        message={modalMessage}
+        onClose={() => setModalOpen(false)}
+        type={modalType}
+      />
     </div>
   );
 };

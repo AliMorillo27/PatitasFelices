@@ -1,7 +1,7 @@
-// src/components/GestionarAdoptantes/CrearAdoptante.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/CrearAdoptante.css';
 
 const CrearAdoptante = () => {
   const [form, setForm] = useState({
@@ -67,15 +67,25 @@ const CrearAdoptante = () => {
     }
 
     try {
-      await axios.post('http://localhost:3000/api/adoptantes', form);
+      const response = await axios.post('http://localhost:3000/api/adoptantes', form);
+      console.log('Respuesta del servidor:', response.data); // Debug
       navigate('/gestionar/adoptantes/listar');
     } catch (error) {
-      console.error('Error saving adoptante:', error.response ? error.response.data : error.message);
+      if (error.response && error.response.data) {
+        console.error('Error del servidor:', error.response.data.message);
+        setErrors({ apiError: error.response.data.message });
+      } else {
+        setErrors({ apiError: 'Error desconocido al guardar el adoptante.' });
+      }
     }
   };
 
+  const handleCancel = () => {
+    navigate('/gestionar/adoptantes/listar');
+  };
+
   return (
-    <div>
+    <div className="crear-adoptante-container">
       <h2>Crear Adoptante</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -165,10 +175,13 @@ const CrearAdoptante = () => {
             <option value="EXPERTO">Experto</option>
           </select>
         </div>
+        {errors.apiError && <p>{errors.apiError}</p>}
         <button type="submit">Guardar</button>
+        <button type="button" onClick={handleCancel}>Cancelar</button>
       </form>
     </div>
   );
 };
 
 export default CrearAdoptante;
+

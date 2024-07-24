@@ -1,16 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
+import axios from 'axios';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Inicio.css';
 import Footer from '../components/Footer';
+import { AuthContext } from '../AuthContext';
+import Solicitar from './Solicitar';
+import Modal from 'react-modal';
 
 const Inicio = () => {
+  const { auth, setRedirectPath } = useContext(AuthContext);
   const [dogs, setDogs] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showSolicitudModal, setShowSolicitudModal] = useState(false);
+  const [selectedPerroId, setSelectedPerroId] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fetchPerros = useCallback(async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/perros', {
+        params: { estado: [1, 5] } // Solo mostrar perros disponibles y devueltos
+      });
+      setDogs(response.data.perros || []);
+    } catch (error) {
+      console.error('Error fetching perros:', error);
+    }
+  }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/perros')  // Ajusta la URL según tu API
-      .then(response => response.json())
-      .then(data => setDogs(data))
-      .catch(error => console.error('Error fetching dogs:', error));
-  }, []);
+    fetchPerros();
+  }, [fetchPerros]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const perroId = queryParams.get('adoptar');
+
+    if (auth.isAuthenticated && perroId) {
+      setSelectedPerroId(perroId);
+      setShowSolicitudModal(true);
+      setRedirectPath(null);
+    }
+  }, [auth.isAuthenticated, location.search]);
+
+  const handleSolicitud = (id) => {
+    if (!auth.isAuthenticated) {
+      setSelectedPerroId(id);
+      setShowModal(true);
+    } else {
+      setSelectedPerroId(id);
+      setShowSolicitudModal(true);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setShowSolicitudModal(false);
+    setSelectedPerroId(null);
+  };
+
+  const handleLoginRedirect = () => {
+    setRedirectPath(`/?adoptar=${selectedPerroId}`);
+    navigate('/login');
+  };
 
   return (
     <div className="inicio-container">
@@ -18,21 +69,55 @@ const Inicio = () => {
         <h1>ADOPTA, SALVA UNA VIDA, GANA UN AMIGO</h1>
         <p>Plataforma para la adopción de perros.</p>
         <div className="hero-buttons">
-          <button>QUIERO ADOPTAR</button>
+          <button className="solicitud-button" onClick={() => navigate('/perros')}>QUIERO ADOPTAR</button>
         </div>
       </header>
       <section className="dogs-gallery">
         {dogs.length > 0 ? (
-          dogs.map(dog => (
+          dogs.slice(0, 6).map(dog => (
             <div className="dog-card" key={dog.id_perro}>
-              <img src={dog.imagen_url} alt={dog.nombre} />
-              <div>{dog.nombre}<br />{dog.genero}, {dog.edad} años</div>
+              <img
+                src={`http://localhost:3000/${dog.imagen_url.startsWith('http') ? dog.imagen_url : dog.imagen_url}`}
+                alt={dog.nombre}
+                width="100"
+              />
+              <div className="dog-card-info">
+                <h3>{dog.nombre}</h3>
+                <p><strong>Género:</strong> {dog.genero}</p>
+                <p><strong>Edad:</strong> {dog.edad} años</p>
+                <p><strong>Raza:</strong> {dog.raza}</p>
+                <p><strong>Tamaño:</strong> {dog.tamano} kgs</p>
+                <button className="solicitud-button" onClick={() => handleSolicitud(dog.id_perro)}>Enviar Solicitud</button>
+              </div>
             </div>
           ))
         ) : (
           <p>No hay perros disponibles en este momento.</p>
         )}
       </section>
+      <Modal
+        isOpen={showModal}
+        onRequestClose={closeModal}
+        contentLabel="Iniciar Sesión"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <button className="close-modal-btn" onClick={closeModal}>X</button>
+        <h2>Por favor, inicie sesión primero</h2>
+        <div className="button-container">
+          <button onClick={handleLoginRedirect}>Iniciar Sesión</button>
+          <button className="close-btn" onClick={closeModal}>Cerrar</button>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={showSolicitudModal}
+        onRequestClose={closeModal}
+        contentLabel="Solicitud de Adopción"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <Solicitar idAdoptante={auth.id_adoptante} idPerro={selectedPerroId} closeModal={closeModal} />
+      </Modal>
       <Footer />
     </div>
   );
