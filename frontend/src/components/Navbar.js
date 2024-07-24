@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouseChimney, faDog, faDice, faBook, faAddressCard, faUsersLine, faUserPen, faUserLarge } from '@fortawesome/free-solid-svg-icons'; // Asegúrate de importar los iconos adicionales
 import { AuthContext } from '../AuthContext';
 import '../styles/Navbar.css'; // Asegúrate de ajustar la ruta según la ubicación de tu archivo CSS
 
@@ -68,7 +70,7 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
-            {<li>
+            <li>
               <button onClick={() => handleDropdown('recursos')}>Gestionar Recursos</button>
               {dropdown === 'recursos' && (
                 <ul className="dropdown-menu">
@@ -76,7 +78,7 @@ const Navbar = () => {
                   <li><Link to="/gestionar/recursos/listar">Listar</Link></li>
                 </ul>
               )}
-            </li>}
+            </li>
             <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
@@ -120,7 +122,7 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
-            {<li>
+            <li>
               <button onClick={() => handleDropdown('recursos')}>Gestionar Recursos</button>
               {dropdown === 'recursos' && (
                 <ul className="dropdown-menu">
@@ -128,17 +130,33 @@ const Navbar = () => {
                   <li><Link to="/gestionar/recursos/listar">Listar</Link></li>
                 </ul>
               )}
-            </li>}
+            </li>
             <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
       } else if (auth.userType === 'adoptante') {
         return (
           <>
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/perros">Perros</Link></li>
-            <li><Link to="/recomendar">Recomendar</Link></li>
-            <li><Link to="/recursos">Recursos</Link></li>
+            <li>
+              <Link to="/">
+                <FontAwesomeIcon icon={faHouseChimney} /> Inicio
+              </Link>
+            </li>
+            <li>
+              <Link to="/perros">
+                <FontAwesomeIcon icon={faDog} /> Perros
+              </Link>
+            </li>
+            <li>
+              <Link to="/recomendar">
+                <FontAwesomeIcon icon={faDice} /> Recomendar
+              </Link>
+            </li>
+            <li>
+              <Link to="/recursos">
+                <FontAwesomeIcon icon={faBook} /> Recursos
+              </Link>
+            </li>
             <li><button onClick={handleLogout}>Cerrar Sesión</button></li>
           </>
         );
@@ -146,14 +164,46 @@ const Navbar = () => {
     } else {
       return (
         <>
-          <li><Link to="/">Inicio</Link></li>
-          <li><Link to="/perros">Perros</Link></li>
-          <li><Link to="/recomendar-visitante">Recomendar</Link></li>
-          <li><Link to="/recursos">Recursos</Link></li>
-          <li><Link to="/contactos">Contactos</Link></li>
-          <li><Link to="/nosotros">Nosotros</Link></li>
-          <li><Link to="/login">Iniciar Sesión</Link></li>
-          <li><Link to="/register">Registrarse</Link></li>
+          <li>
+            <Link to="/">
+              <FontAwesomeIcon icon={faHouseChimney} /> Inicio
+            </Link>
+          </li>
+          <li>
+            <Link to="/perros">
+              <FontAwesomeIcon icon={faDog} /> Perros
+            </Link>
+          </li>
+          <li>
+            <Link to="/recomendar-visitante">
+              <FontAwesomeIcon icon={faDice} /> Recomendacion (IA)
+            </Link>
+          </li>
+          <li>
+            <Link to="/recursos">
+              <FontAwesomeIcon icon={faBook} /> Recursos
+            </Link>
+          </li>
+          <li>
+            <Link to="/contactos">
+              <FontAwesomeIcon icon={faAddressCard} /> Contactos
+            </Link>
+          </li>
+          <li>
+            <Link to="/nosotros">
+              <FontAwesomeIcon icon={faUsersLine} /> Nosotros
+            </Link>
+          </li>
+          <li>
+            <Link to="/login">
+              <FontAwesomeIcon icon={faUserLarge} /> Iniciar Sesión
+            </Link>
+          </li>
+          <li>
+            <Link to="/register">
+              <FontAwesomeIcon icon={faUserPen} /> Registrarse
+            </Link>
+          </li>
         </>
       );
     }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDog, faPaperPlane, faShieldDog } from '@fortawesome/free-solid-svg-icons'; // Importa faShieldDog
 import '../styles/Inicio.css';
 import Footer from '../components/Footer';
 import { AuthContext } from '../AuthContext';
@@ -64,17 +66,20 @@ const Inicio = () => {
   };
 
   return (
-    <div className="inicio-container">
+    <div>
+      <div className="inicio-container">
       <header className="hero">
         <h1>ADOPTA, SALVA UNA VIDA, GANA UN AMIGO</h1>
         <p>Plataforma para la adopción de perros.</p>
         <div className="hero-buttons">
-          <button className="solicitud-button" onClick={() => navigate('/perros')}>QUIERO ADOPTAR</button>
+          <button className="solicitud-button" onClick={() => navigate('/perros')}>
+            <FontAwesomeIcon icon={faDog} /> QUIERO ADOPTAR
+          </button>
         </div>
       </header>
       <section className="dogs-gallery">
         {dogs.length > 0 ? (
-          dogs.slice(0, 6).map(dog => (
+          dogs.slice(0, 8).map(dog => (
             <div className="dog-card" key={dog.id_perro}>
               <img
                 src={`http://localhost:3000/${dog.imagen_url.startsWith('http') ? dog.imagen_url : dog.imagen_url}`}
@@ -87,7 +92,9 @@ const Inicio = () => {
                 <p><strong>Edad:</strong> {dog.edad} años</p>
                 <p><strong>Raza:</strong> {dog.raza}</p>
                 <p><strong>Tamaño:</strong> {dog.tamano} kgs</p>
-                <button className="solicitud-button" onClick={() => handleSolicitud(dog.id_perro)}>Enviar Solicitud</button>
+                <button className="solicitud-button" onClick={() => handleSolicitud(dog.id_perro)}>
+                  <FontAwesomeIcon icon={faPaperPlane} /> Enviar Solicitud
+                </button>
               </div>
             </div>
           ))
@@ -105,8 +112,9 @@ const Inicio = () => {
         <button className="close-modal-btn" onClick={closeModal}>X</button>
         <h2>Por favor, inicie sesión primero</h2>
         <div className="button-container">
-          <button onClick={handleLoginRedirect}>Iniciar Sesión</button>
-          <button className="close-btn" onClick={closeModal}>Cerrar</button>
+          <button onClick={handleLoginRedirect}>
+            <FontAwesomeIcon icon={faShieldDog} /> Iniciar Sesión
+          </button>
         </div>
       </Modal>
       <Modal
@@ -118,7 +126,9 @@ const Inicio = () => {
       >
         <Solicitar idAdoptante={auth.id_adoptante} idPerro={selectedPerroId} closeModal={closeModal} />
       </Modal>
-      <Footer />
+      
+    </div>
+    <Footer />
     </div>
   );
 };

@@ -1,20 +1,16 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
+/* Asegúrate de que el contenedor de contacto esté centrado */
 .contactos-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrar contenido horizontalmente */
     justify-content: center; /* Centrar contenido verticalmente */
-    height: 100%;
+    height: 120vh; /* Ajusta el alto para que ocupe la altura completa de la ventana */
     background-image: url('../assets/contactos.jpg'); /* Reemplaza con la ruta de tu imagen */
     background-size: cover;
     background-position: center;
 }
 
+/* Estilos para el contenido */
 .content {
     padding: 20px;
     color: black;
@@ -23,39 +19,61 @@ html, body {
     width: 80%; /* Ancho del contenido ajustable */
     max-width: 600px; /* Ancho máximo para evitar que se extienda demasiado */
     text-align: center; /* Centrar texto */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho del contenedor */
 }
 
-.box {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9; /* Fondo de los cuadros */
+/* Estilos para encabezados */
+h1, h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0; /* Elimina márgenes predeterminados para centrar mejor */
 }
 
+/* Espaciado entre íconos y texto en encabezados */
+h1 .fa, h2 .fa {
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+/* Tamaño de fuentes */
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+/* Color de los encabezados en las secciones */
 .contact-info h2, .contact-hours h2, .contact-social h2 {
     color: #2bd742;
 }
 
+/* Estilos para la sección de redes sociales */
+.contact-social {
+    display: flex;
+    flex-direction: column; /* Centrar verticalmente el título sobre los íconos */
+    align-items: center;
+    margin-top: 20px; /* Espacio superior */
+}
+
+.contact-social h2 {
+    margin-bottom: 15px; /* Espacio inferior entre el título y los íconos */
+}
+
+/* Contenedor para los íconos de redes sociales */
+.social-icons {
+    display: flex;
+    gap: 15px; /* Espacio entre íconos */
+    align-items: center; /* Centrar íconos verticalmente si es necesario */
+}
+
 .contact-social a {
-    display: block;
-    margin-bottom: 10px;
     color: #2bd742;
     text-decoration: none;
+    font-size: 24px; /* Tamaño de íconos */
 }
 
 .contact-social a:hover {
     text-decoration: underline;
-}
-
-.footer-container {
-    background-color: rgba(43, 215, 66, 0.9); /* Fondo semi-transparente */
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    width: 100%;
-}
-
-.footer-container p {
-    margin: 5px 0;
 }

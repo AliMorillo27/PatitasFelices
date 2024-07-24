@@ -3,6 +3,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import Solicitar from './Solicitar'; // Asegúrate de importar el componente Solicitar
+import Footer from '../components/Footer';
 import MessageModal from './MessageModal'; // Asegúrate de que este componente esté correctamente importado
 import '../styles/Recomendar.css'; // Importa el archivo CSS
 
@@ -112,7 +113,8 @@ const Recomendar = () => {
   };
 
   return (
-    <div className="recomendar-container">
+    <div>
+      <div className="recomendar-container">
       <label htmlFor="numRecommendations">Número de Recomendaciones:</label>
       <input
         type="number"
@@ -224,6 +226,9 @@ const Recomendar = () => {
 
       <MessageModal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} type={modalType} image={modalImage} />
     </div>
+    <Footer />
+    </div>
+    
   );
 };
 

@@ -4,7 +4,10 @@ import Modal from 'react-modal';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import Solicitar from './Solicitar';
+import Footer from '../components/Footer';
 import MessageModal from './MessageModal'; // Importa el componente MessageModal
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Importa FontAwesomeIcon
+import { faShieldDog, faDice } from '@fortawesome/free-solid-svg-icons'; // Importa los iconos necesarios
 import '../styles/RecomendarVisitante.css'; // Importa el archivo CSS
 
 const RecomendarVisitante = () => {
@@ -89,8 +92,11 @@ const RecomendarVisitante = () => {
   };
 
   return (
-    <div className="recomendar-container">
-      <h1>Recomendar un Perro</h1>
+    <div>
+      <div className="recomendar-container">
+      <h1>
+        <FontAwesomeIcon icon={faShieldDog} /> Recomendación de Perro con IA
+      </h1>
       <div>
         <label>
           Tiene niños:
@@ -157,7 +163,9 @@ const RecomendarVisitante = () => {
           min="1"
           placeholder="Número de Recomendaciones"
         />
-        <button className="recomendar-button" onClick={handleRecommend}>Recomendar</button>
+        <button className="recomendar-button" onClick={handleRecommend}>
+          <FontAwesomeIcon icon={faDice} /> Recomendar
+        </button>
       </div>
 
       {recommendations.length > 0 && (
@@ -206,6 +214,8 @@ const RecomendarVisitante = () => {
       </Modal>
 
       <MessageModal isOpen={modalOpen} message={modalMessage} onClose={() => setModalOpen(false)} type={modalType} image={modalImage} />
+    </div>
+    <Footer />
     </div>
   );
 };

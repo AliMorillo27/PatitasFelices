@@ -1,30 +1,161 @@
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.content {
-  flex: 1;
-}
-
-.footer-container {
+/* Footer.css */
+footer {
   background-color: #2bd742;
   color: white;
+  font-family: Arial, sans-serif;
+  padding: 10px 20px;
   text-align: center;
-  padding: 20px 0;
+  border-top: 1px solid #fff;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* Cambia esto a relative si es necesario */
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row; /* Cambiado a row para pantallas grandes */
+  justify-content: space-between;
   width: 100%;
+  max-width: 1200px; /* Ajusta el ancho máximo si es necesario */
+  margin: 0 auto;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas más pequeñas */
+}
+
+.footer-section {
+  margin: 0;
+  padding: 0 10px;
+}
+
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
- 
+  margin-left: -80px; /* Mueve el logo a la izquierda */
 }
 
-.footer-container p {
-  margin: 5px 0;
+.footer-logo img {
+  max-width: 100px; /* Ajusta el tamaño del logo si es necesario */
+  height: auto;
 }
 
+.footer-section h4 {
+  margin: 10px 0 5px 0; /* Ajusta el margen superior (10px) y el margen inferior (5px) según sea necesario */
+  font-size: 14px;
+  font-weight: bold;
+}
 
+.footer-section p {
+  margin: 2px 0; /* Ajusta el margen superior e inferior de los párrafos */
+}
+
+.footer-section.horario {
+  margin-top: 10px; /* Ajusta este margen para bajar toda la sección un poco */
+}
+
+.location-button {
+  background-color: #ffffff; /* Color de fondo del botón */
+  color: #2bd742; /* Color del texto del botón */
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px; /* Tamaño del botón */
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 10px; /* Espacio superior para separar del contenido */
+}
+
+.location-button:hover {
+  background-color: #e0e0e0; /* Color de fondo del botón al pasar el cursor */
+}
+
+.social-media {
+  display: flex;
+  flex-direction: column; /* Cambiado a columna para pantallas más grandes */
+  align-items: center; /* Centra los elementos */
+  margin-top: 20px; /* Ajusta este margen para bajar la sección de redes sociales */
+}
+
+.social-media h4 {
+  margin-top: 10px; /* Ajusta el margen superior para bajar el encabezado de redes sociales */
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: row; /* Alinea los iconos horizontalmente */
+  gap: 10px; /* Espacio entre los iconos */
+  align-items: center; /* Centra los iconos verticalmente */
+  margin: 10px 0; /* Añade un margen superior e inferior */
+}
+
+.social-media a {
+  color: white;
+  text-decoration: none;
+}
+
+.social-icon {
+  font-size: 18px; /* Tamaño del icono */
+}
+
+.help-button {
+  background-color: #ffffff; /* Color de fondo del botón */
+  color: #2bd742; /* Color del texto del botón */
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px; /* Tamaño del botón */
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 10px; /* Espacio superior para separar del contenido de redes sociales */
+}
+
+.help-button:hover {
+  background-color: #e0e0e0; /* Color de fondo del botón al pasar el cursor */
+}
+
+.contact-info {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.contact-info a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-logo {
+    margin-bottom: 10px; /* Ajusta el margen inferior del logo para pantallas pequeñas */
+    margin-left: 0; /* Elimina el margen izquierdo para pantallas pequeñas */
+  }
+
+  .social-media {
+    margin-top: 10px; /* Ajusta el margen superior para pantallas pequeñas */
+  }
+
+  .social-icons {
+    gap: 8px; /* Ajusta el espacio entre los iconos si es necesario */
+  }
+
+  .social-icon {
+    font-size: 16px; /* Ajusta el tamaño del icono en pantallas pequeñas */
+  }
+
+  .help-button {
+    font-size: 10px; /* Ajusta el tamaño del botón en pantallas pequeñas */
+  }
+
+  .location-button {
+    font-size: 10px; /* Ajusta el tamaño del botón en pantallas pequeñas */
+  }
+
+  .contact-info {
+    font-size: 10px; /* Ajusta el tamaño de la fuente en pantallas pequeñas */
+  }
+}

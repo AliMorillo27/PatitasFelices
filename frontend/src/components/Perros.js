@@ -2,9 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
 import Solicitar from './Solicitar';
+import Footer from '../components/Footer';
 import Modal from 'react-modal';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDog, faShieldDog } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Perros.css';
+
 
 const Perros = () => {
   const { auth, setRedirectPath } = useContext(AuthContext);
@@ -18,11 +22,11 @@ const Perros = () => {
   });
   const [selectedPerroId, setSelectedPerroId] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [loginPromptOpen, setLoginPromptOpen] = useState(false); // Nuevo estado para el modal de inicio de sesión
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(10); // Límite de elementos por página, configurable por el usuario
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     fetchPerros();
@@ -42,7 +46,7 @@ const Perros = () => {
   const fetchPerros = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/perros', {
-        params: { ...filters, estado: [1, 5], page: currentPage, limit } // Solo mostrar perros disponibles y devueltos
+        params: { ...filters, estado: [1, 5], page: currentPage, limit }
       });
       setPerros(response.data.perros || []);
       setTotalPages(response.data.totalPages);
@@ -60,13 +64,13 @@ const Perros = () => {
 
   const handleLimitChange = (e) => {
     setLimit(e.target.value);
-    setCurrentPage(1); // Reset to first page on limit change
+    setCurrentPage(1);
   };
 
   const handleAdoptar = (id) => {
     if (!auth.isAuthenticated) {
       setSelectedPerroId(id);
-      setLoginPromptOpen(true); // Mostrar el modal de inicio de sesión
+      setLoginPromptOpen(true);
     } else {
       setSelectedPerroId(id);
       setModalIsOpen(true);
@@ -89,8 +93,11 @@ const Perros = () => {
   };
 
   return (
-    <div className="perros-container">
-      <h2>Perros Disponibles</h2>
+    <div>
+<div className="perros-container">
+      <h2>
+        <FontAwesomeIcon icon={faShieldDog} /> Perros Disponibles
+      </h2>
       <div className="filters">
         <label>
           Raza:
@@ -149,7 +156,9 @@ const Perros = () => {
                 <td>{perro.genero}</td>
                 <td>{perro.descripcion}</td>
                 <td>
-                  <button onClick={() => handleAdoptar(perro.id_perro)}>Adoptar</button>
+                  <button onClick={() => handleAdoptar(perro.id_perro)}>
+                    <FontAwesomeIcon icon={faDog} /> Adoptar
+                  </button>
                 </td>
               </tr>
             ))}
@@ -183,14 +192,19 @@ const Perros = () => {
         className="Modal"
         overlayClassName="Overlay"
       >
-        <button className="close-modal-btn" onClick={closeLoginPrompt}>X</button> {/* Botón X para cerrar */}
+        <button className="close-modal-btn" onClick={closeLoginPrompt}>X</button>
         <h2>Por favor, inicie sesión primero</h2>
         <div className="button-container">
-          <button onClick={handleLoginRedirect}>Iniciar Sesión</button>
-          <button className="close-btn" onClick={closeLoginPrompt}>Cerrar</button>
+          <button onClick={handleLoginRedirect}>
+            <FontAwesomeIcon icon={faShieldDog} /> Iniciar Sesión
+          </button>
         </div>
       </Modal>
     </div>
+    <Footer />
+      
+    </div>
+    
   );
 };
 

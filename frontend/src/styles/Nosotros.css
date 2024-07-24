@@ -16,6 +16,7 @@ html, body {
     padding: 20px;
 }
 
+/* Estilos para el contenido */
 .content {
     background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente para el contenido */
     max-width: 800px; /* Ancho máximo del contenido */
@@ -26,10 +27,32 @@ html, body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra ligera para el contenido */
 }
 
+/* Estilos para encabezados */
 .content h1 {
     color: #2bd742; /* Color verde para el título */
     text-align: center; /* Centrar el título */
     margin-bottom: 20px; /* Espacio inferior después del título */
+    display: flex;
+    align-items: center; /* Centrar verticalmente el ícono con el texto */
+    justify-content: center; /* Centrar horizontalmente el ícono con el texto */
+}
+
+.content h1 .faUsersLine {
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+.content h2 {
+    color: #2bd742; /* Color verde para los encabezados h2 */
+    margin-bottom: 20px; /* Espacio inferior entre encabezados y el contenido siguiente */
+    display: flex;
+    align-items: center; /* Centrar verticalmente el ícono con el texto */
+    justify-content: center; /* Centrar horizontalmente el ícono con el texto */
+}
+
+.content h2 .faShieldDog, 
+.content h2 .faHandshake, 
+.content h2 .faGift {
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
 }
 
 .content p {
